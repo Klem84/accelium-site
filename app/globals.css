@@ -1,0 +1,351 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* ── Polices auto-hébergées (Fontshare woff2, /public/fonts) ── */
+@font-face {
+  font-family: "Clash Display";
+  src: url("/fonts/ClashDisplay-500.woff2") format("woff2");
+  font-weight: 500;
+  font-style: normal;
+  font-display: swap;
+}
+@font-face {
+  font-family: "Clash Display";
+  src: url("/fonts/ClashDisplay-600.woff2") format("woff2");
+  font-weight: 600;
+  font-style: normal;
+  font-display: swap;
+}
+@font-face {
+  font-family: "Clash Display";
+  src: url("/fonts/ClashDisplay-700.woff2") format("woff2");
+  font-weight: 700;
+  font-style: normal;
+  font-display: swap;
+}
+@font-face {
+  font-family: "General Sans";
+  src: url("/fonts/GeneralSans-400.woff2") format("woff2");
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+}
+@font-face {
+  font-family: "General Sans";
+  src: url("/fonts/GeneralSans-500.woff2") format("woff2");
+  font-weight: 500;
+  font-style: normal;
+  font-display: swap;
+}
+@font-face {
+  font-family: "General Sans";
+  src: url("/fonts/GeneralSans-600.woff2") format("woff2");
+  font-weight: 600;
+  font-style: normal;
+  font-display: swap;
+}
+@font-face {
+  font-family: "General Sans";
+  src: url("/fonts/GeneralSans-700.woff2") format("woff2");
+  font-weight: 700;
+  font-style: normal;
+  font-display: swap;
+}
+
+:root {
+  --ease: cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  background: #ffffff;
+  color: #3e4a63;
+  font-family: "General Sans", system-ui, sans-serif;
+  -webkit-font-smoothing: antialiased;
+  overflow-x: hidden;
+}
+
+::selection {
+  background: #f26122;
+  color: #fff;
+}
+
+/* ── Typographie display ── */
+.display {
+  font-family: "Clash Display", system-ui, sans-serif;
+  letter-spacing: -0.02em;
+  line-height: 0.98;
+  text-wrap: balance;
+}
+.h-hero {
+  font-size: clamp(2.4rem, 1rem + 5.4vw, 6rem);
+}
+.h-mega {
+  font-size: clamp(2.3rem, 1.2rem + 4.4vw, 4.8rem);
+}
+.h-sec {
+  font-size: clamp(2rem, 1.1rem + 3vw, 3.5rem);
+}
+.lede {
+  font-size: clamp(1.06rem, 0.98rem + 0.5vw, 1.32rem);
+  line-height: 1.5;
+}
+.measure {
+  max-width: 58ch;
+}
+.wrap {
+  max-width: 1280px;
+  margin-inline: auto;
+  padding-inline: 1.25rem;
+}
+@media (min-width: 1024px) {
+  .wrap {
+    padding-inline: 2rem;
+  }
+}
+.kicker {
+  font-size: 0.8rem;
+  font-weight: 600;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+}
+
+/* ── Transitions de base ── */
+a,
+button {
+  transition: color 0.25s var(--ease), background-color 0.25s var(--ease),
+    border-color 0.25s var(--ease), transform 0.25s var(--ease),
+    box-shadow 0.25s var(--ease);
+}
+
+/* ── Boutons ── */
+.btn-primary {
+  background: #f26122;
+  color: #fff;
+  font-weight: 600;
+  box-shadow: 0 12px 34px -12px rgba(242, 97, 34, 0.6);
+}
+.btn-primary:hover {
+  background: #ff6e2e;
+  transform: translateY(-2px);
+}
+.btn-light {
+  background: #fff;
+  color: #1b2336;
+  font-weight: 600;
+}
+.btn-light:hover {
+  transform: translateY(-2px);
+}
+.btn-ghost-d {
+  border: 1px solid rgba(255, 255, 255, 0.4);
+  color: #fff;
+  font-weight: 600;
+}
+.btn-ghost-d:hover {
+  background: rgba(255, 255, 255, 0.12);
+}
+.btn-ghost {
+  border: 1px solid #d7d3c7;
+  color: #1b2336;
+  font-weight: 600;
+}
+.btn-ghost:hover {
+  border-color: #1b2336;
+  background: #f5f4ef;
+}
+
+/* ── Reveals / motion (activés quand <html class="js">) ── */
+.js .reveal {
+  opacity: 0;
+  transform: translateY(28px);
+}
+.js .reveal.in {
+  opacity: 1;
+  transform: none;
+  transition: opacity 1s var(--ease), transform 1s var(--ease);
+}
+.js [data-stagger] > * {
+  opacity: 0;
+  transform: translateY(22px);
+}
+.js [data-stagger].in > * {
+  opacity: 1;
+  transform: none;
+  transition: opacity 0.85s var(--ease), transform 0.85s var(--ease);
+}
+.js .clip span {
+  display: block;
+  transform: translateY(110%);
+}
+.js .clip.in span {
+  transform: translateY(0);
+  transition: transform 1.1s var(--ease);
+}
+
+/* ── Focus accessible ── */
+.focusable:focus-visible {
+  outline: 2px solid #f26122;
+  outline-offset: 3px;
+  border-radius: 6px;
+}
+.nav-link {
+  position: relative;
+}
+.nav-link::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  bottom: -5px;
+  height: 2px;
+  width: 0;
+  background: #f26122;
+  transition: width 0.25s var(--ease);
+}
+.nav-link:hover::after {
+  width: 100%;
+}
+
+/* ── Photos hover zoom + parallaxe ── */
+.photo {
+  overflow: hidden;
+}
+.photo img {
+  transition: transform 0.8s var(--ease);
+  will-change: transform;
+}
+.group:hover .photo img {
+  transform: scale(1.06);
+}
+.parallax {
+  will-change: transform;
+}
+
+/* ── Marquee financeurs ── */
+.marquee-track {
+  display: flex;
+  gap: 3.5rem;
+  width: max-content;
+  animation: mq 34s linear infinite;
+}
+@keyframes mq {
+  to {
+    transform: translateX(-50%);
+  }
+}
+.mq-mask {
+  -webkit-mask: linear-gradient(90deg, transparent, #000 8%, #000 92%, transparent);
+  mask: linear-gradient(90deg, transparent, #000 8%, #000 92%, transparent);
+}
+
+/* ── Prose (corps MDX) ── */
+.prose-accelium {
+  color: #3e4a63;
+  line-height: 1.7;
+}
+.prose-accelium > * + * {
+  margin-top: 1.1rem;
+}
+.prose-accelium h2 {
+  font-family: "Clash Display", system-ui, sans-serif;
+  font-weight: 600;
+  color: #1b2336;
+  font-size: clamp(1.5rem, 1.1rem + 1.2vw, 2.1rem);
+  letter-spacing: -0.02em;
+  margin-top: 2.4rem;
+  line-height: 1.1;
+}
+.prose-accelium h3 {
+  font-family: "Clash Display", system-ui, sans-serif;
+  font-weight: 600;
+  color: #1b2336;
+  font-size: clamp(1.2rem, 1rem + 0.6vw, 1.5rem);
+  margin-top: 1.8rem;
+}
+.prose-accelium strong {
+  color: #1b2336;
+  font-weight: 600;
+}
+.prose-accelium a {
+  color: #c2480f;
+  text-decoration: underline;
+  text-underline-offset: 2px;
+}
+.prose-accelium ul {
+  list-style: none;
+  padding-left: 0;
+}
+.prose-accelium ul > li {
+  position: relative;
+  padding-left: 1.5rem;
+  margin-top: 0.6rem;
+}
+.prose-accelium ul > li::before {
+  content: "";
+  position: absolute;
+  left: 0;
+  top: 0.65em;
+  width: 7px;
+  height: 7px;
+  border-radius: 9999px;
+  background: #f26122;
+}
+.prose-accelium ol {
+  padding-left: 1.2rem;
+}
+.prose-accelium ol > li {
+  margin-top: 0.6rem;
+}
+.prose-accelium blockquote {
+  border-left: 3px solid #f26122;
+  padding-left: 1.1rem;
+  color: #39455f;
+  font-style: normal;
+}
+
+/* ── Réglages écrans courts (hero) ── */
+@media (max-height: 700px) {
+  .hero-content {
+    padding-top: 94px !important;
+    padding-bottom: 4vh !important;
+  }
+  .hero-content .h-hero {
+    font-size: clamp(2rem, 1rem + 3vw, 3.4rem);
+  }
+  .hero-content .lede {
+    margin-top: 1rem;
+  }
+  .hero-content .kicker {
+    margin-bottom: 1.4rem !important;
+  }
+}
+
+/* ── prefers-reduced-motion ── */
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+  .js .reveal,
+  .js [data-stagger] > * {
+    opacity: 1 !important;
+    transform: none !important;
+  }
+  .js .clip span {
+    transform: none !important;
+  }
+  .photo img,
+  .parallax {
+    transition: none;
+    transform: none !important;
+  }
+  .marquee-track {
+    animation: none;
+  }
+  * {
+    animation: none !important;
+  }
+}

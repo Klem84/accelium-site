@@ -1,0 +1,102 @@
+import type { Metadata } from "next";
+import { notFound } from "next/navigation";
+import Link from "next/link";
+import { PageHero } from "@/components/blocks/PageHero";
+import { CtaBlock } from "@/components/blocks/CtaBlock";
+import { RelatedLinks } from "@/components/blocks/RelatedLinks";
+import { Mdx } from "@/components/Mdx";
+import { getSecteur, getSecteurs, getCasClients, getDispositifs } from "@/lib/content";
+import { buildMetadata } from "@/lib/seo";
+
+export function generateStaticParams() {
+  return getSecteurs().map((s) => ({ slug: s.slug }));
+}
+
+export function generateMetadata({ params }: { params: { slug: string } }): Metadata {
+  const s = getSecteur(params.slug);
+  if (!s) return {};
+  return buildMetadata(s.seo, `/secteurs/${s.slug}`);
+}
+
+export default function SecteurPage({ params }: { params: { slug: string } }) {
+  const s = getSecteur(params.slug);
+  if (!s) notFound();
+
+  const dispositifs = getDispositifs();
+  const cas = getCasClients().filter((c) => c.secteur === s.slug);
+
+  return (
+    <>
+      <PageHero
+        kicker="Secteur"
+        title={s.h1}
+        intro={s.accroche}
+        crumbs={[
+          { name: "Secteurs", url: "/secteurs" },
+          { name: s.nom, url: `/secteurs/${s.slug}` },
+        ]}
+      />
+
+      <section className="wrap py-16 lg:py-24 grid lg:grid-cols-12 gap-12">
+        <div className="lg:col-span-7">
+          <Mdx source={s.body} />
+        </div>
+        <aside className="lg:col-span-5">
+          {s.aides?.length ? (
+            <div className="rounded-2xl border border-line bg-cream p-7">
+              <p className="kicker text-orange700 mb-5">Principales aides mobilisables</p>
+              <ul className="space-y-4">
+                {s.aides.map((a, i) => {
+                  const d = a.dispositif ? dispositifs.find((x) => x.slug === a.dispositif) : undefined;
+                  return (
+                    <li key={i} className="border-b border-line pb-4 last:border-0 last:pb-0">
+                      <p className="display text-[1.05rem] font-600 text-ink">{a.famille}</p>
+                      <p className="text-[0.92rem] text-body mt-1">{a.finance}</p>
+                      {d && (
+                        <Link
+                          href={`/le-financement-public/dispositifs/${d.slug}`}
+                          className="inline-flex items-center gap-1 text-[0.85rem] font-600 text-orange700 mt-2 focusable"
+                        >
+                          {d.nom} <span>→</span>
+                        </Link>
+                      )}
+                    </li>
+                  );
+                })}
+              </ul>
+            </div>
+          ) : null}
+          {s.derniereVerification && (
+            <p className="mt-4 text-[0.8rem] text-slate">
+              Aides vérifiées au {s.derniereVerification}. Fiche maintenue à chaque loi de finances.
+            </p>
+          )}
+        </aside>
+      </section>
+
+      {cas.length > 0 && (
+        <section className="bg-cream border-y border-line">
+          <div className="wrap py-16 lg:py-24">
+            <h2 className="display h-sec font-600 text-ink mb-8">Cas clients du secteur</h2>
+            <div className="grid md:grid-cols-3 gap-4">
+              {cas.map((c) => (
+                <Link
+                  key={c.slug}
+                  href={`/cas-clients/${c.slug}`}
+                  className="rounded-2xl border border-line bg-surface p-6 hover:border-ink transition-colors focusable"
+                >
+                  <p className="display text-[1.8rem] font-600 text-ink leading-none">{c.montant}</p>
+                  <p className="mt-1 text-[0.82rem] font-600 text-slateD">{c.titre}</p>
+                  <p className="mt-2 text-[0.92rem] text-body">{c.contexte}</p>
+                </Link>
+              ))}
+            </div>
+          </div>
+        </section>
+      )}
+
+      <RelatedLinks related={s.related} title="Secteurs proches & ressources" />
+      <CtaBlock />
+    </>
+  );
+}

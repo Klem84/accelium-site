@@ -1,0 +1,18 @@
+import { z } from "zod";
+
+export const diagnosticSchema = z.object({
+  nom: z.string().min(2, "Votre nom est requis.").max(120),
+  societe: z.string().min(1, "Le nom de votre entreprise est requis.").max(160),
+  email: z.string().email("Adresse email invalide."),
+  telephone: z.string().max(40).optional().or(z.literal("")),
+  secteur: z.string().max(80).optional().or(z.literal("")),
+  projet: z.string().max(4000).optional().or(z.literal("")),
+  consentement: z.literal(true, {
+    errorMap: () => ({ message: "Le consentement est requis." }),
+  }),
+  // honeypot : doit rester vide
+  website: z.string().max(0).optional().or(z.literal("")),
+  turnstileToken: z.string().optional().or(z.literal("")),
+});
+
+export type DiagnosticInput = z.infer<typeof diagnosticSchema>;
