@@ -10,14 +10,14 @@ export const redirects = [
   { source: "/category/uncategorized", destination: "/blog", permanent: true },
   { source: "/hello-world", destination: "/blog", permanent: true },
 
-  // Section « dispositifs » supprimée (2026-06) → redirigée vers Types d'aides / Financeurs.
-  { source: "/le-financement-public/dispositifs", destination: "/le-financement-public/types-d-aides", permanent: true },
-  { source: "/le-financement-public/dispositifs/credit-impot-recherche-cir", destination: "/le-financement-public/types-d-aides/credits-impot", permanent: true },
-  { source: "/le-financement-public/dispositifs/cii", destination: "/le-financement-public/types-d-aides/credits-impot", permanent: true },
+  // Section « dispositifs » recréée (run V2) : anciens slugs → nouvelles pages dispositifs.
+  // credit-impot-recherche-cir garde son slug, donc aucune redirection pour lui.
+  { source: "/le-financement-public/dispositifs/cii", destination: "/le-financement-public/dispositifs/credit-impot-innovation-cii", permanent: true },
   { source: "/le-financement-public/dispositifs/c3iv", destination: "/le-financement-public/types-d-aides/credits-impot", permanent: true },
-  { source: "/le-financement-public/dispositifs/decarb-ind", destination: "/le-financement-public/financeurs/ademe", permanent: true },
-  { source: "/le-financement-public/dispositifs/fonds-chaleur-bciat", destination: "/le-financement-public/financeurs/ademe", permanent: true },
-  { source: "/le-financement-public/dispositifs/:slug*", destination: "/le-financement-public/types-d-aides", permanent: true },
+  { source: "/le-financement-public/dispositifs/decarb-ind", destination: "/le-financement-public/dispositifs/decarbonation-industrie-decarb", permanent: true },
+  { source: "/le-financement-public/dispositifs/fonds-chaleur-bciat", destination: "/le-financement-public/dispositifs/fonds-chaleur", permanent: true },
+  { source: "/le-financement-public/dispositifs/france-2030", destination: "/le-financement-public/dispositifs/france-2030-premiere-usine-i-demo", permanent: true },
+  { source: "/le-financement-public/dispositifs/cee", destination: "/le-financement-public/dispositifs/certificats-economies-energie-cee", permanent: true },
 
   // Fiches de décryptage déplacées des Ressources vers le Blog (2026-06).
   { source: "/ressources/fiches-decryptage", destination: "/blog#fiches", permanent: true },
