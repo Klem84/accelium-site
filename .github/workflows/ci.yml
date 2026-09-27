@@ -1,0 +1,55 @@
+name: CI
+
+on:
+  pull_request:
+  push:
+    branches: [main]
+
+concurrency:
+  group: ci-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  build-and-test:
+    runs-on: ubuntu-latest
+    env:
+      NEXT_PUBLIC_SITE_URL: https://www.accelium-conseil.fr
+    steps:
+      - name: Récupération du dépôt
+        uses: actions/checkout@v4
+
+      - name: Installation de Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          cache: npm
+          cache-dependency-path: package-lock.json
+
+      - name: Installation des dépendances
+        run: npm ci
+
+      - name: Vérifications de contenu, SEO, liens, fraîcheur (npm run check)
+        run: npm run check
+
+      - name: Build Next.js
+        run: npm run build
+
+      - name: Vérifications SEO et liens (post-build)
+        run: npm run check:seo && npm run check:links
+
+      - name: Installation des navigateurs Playwright
+        run: npx playwright install --with-deps chromium
+
+      - name: Tests Playwright (e2e + accessibilité)
+        run: npm run test:e2e
+
+      - name: Lighthouse CI
+        run: npm run lhci
+
+      - name: Publication du rapport Playwright
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: playwright-report
+          path: playwright-report/
+          retention-days: 14
