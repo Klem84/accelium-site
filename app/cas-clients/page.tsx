@@ -8,9 +8,9 @@ import { buildMetadata } from "@/lib/seo";
 
 export const metadata: Metadata = buildMetadata(
   {
-    title: "Cas clients & références | Accelium",
+    title: "Cas clients : projets financés par secteur",
     description:
-      "Découvrez des projets accompagnés par Accelium : montants d'aide mobilisés, secteurs, dispositifs. Clients anonymisés.",
+      "Scieries, chaufferies biomasse, friches industrielles, ports : les projets financés avec Accelium, montants d'aides obtenues et financeurs mobilisés.",
   },
   "/cas-clients"
 );

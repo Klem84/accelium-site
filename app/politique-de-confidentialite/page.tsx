@@ -7,7 +7,7 @@ const SLUG = "politique-de-confidentialite";
 export function generateMetadata(): Metadata {
   const p = getPage(SLUG);
   return buildMetadata(
-    p?.seo || { title: "Politique de confidentialité | Accelium", description: "Politique de confidentialité et traitement des données personnelles du site Accelium Conseil." },
+    p?.seo || { title: "Politique de confidentialité", description: "Politique de confidentialité et traitement des données personnelles du site Accelium Conseil." },
     `/${SLUG}`
   );
 }

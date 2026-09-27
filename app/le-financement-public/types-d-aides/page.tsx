@@ -6,7 +6,7 @@ import { buildMetadata } from "@/lib/seo";
 
 export const metadata: Metadata = buildMetadata(
   {
-    title: "Les types d'aides aux entreprises | Accelium",
+    title: "Les types d'aides aux entreprises",
     description:
       "Subventions, prêts et avances remboursables, garanties, exonérations, crédits d'impôt : les cinq grandes formes d'aides publiques, souvent cumulables.",
   },

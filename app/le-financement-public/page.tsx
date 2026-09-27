@@ -10,7 +10,7 @@ export function generateMetadata(): Metadata {
   const p = getPage(SLUG);
   return buildMetadata(
     p?.seo || {
-      title: "Le financement public en France : le guide | Accelium",
+      title: "Le financement public en France : le guide",
       description:
         "Subventions, prêts, crédits d'impôt : comprenez le financement public des entreprises et identifiez vos aides. Diagnostic gratuit.",
     },

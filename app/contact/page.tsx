@@ -7,9 +7,9 @@ import { site } from "@/config/site";
 
 export const metadata: Metadata = buildMetadata(
   {
-    title: "Contact & diagnostic gratuit | Accelium Conseil",
+    title: "Contact et diagnostic gratuit",
     description:
-      "Contactez Accelium pour un diagnostic gratuit de vos financements publics. À Tours, partout en France.",
+      "Demandez un diagnostic gratuit de vos financements publics : réponse sous 24 h ouvrées. Accelium Conseil, 57 avenue de Grammont, Tours. 06 99 79 85 85.",
   },
   "/contact"
 );

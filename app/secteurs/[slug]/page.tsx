@@ -8,6 +8,7 @@ import { CasGrid, type CasCard } from "@/components/blocks/CasGrid";
 import { Mdx } from "@/components/Mdx";
 import { getSecteur, getSecteurs, getCasClients, getDispositifs } from "@/lib/content";
 import { buildMetadata } from "@/lib/seo";
+import { estNoindexTemporaire } from "@/config/indexation";
 
 export function generateStaticParams() {
   return getSecteurs().map((s) => ({ slug: s.slug }));
@@ -16,7 +17,8 @@ export function generateStaticParams() {
 export function generateMetadata({ params }: { params: { slug: string } }): Metadata {
   const s = getSecteur(params.slug);
   if (!s) return {};
-  return buildMetadata(s.seo, `/secteurs/${s.slug}`);
+  const noindex = s.seo.noindex || estNoindexTemporaire(`secteurs/${s.slug}`);
+  return buildMetadata({ ...s.seo, noindex }, `/secteurs/${s.slug}`);
 }
 
 export default function SecteurPage({ params }: { params: { slug: string } }) {

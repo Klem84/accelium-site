@@ -7,7 +7,7 @@ import { buildMetadata } from "@/lib/seo";
 
 export const metadata: Metadata = buildMetadata(
   {
-    title: "Nos secteurs d'intervention | Accelium",
+    title: "Nos secteurs d'intervention",
     description:
       "Chaque filière a ses financeurs, ses dispositifs et son calendrier. Découvrez les aides mobilisables dans votre secteur avec Accelium.",
   },

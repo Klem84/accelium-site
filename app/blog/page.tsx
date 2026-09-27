@@ -7,9 +7,9 @@ import { buildMetadata } from "@/lib/seo";
 
 export const metadata: Metadata = buildMetadata(
   {
-    title: "Comprendre les financements publics — le blog | Accelium",
+    title: "Blog : comprendre les financements publics",
     description:
-      "Décryptages, actualités et conseils pour ne rien manquer des aides mobilisables : dispositifs, secteurs, méthode, fiches de décryptage et cas clients.",
+      "Décryptages des appels à projets ADEME, Bpifrance et Régions, actualité du CIR et du CII, conseils pour financer vos projets. Par les consultants Accelium.",
   },
   "/blog"
 );

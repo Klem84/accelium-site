@@ -15,7 +15,7 @@ export function generateMetadata({ params }: { params: { cluster: string } }): M
   const label = clusterLabels[params.cluster] || params.cluster;
   return buildMetadata(
     {
-      title: `${label} — financements publics | Accelium`,
+      title: `${label} : financements publics`,
       description: `Tous nos articles de la catégorie ${label} sur les financements publics des entreprises.`,
     },
     `/blog/cluster/${params.cluster}`

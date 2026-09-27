@@ -7,9 +7,9 @@ import { buildMetadata } from "@/lib/seo";
 
 export const metadata: Metadata = buildMetadata(
   {
-    title: "Nos offres en financements publics | Accelium",
+    title: "Nos offres en financements publics",
     description:
-      "Recherche d'aides, CIR/CII, agrément, internalisation, veille : découvrez les offres d'Accelium pour financer et sécuriser vos projets.",
+      "Cinq offres pour financer vos projets : recherche d'aides, CIR/CII, agrément, internalisation, veille. Un interlocuteur unique jusqu'au versement.",
   },
   "/offres"
 );

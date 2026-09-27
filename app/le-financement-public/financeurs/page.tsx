@@ -9,7 +9,7 @@ import { IconEurope, IconEtat, IconRegion } from "@/components/blocks/Icons";
 
 export const metadata: Metadata = buildMetadata(
   {
-    title: "Les financeurs publics des entreprises | Accelium",
+    title: "Les financeurs publics des entreprises",
     description:
       "ADEME, Bpifrance, FranceAgriMer, Régions, AID, Union européenne : qui finance les entreprises et comment mobiliser chaque acteur.",
   },
