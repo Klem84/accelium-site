@@ -1,7 +1,8 @@
-/* Contenu structuré du cabinet (parties réelles). Sans tiret long.
-   todo: true => description à compléter par le client. */
+/* Contenu structuré des pages cabinet : source unique du corps de ces pages
+   (les fichiers content/pages/cabinet-*.mdx ne portent que le frontmatter :
+   h1, intro, seo). Sans tiret long. */
 
-export type Principe = { titre: string; desc?: string; todo?: boolean };
+export type Principe = { titre: string; desc: string };
 
 export const atouts: Principe[] = [
   {
@@ -22,7 +23,7 @@ export const atouts: Principe[] = [
   },
   {
     titre: "L'alignement de nos intérêts",
-    todo: true, // modèle de rémunération à préciser
+    desc: "Nous ne recommandons que les dispositifs défendables ; nos intérêts sont alignés sur l'obtention effective de l'aide.",
   },
   {
     titre: "La rigueur, garante de votre sécurité",
@@ -43,15 +44,11 @@ export const deontologie: Principe[] = [
     titre: "Indépendance",
     desc: "Nos recommandations servent votre intérêt, pas la vente d'un dispositif.",
   },
-  {
-    titre: "Assurance responsabilité civile professionnelle",
-    todo: true, // référence du contrat à afficher
-  },
-  {
-    titre: "Référencement CIR/CII du Médiateur des entreprises",
-    todo: true, // à afficher si effectivement référencé
-  },
 ];
+
+/* Ligne « Référencement CIR/CII du Médiateur des entreprises » : affichée
+   uniquement si config/chiffres.ts renseigne referencementMediateur (sinon masquée). */
+export const mediateurTitre = "Référencement CIR/CII du Médiateur des entreprises";
 
 /* Profils d'expertise mis en avant pour l'équipe (depuis la fiche auteur). */
 export const equipeExpertise = [

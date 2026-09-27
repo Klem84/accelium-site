@@ -5,7 +5,16 @@ import { PageHero } from "@/components/blocks/PageHero";
 import { CtaBlock } from "@/components/blocks/CtaBlock";
 import { getPages, getPage } from "@/lib/content";
 import { buildMetadata } from "@/lib/seo";
-import { atouts, deontologie, equipeExpertise, partenairesCibles, type Principe } from "@/lib/cabinetData";
+import { estNoindexTemporaire } from "@/config/indexation";
+import {
+  atouts,
+  deontologie,
+  mediateurTitre,
+  equipeExpertise,
+  partenairesCibles,
+  type Principe,
+} from "@/lib/cabinetData";
+import { chiffres } from "@/config/chiffres";
 import { IconCheck, IconShield, IconLever } from "@/components/blocks/Icons";
 
 const PREFIX = "cabinet-";
@@ -27,18 +36,47 @@ export function generateStaticParams() {
 export function generateMetadata({ params }: { params: { slug: string } }): Metadata {
   const p = getPage(PREFIX + params.slug);
   if (!p) return {};
-  return buildMetadata(p.seo, `/cabinet/${params.slug}`);
+  const noindex = p.seo.noindex || estNoindexTemporaire(`cabinet/${params.slug}`);
+  return buildMetadata({ ...p.seo, noindex }, `/cabinet/${params.slug}`);
 }
 
-/* Repère discret « à compléter » (contenu client manquant). */
-function TodoNote({ children }: { children: React.ReactNode }) {
-  return (
-    <span className="inline-flex items-center gap-2 rounded-full border border-dashed border-orange/50 bg-orange/[0.06] px-3 py-1 text-[0.78rem] font-500 text-orange700">
-      <span className="w-1.5 h-1.5 rounded-full bg-orange" />
-      {children}
-    </span>
-  );
+/* Référencement Médiateur des entreprises : lu dans config/chiffres.ts.
+   Champ null ou vide : la ligne n'est pas rendue. Une chaîne non vide est
+   affichée comme description. */
+function getReferencementMediateur(): string | null {
+  const raw: string | null = chiffres.referencementMediateur;
+  return raw && raw.trim() ? raw.trim() : null;
 }
+
+/* Indicateurs de la page À propos : valeurs de config/chiffres.ts uniquement
+   (aucun chiffre en dur). Les champs null ne sont pas affichés. */
+const indicateurs: { valeur: string; libelle: string }[] = [
+  { valeur: chiffres.projets.affichage, libelle: chiffres.projets.libelle },
+  { valeur: chiffres.clients.affichage, libelle: chiffres.clients.libelle },
+  {
+    valeur: `${String(chiffres.satisfaction.recommandation).replace(".", ",")}/${chiffres.satisfaction.recommandationSur}`,
+    libelle: `de recommandation (${chiffres.satisfaction.methode.toLowerCase()})`,
+  },
+  {
+    valeur: `${String(chiffres.satisfaction.satisfaction).replace(".", ",")}/${chiffres.satisfaction.satisfactionSur}`,
+    libelle: "de satisfaction globale",
+  },
+];
+
+const histoire = [
+  {
+    titre: "Création",
+    desc: "Accelium Conseil est créé en juin 2022 à Tours, avec une conviction : le financement public doit être accessible à toutes les entreprises qui investissent, innovent ou se transforment, quelle que soit leur taille.",
+  },
+  {
+    titre: "Étapes clés",
+    desc: "En 2023, une docteure en physique appliquée, ancienne responsable R&D dans l'industrie, rejoint la direction générale et renforce l'expertise CIR, CII et agrément. Le cabinet accompagne depuis des projets partout en France, auprès de l'ADEME, de Bpifrance, des Régions, des agences de l'eau, de l'Europe et de France 2030.",
+  },
+  {
+    titre: "Ce qui distingue Accelium",
+    desc: "Une double culture : l'analyse financière et le pilotage de projets complexes d'un côté, la recherche et l'industrie de l'autre. Chaque dossier est construit pour être défendable devant le financeur, jusqu'au versement de l'aide.",
+  },
+];
 
 function PrincipeGrid({ items, icon: Icon }: { items: Principe[]; icon: (p: { className?: string }) => JSX.Element }) {
   return (
@@ -49,13 +87,7 @@ function PrincipeGrid({ items, icon: Icon }: { items: Principe[]; icon: (p: { cl
             <Icon className="w-6 h-6" />
           </span>
           <h3 className="display text-[1.15rem] font-600 text-ink mt-5 leading-snug">{it.titre}</h3>
-          {it.desc ? (
-            <p className="mt-2 text-[0.95rem] text-body leading-relaxed">{it.desc}</p>
-          ) : (
-            <p className="mt-3">
-              <TodoNote>À compléter</TodoNote>
-            </p>
-          )}
+          <p className="mt-2 text-[0.95rem] text-body leading-relaxed">{it.desc}</p>
         </div>
       ))}
     </div>
@@ -66,6 +98,11 @@ export default function CabinetPage({ params }: { params: { slug: string } }) {
   const slug = params.slug;
   const p = getPage(PREFIX + slug);
   if (!p) notFound();
+
+  const mediateur = getReferencementMediateur();
+  const deontologieItems: Principe[] = mediateur
+    ? [...deontologie, { titre: mediateurTitre, desc: mediateur }]
+    : deontologie;
 
   const crumbs = [
     { name: "Le cabinet", url: "/cabinet/a-propos" },
@@ -106,14 +143,15 @@ export default function CabinetPage({ params }: { params: { slug: string } }) {
             <div className="wrap py-16 lg:py-20">
               <div className="flex items-center justify-between gap-4 flex-wrap mb-8">
                 <h2 className="display h-sec font-600 text-ink">Notre histoire</h2>
-                <TodoNote>Section à compléter</TodoNote>
               </div>
               <div className="grid md:grid-cols-3 gap-4">
-                {["Création", "Étapes clés", "Ce qui distingue Accelium"].map((t) => (
-                  <div key={t} className="rounded-2xl border border-dashed border-line bg-surface/60 p-7">
-                    <span className="display text-[2rem] font-600 text-orange/25 leading-none">—</span>
-                    <h3 className="display text-[1.1rem] font-600 text-ink mt-3">{t}</h3>
-                    <p className="mt-2 text-[0.9rem] text-slate">À renseigner par Accelium.</p>
+                {histoire.map((h, i) => (
+                  <div key={h.titre} className="rounded-2xl border border-line bg-surface p-7">
+                    <span className="display text-[2rem] font-600 text-orange700 leading-none">
+                      {String(i + 1).padStart(2, "0")}
+                    </span>
+                    <h3 className="display text-[1.1rem] font-600 text-ink mt-3">{h.titre}</h3>
+                    <p className="mt-2 text-[0.95rem] text-body leading-relaxed">{h.desc}</p>
                   </div>
                 ))}
               </div>
@@ -123,17 +161,15 @@ export default function CabinetPage({ params }: { params: { slug: string } }) {
           <section className="wrap py-16 lg:py-20">
             <div className="flex items-center justify-between gap-4 flex-wrap mb-8">
               <h2 className="display h-sec font-600 text-ink">En chiffres</h2>
-              <TodoNote>Indicateurs réels et datés à fournir</TodoNote>
+              <p className="text-[0.88rem] text-slate">{chiffres.dateChiffresLabel}</p>
             </div>
             <div className="grid grid-cols-2 lg:grid-cols-4 gap-4">
-              {["Dispositifs suivis", "Projets accompagnés", "Aides obtenues", "Réseaux de financement"].map(
-                (label) => (
-                  <div key={label} className="rounded-2xl border border-line bg-cream p-7">
-                    <div className="display text-[2.4rem] font-600 text-ink/30 leading-none">000</div>
-                    <p className="mt-2 text-[0.88rem] text-body">{label}</p>
-                  </div>
-                )
-              )}
+              {indicateurs.map((it) => (
+                <div key={it.libelle} className="rounded-2xl border border-line bg-cream p-7">
+                  <div className="display text-[2.4rem] font-600 text-ink leading-none">{it.valeur}</div>
+                  <p className="mt-2 text-[0.88rem] text-body">{it.libelle}</p>
+                </div>
+              ))}
             </div>
           </section>
         </>
@@ -156,7 +192,7 @@ export default function CabinetPage({ params }: { params: { slug: string } }) {
           <p className="lede text-body max-w-[60ch] mb-12">
             Nos engagements vis-à-vis de chaque client, à chaque étape de la mission.
           </p>
-          <PrincipeGrid items={deontologie} icon={IconShield} />
+          <PrincipeGrid items={deontologieItems} icon={IconShield} />
         </section>
       )}
 
@@ -176,17 +212,17 @@ export default function CabinetPage({ params }: { params: { slug: string } }) {
 
           <div className="flex items-center justify-between gap-4 flex-wrap mb-7">
             <h2 className="display h-sec font-600 text-ink">Les experts Accelium</h2>
-            <TodoNote>Membres à renseigner (photo, nom, parcours, LinkedIn)</TodoNote>
           </div>
-          <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-5">
-            {[0, 1, 2].map((i) => (
-              <div key={i} className="rounded-2xl border border-dashed border-line bg-surface/60 p-7">
-                <div className="w-16 h-16 rounded-full bg-cream border border-line" />
-                <div className="mt-5 h-4 w-2/3 rounded bg-sand" />
-                <div className="mt-2 h-3 w-1/2 rounded bg-sand/70" />
-                <p className="mt-4 text-[0.88rem] text-slate">Profil à compléter.</p>
-              </div>
-            ))}
+          <div className="max-w-[64ch] space-y-4 text-body leading-relaxed">
+            <p>
+              L'équipe réunit deux cultures complémentaires : l'analyse financière et le pilotage de
+              projets complexes, acquis dans la banque et le conseil, et la recherche appliquée,
+              acquise en laboratoire et en direction R&amp;D industrielle.
+            </p>
+            <p>
+              Chaque dossier est suivi par un interlocuteur unique, du diagnostic au versement de l'aide,
+              pour des entreprises situées partout en France.
+            </p>
           </div>
 
           <div className="mt-10">
@@ -207,17 +243,17 @@ export default function CabinetPage({ params }: { params: { slug: string } }) {
         <section className="wrap py-16 lg:py-24">
           <div className="flex items-center justify-between gap-4 flex-wrap mb-8">
             <h2 className="display h-sec font-600 text-ink max-w-[20ch]">Notre écosystème</h2>
-            <TodoNote>Partenaires réels et nature du partenariat à fournir</TodoNote>
           </div>
-          <div className="grid grid-cols-2 md:grid-cols-3 gap-4 mb-16">
-            {[0, 1, 2, 3, 4, 5].map((i) => (
-              <div
-                key={i}
-                className="aspect-[16/9] rounded-2xl border border-dashed border-line bg-cream/60 flex items-center justify-center"
-              >
-                <span className="text-[0.82rem] text-slate">Logo partenaire</span>
-              </div>
-            ))}
+          <div className="max-w-[64ch] space-y-4 text-body leading-relaxed mb-16">
+            <p>
+              Un projet financé mobilise souvent plusieurs expertises : bureaux d'études pour le volet
+              technique, experts-comptables pour le plan de financement, banques pour le cofinancement,
+              écoles et laboratoires pour la R&amp;D.
+            </p>
+            <p>
+              Nous travaillons avec ces acteurs dans toute la France, chacun dans son rôle, pour que vos
+              dossiers soient complets et cohérents.
+            </p>
           </div>
 
           <div className="rounded-3xl bg-ink text-white p-8 lg:p-12">
