@@ -32,7 +32,7 @@ export default function SecteursHub() {
               href={`/secteurs/${s.slug}`}
               className="group focusable relative rounded-xl overflow-hidden aspect-[3/4] photo"
             >
-              {s.image && <img src={s.image} alt={s.nom} className="w-full h-full object-cover" />}
+              {s.image && <img src={s.image} alt={s.nom} loading="lazy" decoding="async" className="w-full h-full object-cover" />}
               <div className="absolute inset-0 bg-gradient-to-t from-ink/85 via-ink/10 to-transparent" />
               <span className="absolute left-4 bottom-4 text-white font-600 display text-[1.15rem]">{s.nom}</span>
             </Link>

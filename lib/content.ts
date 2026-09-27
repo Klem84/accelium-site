@@ -83,6 +83,7 @@ export type Financeur = {
   nom: string;
   h1: string;
   dispositifs?: string[];
+  siteOfficiel?: string;
   related?: Related;
   seo: Seo;
   sources?: string[];
@@ -112,6 +113,7 @@ export type CasClient = {
   dispositif?: string;
   financeur?: string;
   montant: string;
+  montantLabel?: string;
   contexte: string;
   resultat?: string;
   image?: string;

@@ -58,7 +58,7 @@ export default function Header() {
         (solid ? "bg-white/90 backdrop-blur-md shadow-sm border-b border-line" : "")
       }
     >
-      <div className="wrap">
+      <div className="mx-auto w-full max-w-[1280px] xl:max-w-[1600px] 2xl:max-w-[1840px] px-5 lg:px-8">
         <div className="flex items-center justify-between h-[68px] md:h-[80px] lg:h-[96px]">
           <Link href="/" className="flex items-center focusable" aria-label="Accelium Conseil — accueil">
             <Image
@@ -119,9 +119,6 @@ export default function Header() {
           </nav>
 
           <div className="hidden lg:flex items-center gap-5">
-            <Link href="/contact" className={"text-[1.02rem] font-medium hover:text-orange2 focusable " + onText}>
-              Contact
-            </Link>
             <Link href="/contact" className="btn-primary focusable rounded-full px-6 py-3 text-[0.98rem]">
               Diagnostic gratuit
             </Link>

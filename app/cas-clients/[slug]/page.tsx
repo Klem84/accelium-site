@@ -55,7 +55,7 @@ export default function CasClientPage({ params }: { params: { slug: string } }) 
         <aside className="lg:col-span-4 space-y-4">
           <div className="rounded-2xl bg-ink text-white p-7">
             <p className="display text-[2.4rem] font-600 leading-none">{c.montant}</p>
-            <p className="mt-2 text-white/70 text-[0.9rem]">d'aide obtenue</p>
+            <p className="mt-2 text-white/70 text-[0.9rem]">{c.montantLabel || "d'aide obtenue"}</p>
           </div>
           <div className="rounded-2xl border border-line p-7 space-y-3 text-[0.92rem]">
             {secteur && (
@@ -70,7 +70,7 @@ export default function CasClientPage({ params }: { params: { slug: string } }) 
                 <Link href={`/le-financement-public/dispositifs/${dispositif.slug}`} className="text-orange700 font-600 focusable">{dispositif.nom}</Link>
               </p>
             )}
-            {c.anonymise && <p className="text-[0.8rem] text-slate">Client anonymisé à sa demande.</p>}
+            {c.anonymise && <p className="text-[0.8rem] text-slate">Client anonymisé.</p>}
           </div>
         </aside>
       </section>

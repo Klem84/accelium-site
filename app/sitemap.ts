@@ -3,7 +3,6 @@ import { site } from "@/config/site";
 import {
   getOffres,
   getSecteurs,
-  getDispositifs,
   getFinanceurs,
   getArticles,
   getCasClients,
@@ -19,13 +18,15 @@ export default function sitemap(): MetadataRoute.Sitemap {
     "/offres",
     "/secteurs",
     "/le-financement-public",
-    "/le-financement-public/dispositifs",
+    "/le-financement-public/types-d-aides",
     "/le-financement-public/financeurs",
     "/cas-clients",
     "/blog",
     "/contact",
+    "/ressources",
+    "/ressources/livres-blancs",
+    "/ressources/agrement-cir-cii",
     "/cabinet/a-propos",
-    "/cabinet/methodologie",
     "/cabinet/nos-atouts",
     "/cabinet/equipe",
     "/cabinet/partenaires",
@@ -38,11 +39,10 @@ export default function sitemap(): MetadataRoute.Sitemap {
 
   const offres = getOffres().map((o) => ({ url: `${base}/offres/${o.slug}`, lastModified: now, priority: 0.8 }));
   const secteurs = getSecteurs().map((s) => ({ url: `${base}/secteurs/${s.slug}`, lastModified: now, priority: 0.8 }));
-  const dispositifs = getDispositifs().map((d) => ({ url: `${base}/le-financement-public/dispositifs/${d.slug}`, lastModified: now, priority: 0.8 }));
   const financeurs = getFinanceurs().map((f) => ({ url: `${base}/le-financement-public/financeurs/${f.slug}`, lastModified: now, priority: 0.6 }));
-  const typesAides = ["subventions", "prets", "credits-impot", "garanties", "exonerations"].map((s) => ({ url: `${base}/le-financement-public/types-d-aides/${s}`, lastModified: now, priority: 0.5 }));
+  const typesAides = ["subventions", "prets", "garanties", "exonerations", "credits-impot"].map((s) => ({ url: `${base}/le-financement-public/types-d-aides/${s}`, lastModified: now, priority: 0.6 }));
   const articles = getArticles().map((a) => ({ url: `${base}/blog/${a.slug}`, lastModified: new Date(a.updatedAt || a.publishedAt), priority: 0.6 }));
   const cas = getCasClients().map((c) => ({ url: `${base}/cas-clients/${c.slug}`, lastModified: now, priority: 0.5 }));
 
-  return [...staticRoutes, ...offres, ...secteurs, ...dispositifs, ...financeurs, ...typesAides, ...articles, ...cas];
+  return [...staticRoutes, ...offres, ...secteurs, ...financeurs, ...typesAides, ...articles, ...cas];
 }

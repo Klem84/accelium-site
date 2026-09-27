@@ -23,7 +23,9 @@ export const metadata: Metadata = {
     siteName: site.name,
   },
   icons: {
-    icon: "/assets/logo-cercle.png",
+    icon: "/assets/logo-symbole.png",
+    shortcut: "/assets/logo-symbole.png",
+    apple: "/assets/logo-symbole.png",
   },
 };
 

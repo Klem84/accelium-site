@@ -1,4 +1,4 @@
-import type { DiagnosticInput } from "./validation";
+import type { DiagnosticInput, LivreBlancInput } from "./validation";
 
 const TOKEN = process.env.MONDAY_API_TOKEN;
 const BOARD_ID = process.env.MONDAY_LEADS_BOARD_ID || "5098269157";
@@ -37,6 +37,35 @@ export async function createLead(
   if (data.secteur) columnValues[COL.secteur] = data.secteur;
   if (data.projet) columnValues[COL.projet] = { text: data.projet };
 
+  return createItem(`${data.nom} — ${data.societe}`, columnValues);
+}
+
+export async function createLeadLivreBlanc(
+  data: LivreBlancInput,
+  titreLivre: string,
+  isoDate: string
+): Promise<{ ok: boolean; skipped?: boolean; id?: string }> {
+  if (!TOKEN) {
+    console.warn("[monday] MONDAY_API_TOKEN manquant — création simulée (mock).");
+    return { ok: true, skipped: true };
+  }
+
+  const columnValues: Record<string, unknown> = {
+    [COL.email]: { email: data.email, text: data.email },
+    [COL.statut]: { label: "Nouveau" },
+    [COL.source]: `Site — Livre blanc : ${titreLivre}`,
+    [COL.consentement]: { checked: "true" },
+    [COL.date]: { date: isoDate.slice(0, 10) },
+  };
+  if (data.societe) columnValues[COL.societe] = data.societe;
+
+  return createItem(`${data.nom}${data.societe ? ` — ${data.societe}` : ""}`, columnValues);
+}
+
+async function createItem(
+  name: string,
+  columnValues: Record<string, unknown>
+): Promise<{ ok: boolean; id?: string }> {
   const query = `mutation ($board: ID!, $name: String!, $cols: JSON!) {
     create_item(board_id: $board, item_name: $name, column_values: $cols, create_labels_if_missing: true) { id }
   }`;
@@ -46,14 +75,14 @@ export async function createLead(
       method: "POST",
       headers: {
         "Content-Type": "application/json",
-        Authorization: TOKEN,
+        Authorization: TOKEN as string,
         "API-Version": "2024-10",
       },
       body: JSON.stringify({
         query,
         variables: {
           board: BOARD_ID,
-          name: `${data.nom} — ${data.societe}`,
+          name,
           cols: JSON.stringify(columnValues),
         },
       }),

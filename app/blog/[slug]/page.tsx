@@ -62,7 +62,7 @@ export default function ArticlePage({ params }: { params: { slug: string } }) {
           {auteur && (
             <div className="mt-12 rounded-2xl border border-line bg-cream p-7 flex gap-5 items-start">
               {auteur.photo && (
-                <img src={auteur.photo} alt={auteur.nom} className="w-16 h-16 rounded-full object-cover" />
+                <img src={auteur.photo} alt={auteur.nom} loading="lazy" decoding="async" className="w-16 h-16 rounded-full object-cover" />
               )}
               <div>
                 <p className="display text-[1.15rem] font-600 text-ink">{auteur.nom}</p>

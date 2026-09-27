@@ -1,0 +1,686 @@
+[
+ {
+  "nom": "AMPATIA",
+  "categorie": "cercle",
+  "site": "",
+  "fichier": "",
+  "dimensions": "",
+  "source": "",
+  "remarque": "aucun site officiel trouvé"
+ },
+ {
+  "nom": "Courtage & Services",
+  "categorie": "cercle",
+  "site": "",
+  "fichier": "",
+  "dimensions": "",
+  "source": "",
+  "remarque": "aucun site officiel trouvé"
+ },
+ {
+  "nom": "Dxsigner",
+  "categorie": "cercle",
+  "site": "https://dxsigner.com/",
+  "fichier": "cercle/dxsigner.png",
+  "dimensions": "500x161",
+  "source": "https://dxsigner.com/wp-content/uploads/2025/09/Dxsigner-LOGO-H-GOLD-500px-2025-01.png",
+  "remarque": ""
+ },
+ {
+  "nom": "L'Éclaircie Communication",
+  "categorie": "cercle",
+  "site": "https://eclaircie-communication.fr/",
+  "fichier": "cercle/l-eclaircie-communication.svg",
+  "dimensions": "svg",
+  "source": "https://eclaircie-communication.fr/wp-content/uploads/2025/07/Logo-secondaire-eclaircie-communication.svg",
+  "remarque": ""
+ },
+ {
+  "nom": "Lukeion Advisory",
+  "categorie": "cercle",
+  "site": "https://lukeion-advisory.com/",
+  "fichier": "",
+  "dimensions": "",
+  "source": "",
+  "remarque": "site sans logo en image ; à demander à Guillaume Mayot"
+ },
+ {
+  "nom": "Magma Energy",
+  "categorie": "cercle",
+  "site": "https://magma-energy.net/",
+  "fichier": "cercle/magma-energy.jpg",
+  "dimensions": "209x312",
+  "source": "https://cdn-ldagl.nitrocdn.com/dqyBdjuikUVQnverwqGXGsHndWtIBDDa/assets/images/optimized/rev-2bb4235/magma-energy.net/wp-content/uploads/2022/09/Logo-2022.jpg",
+  "remarque": "faible résolution, à remplacer"
+ },
+ {
+  "nom": "PGC Formation",
+  "categorie": "cercle",
+  "site": "https://www.pgcformation.fr/",
+  "fichier": "cercle/pgc-formation.png",
+  "dimensions": "455x176",
+  "source": "https://www.pgcformation.fr/wp-content/uploads/go-x/u/9ae8638a-343f-42ab-a7a6-1e6870412b44/image-455x176.png",
+  "remarque": ""
+ },
+ {
+  "nom": "Scenent",
+  "categorie": "cercle",
+  "site": "https://www.auriach.net/",
+  "fichier": "",
+  "dimensions": "",
+  "source": "",
+  "remarque": "site Wix sans logo exploitable ; à demander à Christian Auriach"
+ },
+ {
+  "nom": "Unici'T",
+  "categorie": "cercle",
+  "site": "",
+  "fichier": "",
+  "dimensions": "",
+  "source": "",
+  "remarque": "aucun site officiel trouvé"
+ },
+ {
+  "nom": "Agriopale",
+  "categorie": "clients",
+  "site": "https://www.agriopale.fr/",
+  "fichier": "clients/agriopale.png",
+  "dimensions": "150x150",
+  "source": "http://www.agriopale.fr/wp-content/uploads/2017/11/logo_agriopale_fond_transparent_web_p-150x150.png",
+  "remarque": "faible résolution, à remplacer"
+ },
+ {
+  "nom": "Alu Steel France",
+  "categorie": "clients",
+  "site": "",
+  "fichier": "",
+  "dimensions": "",
+  "source": "",
+  "remarque": "aucun site officiel trouvé"
+ },
+ {
+  "nom": "Aquitaine Electrique",
+  "categorie": "clients",
+  "site": "https://aquitaine-electrique.com/",
+  "fichier": "clients/aquitaine-electrique.png",
+  "dimensions": "598x149",
+  "source": "http://aquitaine-electrique.com/wp-content/uploads/2020/06/ae-horizontal.png",
+  "remarque": ""
+ },
+ {
+  "nom": "Breizh Bell",
+  "categorie": "clients",
+  "site": "",
+  "fichier": "",
+  "dimensions": "",
+  "source": "",
+  "remarque": "site breizh-bell.bzh injoignable le 27/09/2026 ; logo à demander"
+ },
+ {
+  "nom": "Cap Bois Pyrénées",
+  "categorie": "clients",
+  "site": "https://www.lindependant.fr/",
+  "fichier": "",
+  "dimensions": "",
+  "source": "",
+  "remarque": "pas de site officiel (fichier trouvé = logo d'un journal, supprimé) ; logo à demander au client"
+ },
+ {
+  "nom": "Charier",
+  "categorie": "clients",
+  "site": "https://www.charier.fr/",
+  "fichier": "clients/charier.png",
+  "dimensions": "200x68",
+  "source": "https://www.charier.fr/templates/charier/images/charte/logo.png",
+  "remarque": "logo blanc, à utiliser sur fond sombre ; faible résolution, à remplacer"
+ },
+ {
+  "nom": "Charpentes Vallery",
+  "categorie": "clients",
+  "site": "https://vallery.fr/",
+  "fichier": "clients/charpentes-vallery.svg",
+  "dimensions": "svg",
+  "source": "https://vallery.fr/wp-content/uploads/2024/08/vallery-logo-marketing-blanc-1.svg",
+  "remarque": "logo blanc, à utiliser sur fond sombre"
+ },
+ {
+  "nom": "Collectero",
+  "categorie": "clients",
+  "site": "",
+  "fichier": "",
+  "dimensions": "",
+  "source": "",
+  "remarque": "aucun site officiel trouvé"
+ },
+ {
+  "nom": "Crozat Frères",
+  "categorie": "clients",
+  "site": "https://www.scieriecrozat.fr/",
+  "fichier": "clients/crozat-freres.png",
+  "dimensions": "1272x375",
+  "source": "https://www.scieriecrozat.fr/app/themes/scierie_crozat/public/build/assets/logo-stkEpmRQ.png",
+  "remarque": ""
+ },
+ {
+  "nom": "Curé Emballages",
+  "categorie": "clients",
+  "site": "https://cure-emballages.com/",
+  "fichier": "clients/cure-emballages.png",
+  "dimensions": "179x41",
+  "source": "https://cure-emballages.com/wp-content/uploads/2022/12/cropped-logo-accueil-30-ans-179x41.png",
+  "remarque": "faible résolution, à remplacer"
+ },
+ {
+  "nom": "Dalkia",
+  "categorie": "clients",
+  "site": "https://www.dalkia.fr/",
+  "fichier": "",
+  "dimensions": "",
+  "source": "",
+  "remarque": "logo intégré au code du site (favicon 16 px seulement) ; à demander au service communication"
+ },
+ {
+  "nom": "Distillerie du Beaujolais",
+  "categorie": "clients",
+  "site": "",
+  "fichier": "",
+  "dimensions": "",
+  "source": "",
+  "remarque": "le domaine distilleriedubeaujolais.fr est une page de parking OVH ; pas de site officiel trouvé, logo à demander au client"
+ },
+ {
+  "nom": "Edeis",
+  "categorie": "clients",
+  "site": "https://www.edeis.com/",
+  "fichier": "clients/edeis.png",
+  "dimensions": "1705x734",
+  "source": "https://www.edeis.com/wp-content/uploads/2024/11/EDEIS_couleurs-1.png",
+  "remarque": ""
+ },
+ {
+  "nom": "Fraktion",
+  "categorie": "clients",
+  "site": "https://www.fraktion.finance/",
+  "fichier": "clients/fraktion.svg",
+  "dimensions": "svg",
+  "source": "https://cdn.prod.website-files.com/68513629f0efe5e53f6302ac/68513629f0efe5e53f6306e1_logo-fraktion-dark.svg",
+  "remarque": ""
+ },
+ {
+  "nom": "Human Ocean",
+  "categorie": "clients",
+  "site": "",
+  "fichier": "",
+  "dimensions": "",
+  "source": "",
+  "remarque": "aucun site officiel trouvé"
+ },
+ {
+  "nom": "IDENA",
+  "categorie": "clients",
+  "site": "",
+  "fichier": "",
+  "dimensions": "",
+  "source": "",
+  "remarque": "aucun site officiel trouvé"
+ },
+ {
+  "nom": "Ice Family",
+  "categorie": "clients",
+  "site": "",
+  "fichier": "",
+  "dimensions": "",
+  "source": "",
+  "remarque": "aucun site officiel trouvé"
+ },
+ {
+  "nom": "Incub'Ado",
+  "categorie": "clients",
+  "site": "",
+  "fichier": "",
+  "dimensions": "",
+  "source": "",
+  "remarque": "aucun site officiel trouvé"
+ },
+ {
+  "nom": "Jaqu'Auto",
+  "categorie": "clients",
+  "site": "https://www.jaquauto.com/fr/",
+  "fichier": "clients/jaqu-auto.svg",
+  "dimensions": "svg",
+  "source": "https://www.jaquauto.com/themes/jaquauto-bootstrap/img/svg/logo.svg",
+  "remarque": ""
+ },
+ {
+  "nom": "La Maison Guiot",
+  "categorie": "clients",
+  "site": "",
+  "fichier": "",
+  "dimensions": "",
+  "source": "",
+  "remarque": "aucun site officiel trouvé"
+ },
+ {
+  "nom": "Label d'Occitanie",
+  "categorie": "clients",
+  "site": "",
+  "fichier": "",
+  "dimensions": "",
+  "source": "",
+  "remarque": "aucun site officiel trouvé"
+ },
+ {
+  "nom": "Linfini",
+  "categorie": "clients",
+  "site": "",
+  "fichier": "",
+  "dimensions": "",
+  "source": "",
+  "remarque": "aucun site officiel trouvé"
+ },
+ {
+  "nom": "Moirin Energy",
+  "categorie": "clients",
+  "site": "",
+  "fichier": "",
+  "dimensions": "",
+  "source": "",
+  "remarque": "aucun site officiel trouvé"
+ },
+ {
+  "nom": "Mokko Agencement",
+  "categorie": "clients",
+  "site": "https://mokko-agencement.fr/",
+  "fichier": "clients/mokko-agencement.png",
+  "dimensions": "192x192",
+  "source": "https://mokko-agencement.fr/wp-content/uploads/2025/09/cropped-MOKKO-Icone-noire-192x192.png",
+  "remarque": "icône seule (192 px), logo complet à demander"
+ },
+ {
+  "nom": "Monin",
+  "categorie": "clients",
+  "site": "https://monin.fr/",
+  "fichier": "clients/monin.svg",
+  "dimensions": "svg",
+  "source": "https://monin.fr/cdn/shop/files/logo-monin.svg?v=1749039815&amp;width=600",
+  "remarque": ""
+ },
+ {
+  "nom": "Planète Terre",
+  "categorie": "clients",
+  "site": "",
+  "fichier": "",
+  "dimensions": "",
+  "source": "",
+  "remarque": "aucun site officiel trouvé"
+ },
+ {
+  "nom": "Prossergy",
+  "categorie": "clients",
+  "site": "",
+  "fichier": "",
+  "dimensions": "",
+  "source": "",
+  "remarque": "aucun site officiel trouvé"
+ },
+ {
+  "nom": "SBI Société de Béton Industriel",
+  "categorie": "clients",
+  "site": "https://www.societebetonindustriel.fr/",
+  "fichier": "clients/sbi-societe-de-beton-industriel.png",
+  "dimensions": "106x66",
+  "source": "https://www.societebetonindustriel.fr/images/logo.png",
+  "remarque": "logo blanc, à utiliser sur fond sombre ; faible résolution, à remplacer"
+ },
+ {
+  "nom": "SGE",
+  "categorie": "clients",
+  "site": "",
+  "fichier": "",
+  "dimensions": "",
+  "source": "",
+  "remarque": "aucun site officiel trouvé"
+ },
+ {
+  "nom": "Scierie Gauthier",
+  "categorie": "clients",
+  "site": "https://www.scierie-gauthier.fr/",
+  "fichier": "",
+  "dimensions": "",
+  "source": "",
+  "remarque": "le site n'affiche que le label PEFC ; logo à demander au client"
+ },
+ {
+  "nom": "Scierie Labrousse",
+  "categorie": "clients",
+  "site": "https://www.scierielabrousse.fr/",
+  "fichier": "clients/scierie-labrousse.svg",
+  "dimensions": "svg",
+  "source": "https://www.scierielabrousse.fr/user/themes/default/assets/img/Logo-Scierie-LABROUSSE.svg",
+  "remarque": ""
+ },
+ {
+  "nom": "Scierie Mourlan",
+  "categorie": "clients",
+  "site": "https://mourlan.com/",
+  "fichier": "clients/scierie-mourlan.svg",
+  "dimensions": "svg",
+  "source": "https://mourlan.com/wp-content/uploads/2024/03/mourlan-logo-1b.svg",
+  "remarque": "logo blanc, à utiliser sur fond sombre"
+ },
+ {
+  "nom": "Seaneo",
+  "categorie": "clients",
+  "site": "",
+  "fichier": "",
+  "dimensions": "",
+  "source": "",
+  "remarque": "aucun site officiel trouvé"
+ },
+ {
+  "nom": "Selva Group",
+  "categorie": "clients",
+  "site": "",
+  "fichier": "",
+  "dimensions": "",
+  "source": "",
+  "remarque": "aucun site officiel trouvé"
+ },
+ {
+  "nom": "Technicant",
+  "categorie": "clients",
+  "site": "",
+  "fichier": "",
+  "dimensions": "",
+  "source": "",
+  "remarque": "aucun site officiel trouvé"
+ },
+ {
+  "nom": "Termovia",
+  "categorie": "clients",
+  "site": "https://www.termovia.eu/",
+  "fichier": "clients/termovia.png",
+  "dimensions": "384x235",
+  "source": "https://www.termovia.eu/wp-content/uploads/go-x/u/5e316763-e0aa-41fd-9573-6011271b1441/image-384x235.png",
+  "remarque": ""
+ },
+ {
+  "nom": "Thiers Palettes",
+  "categorie": "clients",
+  "site": "",
+  "fichier": "",
+  "dimensions": "",
+  "source": "",
+  "remarque": "aucun site officiel trouvé"
+ },
+ {
+  "nom": "Urbeez",
+  "categorie": "clients",
+  "site": "",
+  "fichier": "",
+  "dimensions": "",
+  "source": "",
+  "remarque": "aucun site officiel trouvé"
+ },
+ {
+  "nom": "VMC Bois",
+  "categorie": "clients",
+  "site": "https://vmc-bois.fr/",
+  "fichier": "clients/vmc-bois.jpg",
+  "dimensions": "842x401",
+  "source": "https://vmc-bois.fr/wp-content/uploads/2020/01/cropped-logo-vmc-bois-haut-resolution.jpg",
+  "remarque": ""
+ },
+ {
+  "nom": "3M Maison Machine Menuiserie",
+  "categorie": "partenaires",
+  "site": "https://3m-machinesmenuiserie.fr/",
+  "fichier": "partenaires/3m-maison-machine-menuiserie.jpg",
+  "dimensions": "320x186",
+  "source": "https://3m-machinesmenuiserie.fr/wp-content/uploads/2019/01/logo-3M-e1546896719725.jpg",
+  "remarque": ""
+ },
+ {
+  "nom": "ANDRE Technologies",
+  "categorie": "partenaires",
+  "site": "https://andre-technologies.fr/",
+  "fichier": "partenaires/andre-technologies.png",
+  "dimensions": "185x82",
+  "source": "https://andre-technologies.fr/app/uploads/2019/06/cropped-andre-technologies_logo_desktop.png",
+  "remarque": "faible résolution, à remplacer"
+ },
+ {
+  "nom": "Aa-Biomasse",
+  "categorie": "partenaires",
+  "site": "https://www.aa-biomasse.com/fr",
+  "fichier": "partenaires/aa-biomasse.svg",
+  "dimensions": "svg",
+  "source": "https://www.aa-biomasse.com/safari-pinned-tab.svg",
+  "remarque": ""
+ },
+ {
+  "nom": "Adeena",
+  "categorie": "partenaires",
+  "site": "",
+  "fichier": "",
+  "dimensions": "",
+  "source": "",
+  "remarque": "recherche impossible (HTTPError)"
+ },
+ {
+  "nom": "Aloès",
+  "categorie": "partenaires",
+  "site": "",
+  "fichier": "",
+  "dimensions": "",
+  "source": "",
+  "remarque": "aucun site officiel trouvé"
+ },
+ {
+  "nom": "Atreelog",
+  "categorie": "partenaires",
+  "site": "",
+  "fichier": "",
+  "dimensions": "",
+  "source": "",
+  "remarque": "site introuvable (404) ; logo à demander"
+ },
+ {
+  "nom": "Au Pas de l'Arbre",
+  "categorie": "partenaires",
+  "site": "https://www.aupasdelarbre.fr/",
+  "fichier": "partenaires/au-pas-de-l-arbre.png",
+  "dimensions": "217x220",
+  "source": "https://image.jimcdn.com/app/cms/image/transf/dimension=217x10000:format=png/path/s28ba64aff3d2d2b9/image/i058bdb581d8f99e0/version/1427269244/image.png",
+  "remarque": "faible résolution (217 px), à remplacer"
+ },
+ {
+  "nom": "CETEC Industrie",
+  "categorie": "partenaires",
+  "site": "https://www.cetec.net/",
+  "fichier": "partenaires/cetec-industrie.png",
+  "dimensions": "197x136",
+  "source": "https://www.cetec.net/wp-content/uploads/2023/04/cetec_logo-1.png",
+  "remarque": "faible résolution, à remplacer"
+ },
+ {
+  "nom": "Carbon Impact",
+  "categorie": "partenaires",
+  "site": "",
+  "fichier": "",
+  "dimensions": "",
+  "source": "",
+  "remarque": "aucun site officiel trouvé"
+ },
+ {
+  "nom": "Carbon Stop",
+  "categorie": "partenaires",
+  "site": "https://www.carbon-stop.com/",
+  "fichier": "partenaires/carbon-stop.png",
+  "dimensions": "470x140",
+  "source": "https://www.carbon-stop.com/wp-content/themes/base/assets/images/logo.png",
+  "remarque": ""
+ },
+ {
+  "nom": "Cattinair",
+  "categorie": "partenaires",
+  "site": "https://www.cattinair.fr/",
+  "fichier": "partenaires/cattinair.png",
+  "dimensions": "160x58",
+  "source": "https://www.cattinair.fr/images/logo1.png",
+  "remarque": "faible résolution, à remplacer"
+ },
+ {
+  "nom": "Cauhda",
+  "categorie": "partenaires",
+  "site": "",
+  "fichier": "",
+  "dimensions": "",
+  "source": "",
+  "remarque": "recherche impossible (HTTPError)"
+ },
+ {
+  "nom": "Delta Italy",
+  "categorie": "partenaires",
+  "site": "https://deltaitaly.com/",
+  "fichier": "partenaires/delta-italy.svg",
+  "dimensions": "svg",
+  "source": "https://deltaitaly.com/wp-content/uploads/2022/12/logo.svg",
+  "remarque": ""
+ },
+ {
+  "nom": "Dynergie",
+  "categorie": "partenaires",
+  "site": "https://www.dynergie.fr/",
+  "fichier": "",
+  "dimensions": "",
+  "source": "",
+  "remarque": "logo intégré en SVG dans le code du site, non téléchargeable proprement ; à demander (kit presse)"
+ },
+ {
+  "nom": "Eiffel Investment Group",
+  "categorie": "partenaires",
+  "site": "",
+  "fichier": "",
+  "dimensions": "",
+  "source": "",
+  "remarque": "site protégé contre les robots ; logo à récupérer manuellement (espace presse)"
+ },
+ {
+  "nom": "FILPACK",
+  "categorie": "partenaires",
+  "site": "",
+  "fichier": "",
+  "dimensions": "",
+  "source": "",
+  "remarque": "site injoignable par script ; logo à récupérer manuellement"
+ },
+ {
+  "nom": "HOMAG France",
+  "categorie": "partenaires",
+  "site": "https://www.homag.com/fr",
+  "fichier": "partenaires/homag-france.svg",
+  "dimensions": "svg",
+  "source": "https://www.homag.com/_assets/2e372d6693c3b2eff8eb5a9ca49bdded/assets/images/logo/logo.svg",
+  "remarque": ""
+ },
+ {
+  "nom": "LetShow",
+  "categorie": "partenaires",
+  "site": "",
+  "fichier": "",
+  "dimensions": "",
+  "source": "",
+  "remarque": "recherche impossible (HTTPError)"
+ },
+ {
+  "nom": "MACH Diffusion",
+  "categorie": "partenaires",
+  "site": "",
+  "fichier": "",
+  "dimensions": "",
+  "source": "",
+  "remarque": "aucun site officiel trouvé"
+ },
+ {
+  "nom": "MEBOR",
+  "categorie": "partenaires",
+  "site": "https://www.mebor.eu/",
+  "fichier": "partenaires/mebor.png",
+  "dimensions": "791x218",
+  "source": "https://www.mebor.eu/wp-content/uploads/2023/10/mebor-logo-mobile.png",
+  "remarque": ""
+ },
+ {
+  "nom": "NutriMarketing",
+  "categorie": "partenaires",
+  "site": "",
+  "fichier": "",
+  "dimensions": "",
+  "source": "",
+  "remarque": "recherche impossible (HTTPError)"
+ },
+ {
+  "nom": "Promill",
+  "categorie": "partenaires",
+  "site": "https://promill.fr/",
+  "fichier": "partenaires/promill.png",
+  "dimensions": "230x70",
+  "source": "https://promill.fr/wp-content/uploads/2021/09/Promill-logo-web.png",
+  "remarque": "logo blanc, à utiliser sur fond sombre ; faible résolution, à remplacer"
+ },
+ {
+  "nom": "SNBPE",
+  "categorie": "partenaires",
+  "site": "https://www.snbpe.org/",
+  "fichier": "partenaires/snbpe.svg",
+  "dimensions": "svg",
+  "source": "https://admin-adherent.unicem.fr/app/uploads/sites/4/2023/07/snbpe.svg",
+  "remarque": ""
+ },
+ {
+  "nom": "Steriflow",
+  "categorie": "partenaires",
+  "site": "https://www.steriflow.com/",
+  "fichier": "partenaires/steriflow.png",
+  "dimensions": "529x76",
+  "source": "https://www.steriflow.com/wp-content/uploads/2020/12/cropped-logo-steriflow-noel-1.png",
+  "remarque": ""
+ },
+ {
+  "nom": "Stradal",
+  "categorie": "partenaires",
+  "site": "https://www.stradal.fr/",
+  "fichier": "partenaires/stradal.png",
+  "dimensions": "960x354",
+  "source": "https://www.stradal.fr/wp-content/uploads/2024/12/logo.png",
+  "remarque": ""
+ },
+ {
+  "nom": "Telos Santé",
+  "categorie": "partenaires",
+  "site": "https://telos-sante.fr/",
+  "fichier": "partenaires/telos-sante.png",
+  "dimensions": "171x73",
+  "source": "https://telos-sante.fr/wp-content/uploads/2022/07/Groupe-10.png",
+  "remarque": "logo blanc, à utiliser sur fond sombre ; faible résolution (171 px)"
+ },
+ {
+  "nom": "VBI-BOIS",
+  "categorie": "partenaires",
+  "site": "https://www.vbi-bois.fr/",
+  "fichier": "partenaires/vbi-bois.png",
+  "dimensions": "170x74",
+  "source": "https://www.vbi-bois.fr/wp-content/uploads/2015/03/logo_vbi.png",
+  "remarque": "faible résolution, à remplacer"
+ },
+ {
+  "nom": "Ynergie",
+  "categorie": "partenaires",
+  "site": "https://www.ynergie.com/",
+  "fichier": "partenaires/ynergie.png",
+  "dimensions": "211x82",
+  "source": "https://www.ynergie.com/wp-content/uploads/2023/04/YnergieGroupe_Logo_RVB_Noir-1.png",
+  "remarque": "logo blanc, à utiliser sur fond sombre ; faible résolution, à remplacer"
+ }
+]

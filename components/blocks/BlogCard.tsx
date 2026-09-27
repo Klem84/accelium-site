@@ -10,7 +10,7 @@ export function BlogCard({ article }: { article: Doc<Article> }) {
     >
       {article.heroImage && (
         <div className="photo aspect-[16/9]">
-          <img src={article.heroImage} alt="" className="w-full h-full object-cover" />
+          <img src={article.heroImage} alt="" loading="lazy" decoding="async" className="w-full h-full object-cover" />
         </div>
       )}
       <div className="p-6 flex flex-col flex-1">

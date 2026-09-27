@@ -66,7 +66,7 @@ export default function HomePage() {
   return (
     <>
       {/* ===== HERO plein écran ===== */}
-      <section className="relative w-full overflow-hidden min-h-[600px] h-[100svh] max-h-[900px]">
+      <section className="relative w-full overflow-hidden min-h-[600px] h-[100svh]">
         <img
           data-parallax="0.18"
           src="https://images.unsplash.com/photo-1526821799652-2dc51675628e?auto=format&fit=crop&w=2000&q=80"
@@ -76,7 +76,7 @@ export default function HomePage() {
         <div className="absolute inset-0 bg-gradient-to-t from-ink/85 via-ink/30 to-ink/45" />
         <div className="absolute inset-0 bg-gradient-to-r from-ink/55 to-transparent" />
 
-        <div className="hero-content relative h-full wrap flex flex-col justify-end pt-32 lg:pt-40 pb-[7vh]">
+        <div className="hero-content relative h-full wrap flex flex-col justify-end pt-32 lg:pt-40 pb-[4vh]">
           <div className="reveal">
             <p className="kicker text-orange2 mb-8 lg:mb-12 leading-[1.6]">
               Accélère l'obtention de vos
@@ -137,9 +137,7 @@ export default function HomePage() {
                 <span data-count={s.n}>0</span>
                 {s.suffix.includes("M€") ? <>&nbsp;M€</> : s.suffix}
               </div>
-              <p className="mt-2 text-[0.9rem] text-body">
-                {s.label} <span className="text-orange700">[à compléter]</span>
-              </p>
+              <p className="mt-2 text-[0.9rem] text-body">{s.label}</p>
             </div>
           ))}
         </div>
@@ -220,34 +218,11 @@ export default function HomePage() {
               href={`/secteurs/${s.slug}`}
               className="group focusable relative rounded-xl overflow-hidden aspect-[3/4] photo"
             >
-              <img src={s.img} alt={s.nom} className="w-full h-full object-cover" />
+              <img src={s.img} alt={s.nom} loading="lazy" decoding="async" className="w-full h-full object-cover" />
               <div className="absolute inset-0 bg-gradient-to-t from-ink/85 via-ink/10 to-transparent" />
               <span className="absolute left-4 bottom-4 text-white font-600 display text-[1.15rem]">{s.nom}</span>
             </Link>
           ))}
-        </div>
-      </section>
-
-      {/* ===== METHODE ===== */}
-      <section className="bg-ink text-white">
-        <div className="wrap py-24 lg:py-32">
-          <div className="max-w-[20ch] mb-16">
-            <p className="kicker text-orange2 mb-5 reveal">Notre méthode</p>
-            <h2 className="display h-sec font-500 reveal">Une méthode éprouvée, de la stratégie au versement</h2>
-          </div>
-          <div data-stagger className="grid md:grid-cols-3 gap-px bg-white/10 rounded-2xl overflow-hidden">
-            {[
-              { n: "1", t: "Définir", d: "Nous détectons tous les dispositifs mobilisables — y compris cumulables — et bâtissons un plan d'action chiffré et priorisé." },
-              { n: "2", t: "Obtenir", d: "Nous montons les dossiers, portons la demande auprès des financeurs et défendons votre projet jusqu'à la décision." },
-              { n: "3", t: "Sécuriser", d: "Nous sécurisons les versements et la conformité — un dossier justificatif prêt à affronter un contrôle." },
-            ].map((m) => (
-              <div key={m.n} className="bg-ink p-9">
-                <span className="display text-[3rem] font-500 text-orange leading-none">{m.n}</span>
-                <h3 className="display text-[1.5rem] font-500 mt-5">{m.t}</h3>
-                <p className="mt-3 text-[0.96rem] text-white/70 leading-relaxed">{m.d}</p>
-              </div>
-            ))}
-          </div>
         </div>
       </section>
 
@@ -272,7 +247,7 @@ export default function HomePage() {
               Derrière chaque accompagnement, un projet financé
             </h2>
             <p className="mt-4 text-[0.92rem] text-slateD measure">
-              Projets réels accompagnés par Accelium — montants d'aide obtenus, clients anonymisés.
+              Projets réels accompagnés par Accelium : montants d'aide mobilisés, clients anonymisés.
             </p>
           </div>
           <Link href="/cas-clients" className="btn-ghost focusable rounded-full px-6 py-3 text-[0.92rem] reveal">
@@ -288,7 +263,7 @@ export default function HomePage() {
             >
               {c.image && (
                 <div className="photo aspect-[16/10]">
-                  <img src={c.image} alt={c.secteur} className="w-full h-full object-cover" />
+                  <img src={c.image} alt={c.secteur} loading="lazy" decoding="async" className="w-full h-full object-cover" />
                 </div>
               )}
               <div className="p-7">

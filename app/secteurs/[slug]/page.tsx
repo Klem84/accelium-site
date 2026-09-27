@@ -4,6 +4,7 @@ import Link from "next/link";
 import { PageHero } from "@/components/blocks/PageHero";
 import { CtaBlock } from "@/components/blocks/CtaBlock";
 import { RelatedLinks } from "@/components/blocks/RelatedLinks";
+import { CasGrid, type CasCard } from "@/components/blocks/CasGrid";
 import { Mdx } from "@/components/Mdx";
 import { getSecteur, getSecteurs, getCasClients, getDispositifs } from "@/lib/content";
 import { buildMetadata } from "@/lib/seo";
@@ -23,7 +24,15 @@ export default function SecteurPage({ params }: { params: { slug: string } }) {
   if (!s) notFound();
 
   const dispositifs = getDispositifs();
-  const cas = getCasClients().filter((c) => c.secteur === s.slug);
+  const cas = getCasClients()
+    .filter((c) => c.secteur === s.slug)
+    .sort((a, b) => (b.featured ? 1 : 0) - (a.featured ? 1 : 0));
+  const casItems: CasCard[] = cas.map((c) => ({
+    slug: c.slug,
+    montant: c.montant,
+    titre: c.titre,
+    contexte: c.contexte,
+  }));
 
   return (
     <>
@@ -78,19 +87,7 @@ export default function SecteurPage({ params }: { params: { slug: string } }) {
         <section className="bg-cream border-y border-line">
           <div className="wrap py-16 lg:py-24">
             <h2 className="display h-sec font-600 text-ink mb-8">Cas clients du secteur</h2>
-            <div className="grid md:grid-cols-3 gap-4">
-              {cas.map((c) => (
-                <Link
-                  key={c.slug}
-                  href={`/cas-clients/${c.slug}`}
-                  className="rounded-2xl border border-line bg-surface p-6 hover:border-ink transition-colors focusable"
-                >
-                  <p className="display text-[1.8rem] font-600 text-ink leading-none">{c.montant}</p>
-                  <p className="mt-1 text-[0.82rem] font-600 text-slateD">{c.titre}</p>
-                  <p className="mt-2 text-[0.92rem] text-body">{c.contexte}</p>
-                </Link>
-              ))}
-            </div>
+            <CasGrid items={casItems} initial={9} step={9} />
           </div>
         </section>
       )}

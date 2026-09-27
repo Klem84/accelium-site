@@ -307,6 +307,37 @@ button {
   font-style: normal;
 }
 
+/* ── Grands écrans hauts : on recentre le hero verticalement
+   (sur écran court / 13", on garde le texte ancré en bas) ── */
+@media (min-height: 900px) {
+  .hero-content {
+    justify-content: center !important;
+    padding-top: 8vh !important;
+    padding-bottom: 8vh !important;
+  }
+  /* Titre et sous-texte agrandis seulement sur les grands écrans (hauts),
+     pour ne pas faire déborder le hero sur les petits écrans. */
+  .hero-content .h-hero {
+    font-size: clamp(2.4rem, 1rem + 6vw, 7.5rem);
+  }
+  .hero-content .lede {
+    font-size: clamp(1.2rem, 1rem + 0.8vw, 1.6rem);
+  }
+}
+
+/* ── Écrans "laptop" (700–899px de haut, ex. 13") : on centre le contenu sous
+   le header et on borne le titre pour qu'il ne déborde pas dans le menu. ── */
+@media (min-height: 701px) and (max-height: 899px) {
+  .hero-content {
+    justify-content: center !important;
+    padding-top: 96px !important;
+    padding-bottom: 5vh !important;
+  }
+  .hero-content .h-hero {
+    font-size: clamp(2.4rem, 1rem + 4vw, 5rem);
+  }
+}
+
 /* ── Réglages écrans courts (hero) ── */
 @media (max-height: 700px) {
   .hero-content {

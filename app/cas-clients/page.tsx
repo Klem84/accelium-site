@@ -1,59 +1,85 @@
 import type { Metadata } from "next";
-import Link from "next/link";
 import { PageHero } from "@/components/blocks/PageHero";
 import { CtaBlock } from "@/components/blocks/CtaBlock";
+import { CasGrid, type CasCard } from "@/components/blocks/CasGrid";
 import { getCasClients, getSecteurs } from "@/lib/content";
+import { visuelCas } from "@/config/cas-clients-visuels";
 import { buildMetadata } from "@/lib/seo";
 
 export const metadata: Metadata = buildMetadata(
   {
     title: "Cas clients & références | Accelium",
     description:
-      "Découvrez des projets financés grâce à Accelium : montants obtenus, secteurs, dispositifs mobilisés. Clients anonymisés.",
+      "Découvrez des projets accompagnés par Accelium : montants d'aide mobilisés, secteurs, dispositifs. Clients anonymisés.",
   },
   "/cas-clients"
 );
 
 export default function CasClientsHub() {
-  const cas = getCasClients();
   const secteurs = getSecteurs();
   const nomSecteur = (slug: string) => secteurs.find((s) => s.slug === slug)?.nom || slug;
+
+  // Fiches « soignées » mises en avant en tête, puis le reste entrelacé par
+  // secteur (round-robin) pour éviter qu'un secteur (ex. biomasse) ne forme un
+  // bloc de cartes identiques.
+  const tous = getCasClients();
+  const featured = tous.filter((c) => c.featured);
+  const reste = tous.filter((c) => !c.featured);
+
+  const parSecteur = new Map<string, typeof reste>();
+  for (const c of reste) {
+    const arr = parSecteur.get(c.secteur) ?? [];
+    arr.push(c);
+    parSecteur.set(c.secteur, arr);
+  }
+  // Les plus gros secteurs en premier dans la rotation : ils se diluent mieux.
+  const files = [...parSecteur.values()].sort((a, b) => b.length - a.length);
+  const entrelace: typeof reste = [];
+  for (let added = true; added; ) {
+    added = false;
+    for (const file of files) {
+      const c = file.shift();
+      if (c) {
+        entrelace.push(c);
+        added = true;
+      }
+    }
+  }
+  const cas = [...featured, ...entrelace];
+
+  // Compteur par secteur pour faire tourner les visuels du pool.
+  const compteur = new Map<string, number>();
+  const items: CasCard[] = cas.map((c) => {
+    const i = compteur.get(c.secteur) ?? 0;
+    compteur.set(c.secteur, i + 1);
+    return {
+      slug: c.slug,
+      montant: c.montant,
+      titre: c.titre,
+      contexte: c.contexte,
+      secteurNom: nomSecteur(c.secteur),
+      image: visuelCas(c.secteur, i, c.image),
+    };
+  });
 
   return (
     <>
       <PageHero
         kicker="Résultats"
         title="Des résultats concrets"
-        intro="Derrière chaque accompagnement, un projet financé — montants d'aide obtenus, clients anonymisés."
+        intro="Derrière chaque accompagnement, un projet financé. Montants d'aide mobilisés, clients anonymisés."
         crumbs={[{ name: "Cas clients", url: "/cas-clients" }]}
       />
       <section className="wrap py-16 lg:py-24">
-        {cas.length === 0 ? (
+        {items.length === 0 ? (
           <p className="text-body">Nos références sont en cours de publication. <span className="text-orange700">[à compléter]</span></p>
         ) : (
-          <div className="grid md:grid-cols-3 gap-4">
-            {cas.map((c) => (
-              <Link
-                key={c.slug}
-                href={`/cas-clients/${c.slug}`}
-                className="group rounded-2xl overflow-hidden border border-line bg-surface shadow-soft block"
-              >
-                {c.image && (
-                  <div className="photo aspect-[16/10]">
-                    <img src={c.image} alt={nomSecteur(c.secteur)} className="w-full h-full object-cover" />
-                  </div>
-                )}
-                <div className="p-7">
-                  <span className="inline-flex text-[0.72rem] font-600 tracking-wide uppercase text-orange700 bg-orange/10 rounded-full px-3 py-1">
-                    {nomSecteur(c.secteur)}
-                  </span>
-                  <p className="display text-[2.2rem] font-600 text-ink mt-4 leading-none">{c.montant}</p>
-                  <p className="mt-1 text-[0.82rem] font-600 text-slateD">{c.titre}</p>
-                  <p className="mt-2 text-[0.95rem] text-body">{c.contexte}</p>
-                </div>
-              </Link>
-            ))}
-          </div>
+          <>
+            <p className="text-body mb-8">
+              {items.length} dossiers de financement accompagnés par Accelium, tous secteurs confondus.
+            </p>
+            <CasGrid items={items} withImage initial={12} step={12} />
+          </>
         )}
       </section>
       <CtaBlock />

@@ -12,9 +12,8 @@ export const mainNav: NavItem[] = [
     href: "/le-financement-public",
     children: [
       { label: "Comprendre le financement public", href: "/le-financement-public", description: "La carte des aides aux entreprises" },
-      { label: "Les dispositifs", href: "/le-financement-public/dispositifs", description: "CIR, CII, C3IV, France 2030, CEE…" },
-      { label: "Les financeurs", href: "/le-financement-public/financeurs", description: "ADEME, Bpifrance, Régions, UE…" },
-      { label: "Types d'aides", href: "/le-financement-public/types-d-aides/subventions", description: "Subventions, prêts, crédits d'impôt…" },
+      { label: "Les types d'aides", href: "/le-financement-public/types-d-aides", description: "Subventions, prêts, garanties, crédits d'impôt…" },
+      { label: "Les financeurs", href: "/le-financement-public/financeurs", description: "Régions, Europe, ADEME, Bpifrance…" },
     ],
   },
   {
@@ -46,8 +45,10 @@ export const mainNav: NavItem[] = [
   },
   {
     label: "Ressources",
-    href: "/blog",
+    href: "/ressources",
     children: [
+      { label: "Livres blancs", href: "/ressources/livres-blancs", description: "Nos guides à télécharger" },
+      { label: "Application agrément CIR/CII", href: "/ressources/agrement-cir-cii", description: "Testez votre éligibilité en ligne" },
       { label: "Blog", href: "/blog", description: "Décryptages, actualités et conseils" },
       { label: "Cas clients", href: "/cas-clients", description: "Des projets financés" },
     ],
@@ -57,7 +58,6 @@ export const mainNav: NavItem[] = [
     href: "/cabinet/a-propos",
     children: [
       { label: "À propos", href: "/cabinet/a-propos" },
-      { label: "Notre méthodologie", href: "/cabinet/methodologie" },
       { label: "Nos atouts", href: "/cabinet/nos-atouts" },
       { label: "L'équipe", href: "/cabinet/equipe" },
       { label: "Nos partenaires", href: "/cabinet/partenaires" },
@@ -80,9 +80,8 @@ export const footerNav = {
   ressources: {
     title: "Ressources",
     links: [
-      { label: "Le financement public", href: "/le-financement-public" },
-      { label: "Dispositifs", href: "/le-financement-public/dispositifs" },
-      { label: "Secteurs", href: "/secteurs" },
+      { label: "Livres blancs", href: "/ressources/livres-blancs" },
+      { label: "Application agrément CIR/CII", href: "/ressources/agrement-cir-cii" },
       { label: "Blog", href: "/blog" },
       { label: "Cas clients", href: "/cas-clients" },
     ],
@@ -91,7 +90,6 @@ export const footerNav = {
     title: "Le cabinet",
     links: [
       { label: "À propos", href: "/cabinet/a-propos" },
-      { label: "Méthodologie", href: "/cabinet/methodologie" },
       { label: "Nos atouts", href: "/cabinet/nos-atouts" },
       { label: "Déontologie", href: "/cabinet/deontologie" },
       { label: "Contact", href: "/contact" },
