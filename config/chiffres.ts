@@ -64,9 +64,22 @@ export const chiffres = {
       tant que ce champ est `null`. Une chaîne non vide l'affiche comme description. */
   referencementMediateur: null as string | null,
 
-  /** Régions où Accelium a des clients : liste à fournir par Clément (§2.4, 13 régions
-      au maximum). Tant que `null`, aucun chiffre de couverture régionale n'est affiché. */
-  regionsClientes: null as string[] | null,
+  /** Régions où Accelium a au moins un client (déduites le 27/09/2026 des cas clients,
+      des félicitations Monday et des dossiers clients ; à confirmer par Clément, §2.4). */
+  regionsClientes: [
+    "nouvelle-aquitaine",
+    "auvergne-rhone-alpes",
+    "grand-est",
+    "hauts-de-france",
+    "occitanie",
+    "provence-alpes-cote-d-azur",
+    "bretagne",
+    "centre-val-de-loire",
+    "normandie",
+    "pays-de-la-loire",
+    "ile-de-france",
+    "bourgogne-franche-comte",
+  ] as string[] | null,
 } as const;
 
 /* Export nommé pour compatibilité avec les consommateurs qui lisent directement
