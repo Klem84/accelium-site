@@ -6,9 +6,9 @@ import { buildMetadata } from "@/lib/seo";
 
 export const metadata: Metadata = buildMetadata(
   {
-    title: "Livres blancs | Ressources Accelium Conseil",
+    title: "Livres blancs financements publics",
     description:
-      "Téléchargez gratuitement nos livres blancs sur le CIR/CII, la filière forêt-bois et le programme des agences de l'eau. Le document vous est envoyé immédiatement par email.",
+      "Guides gratuits : CIR/CII, aides forêt-bois, programme des agences de l'eau. Téléchargez nos livres blancs rédigés par les consultants Accelium.",
   },
   "/ressources/livres-blancs"
 );

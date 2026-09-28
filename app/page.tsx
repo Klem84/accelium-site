@@ -1,9 +1,23 @@
+import type { Metadata } from "next";
 import Image from "next/image";
 import Link from "next/link";
 import { Button } from "@/components/ui/Button";
 import { CtaBlock } from "@/components/blocks/CtaBlock";
 import { getCasClients } from "@/lib/content";
+import { buildMetadata } from "@/lib/seo";
 import { site } from "@/config/site";
+import { chiffres } from "@/config/chiffres";
+
+// Titre absolu (fiche J.1.16 amendée) : ignore le template `%s | Accelium` du layout.
+export const metadata: Metadata = buildMetadata(
+  {
+    title: "Accelium, conseil en financements publics en France",
+    description:
+      "Accelium identifie, obtient et sécurise subventions, prêts bonifiés et crédits d'impôt CIR/CII pour les PME et ETI industrielles, partout en France. Diagnostic gratuit.",
+    absoluteTitle: true,
+  },
+  "/"
+);
 
 const offres = [
   {
@@ -39,25 +53,27 @@ const offres = [
 ];
 
 const secteurs = [
-  { nom: "Forêt-bois", slug: "foret-bois", img: "https://images.unsplash.com/photo-1616761286619-2acae0580383?auto=format&fit=crop&w=600&q=75" },
-  { nom: "Industrie", slug: "industrie", img: "https://images.unsplash.com/photo-1511454493857-0a29f2c023c7?auto=format&fit=crop&w=600&q=75" },
-  { nom: "Biomasse", slug: "biomasse", img: "https://images.unsplash.com/photo-1673208769691-e74104d853fd?auto=format&fit=crop&w=600&q=75" },
-  { nom: "Port maritime", slug: "port-maritime", img: "https://images.unsplash.com/photo-1606185540834-d6e7483ee1a4?auto=format&fit=crop&w=600&q=75" },
-  { nom: "Agriculture", slug: "agriculture", img: "https://images.unsplash.com/photo-1560493676-04071c5f467b?auto=format&fit=crop&w=600&q=75" },
-  { nom: "Agroalimentaire", slug: "agroalimentaire", img: "https://images.unsplash.com/photo-1513257805917-a0da1146eb15?auto=format&fit=crop&w=600&q=75" },
-  { nom: "Béton", slug: "beton", img: "https://images.unsplash.com/photo-1578776349090-de61da00ff1a?auto=format&fit=crop&w=600&q=75" },
-  { nom: "Enrobés", slug: "enrobes", img: "https://images.unsplash.com/photo-1717386255773-1e3037c81788?auto=format&fit=crop&w=600&q=75" },
-  { nom: "Défense", slug: "defense", img: "https://images.unsplash.com/photo-1624027492684-327af1fb7559?auto=format&fit=crop&w=600&q=75" },
-  { nom: "Distillerie", slug: "distillerie", img: "https://images.unsplash.com/photo-1620200423727-8127f75d7f53?auto=format&fit=crop&w=600&q=75" },
+  { nom: "Forêt-bois", slug: "foret-bois", img: "/images/secteurs/secteur-foret-bois.jpg" },
+  { nom: "Industrie", slug: "industrie", img: "/images/secteurs/secteur-industrie.jpg" },
+  { nom: "Biomasse", slug: "biomasse", img: "/images/secteurs/secteur-biomasse.jpg" },
+  { nom: "Port maritime", slug: "port-maritime", img: "/images/secteurs/secteur-port-maritime.jpg" },
+  { nom: "Agriculture", slug: "agriculture", img: "/images/secteurs/secteur-agriculture.jpg" },
+  { nom: "Agroalimentaire", slug: "agroalimentaire", img: "/images/secteurs/secteur-agroalimentaire.jpg" },
+  { nom: "Béton", slug: "beton", img: "/images/secteurs/secteur-beton.jpg" },
+  { nom: "Enrobés", slug: "enrobes", img: "/images/secteurs/secteur-enrobes.jpg" },
+  { nom: "Défense", slug: "defense", img: "/images/secteurs/secteur-defense.jpg" },
+  { nom: "Distillerie", slug: "distillerie", img: "/images/secteurs/secteur-distillerie.jpg" },
 ];
 
 const financeurs = ["Bpifrance", "ADEME", "Régions", "FranceAgriMer", "Agences de l'eau", "ASP", "Union européenne", "France 2030"];
 
-const stats = [
-  { n: 40, suffix: "+", label: "réseaux de financement" },
-  { n: 300, suffix: "+", label: "dispositifs suivis" },
-  { n: 150, suffix: "+", label: "projets accompagnés" },
-  { n: 120, suffix: " M€", label: "d'aides obtenues" },
+/* Chiffres clés : source unique config/chiffres.ts (décision de Clément du
+   27/09/2026). Les deux premiers sont des compteurs animés côté client, rendus
+   avec leur valeur finale dans le HTML (data-count) ; la satisfaction est un
+   ratio, affiché en texte statique (jamais dans un compteur). */
+const statsCompteurs = [
+  { n: chiffres.projets.compteur, suffix: chiffres.projets.suffixe, label: chiffres.projets.libelle },
+  { n: chiffres.clients.compteur, suffix: chiffres.clients.suffixe, label: chiffres.clients.libelle },
 ];
 
 export default function HomePage() {
@@ -67,11 +83,15 @@ export default function HomePage() {
     <>
       {/* ===== HERO plein écran ===== */}
       <section className="relative w-full overflow-hidden min-h-[600px] h-[100svh]">
-        <img
+        <Image
           data-parallax="0.18"
-          src="https://images.unsplash.com/photo-1526821799652-2dc51675628e?auto=format&fit=crop&w=2000&q=80"
+          src="/images/bannieres/hero-paris-vue-aerienne.jpg"
           alt="Paris au coucher du soleil, vue aérienne"
-          className="absolute inset-0 w-full h-[118%] object-cover parallax"
+          fill
+          priority
+          sizes="100vw"
+          style={{ height: "118%" }}
+          className="object-cover parallax"
         />
         <div className="absolute inset-0 bg-gradient-to-t from-ink/85 via-ink/30 to-ink/45" />
         <div className="absolute inset-0 bg-gradient-to-r from-ink/55 to-transparent" />
@@ -88,12 +108,16 @@ export default function HomePage() {
             className="display h-hero font-600 text-white max-w-[16ch] clip"
             aria-label="Financez vos projets grâce aux financements publics"
           >
-            <span>Financez vos projets</span>
-            <span>
-              grâce aux <em className="not-italic text-orange2">financements publics</em>
+            <span className="clip-line">
+              <span>Financez vos projets</span>
+            </span>
+            <span className="clip-line">
+              <span>
+                grâce aux <em className="not-italic text-orange2">financements publics</em>
+              </span>
             </span>
           </h1>
-          <p className="lede measure mt-6 lg:mt-8 text-white/80 reveal">
+          <p className="lede measure mt-8 lg:mt-8 text-white/80 reveal">
             Accelium identifie, obtient et sécurise toutes les aides auxquelles votre entreprise peut
             prétendre. De la start-up à la grande entreprise, partout en France.
           </p>
@@ -131,16 +155,35 @@ export default function HomePage() {
         </div>
 
         <div data-stagger className="mt-20 grid grid-cols-2 lg:grid-cols-4 gap-y-12 gap-x-8 border-t border-line pt-12">
-          {stats.map((s) => (
+          {statsCompteurs.map((s) => (
             <div key={s.label}>
               <div className="display text-[clamp(2.6rem,1.8rem_+_2vw,3.6rem)] font-600 text-ink">
-                <span data-count={s.n}>0</span>
-                {s.suffix.includes("M€") ? <>&nbsp;M€</> : s.suffix}
+                <span data-count={s.n}>
+                  {s.n}
+                  {s.suffix}
+                </span>
               </div>
               <p className="mt-2 text-[0.9rem] text-body">{s.label}</p>
             </div>
           ))}
+          <div>
+            <div className="display text-[clamp(2.6rem,1.8rem_+_2vw,3.6rem)] font-600 text-ink">
+              {chiffres.satisfaction.recommandation.toFixed(1).replace(".", ",")}
+              <span className="text-[1.4rem]">/{chiffres.satisfaction.recommandationSur}</span>
+            </div>
+            <p className="mt-2 text-[0.9rem] text-body">de recommandation</p>
+          </div>
+          <div>
+            <div className="display text-[clamp(2.6rem,1.8rem_+_2vw,3.6rem)] font-600 text-ink">
+              {chiffres.satisfaction.satisfaction.toFixed(2).replace(".", ",")}
+              <span className="text-[1.4rem]">/{chiffres.satisfaction.satisfactionSur}</span>
+            </div>
+            <p className="mt-2 text-[0.9rem] text-body">de satisfaction</p>
+          </div>
         </div>
+        <p className="mt-6 text-[0.8rem] text-slate">
+          {chiffres.dateChiffresLabel} · {chiffres.satisfaction.methode}
+        </p>
       </section>
 
       {/* ===== OFFRES ===== */}
@@ -165,12 +208,17 @@ export default function HomePage() {
                 href={o.href}
                 className="group focusable grid md:grid-cols-12 gap-4 items-center py-8 border-b border-line"
               >
-                <span className="md:col-span-1 display text-[1.3rem] font-600 text-orange">{o.n}</span>
+                <span className="md:col-span-1 display text-[1.3rem] font-600 text-orange700">{o.n}</span>
                 <h3 className="md:col-span-5 display text-[clamp(1.5rem,1.1rem_+_1.4vw,2.2rem)] font-500 text-ink group-hover:text-orange700 transition-colors">
                   {o.titre}
                 </h3>
                 <p className="md:col-span-5 text-[0.97rem] text-body">{o.desc}</p>
-                <span className="md:col-span-1 md:text-right text-orange text-2xl transition-transform group-hover:translate-x-1">→</span>
+                <span
+                  aria-hidden="true"
+                  className="md:col-span-1 md:text-right text-orange700 text-2xl transition-transform group-hover:translate-x-1"
+                >
+                  →
+                </span>
               </Link>
             ))}
           </div>
@@ -179,11 +227,14 @@ export default function HomePage() {
 
       {/* ===== BANDEAU VILLE pleine largeur (Lyon) ===== */}
       <section className="relative h-[60vh] min-h-[420px] w-full overflow-hidden flex items-center">
-        <img
+        <Image
           data-parallax="0.15"
-          src="https://images.unsplash.com/photo-1602719092282-f027126b6b74?auto=format&fit=crop&w=2000&q=80"
+          src="/images/bannieres/ville-lyon-lumiere-doree.jpg"
           alt="Lyon sous la lumière dorée"
-          className="absolute inset-0 w-full h-[118%] object-cover parallax"
+          fill
+          sizes="100vw"
+          style={{ height: "118%" }}
+          className="object-cover parallax"
         />
         <div className="absolute inset-0 bg-ink/55" />
         <div className="relative wrap text-white">
@@ -218,7 +269,13 @@ export default function HomePage() {
               href={`/secteurs/${s.slug}`}
               className="group focusable relative rounded-xl overflow-hidden aspect-[3/4] photo"
             >
-              <img src={s.img} alt={s.nom} loading="lazy" decoding="async" className="w-full h-full object-cover" />
+              <Image
+                src={s.img}
+                alt={s.nom}
+                fill
+                sizes="(min-width: 1024px) 20vw, (min-width: 768px) 33vw, 50vw"
+                className="object-cover"
+              />
               <div className="absolute inset-0 bg-gradient-to-t from-ink/85 via-ink/10 to-transparent" />
               <span className="absolute left-4 bottom-4 text-white font-600 display text-[1.15rem]">{s.nom}</span>
             </Link>
@@ -230,7 +287,7 @@ export default function HomePage() {
       <section className="py-14 border-b border-line overflow-hidden">
         <p className="kicker text-center text-slate mb-8">De l'échelon local à l'Europe, tous les financeurs</p>
         <div className="mq-mask">
-          <div className="marquee-track display text-[clamp(1.4rem,1rem_+_1.4vw,2.2rem)] font-500 text-ink/35">
+          <div className="marquee-track display text-[clamp(1.4rem,1rem_+_1.4vw,2.2rem)] font-500 text-ink/60">
             {[...financeurs, ...financeurs].map((f, i) => (
               <span key={i}>{f}</span>
             ))}
@@ -262,8 +319,14 @@ export default function HomePage() {
               className="group rounded-2xl overflow-hidden border border-line bg-surface shadow-soft block"
             >
               {c.image && (
-                <div className="photo aspect-[16/10]">
-                  <img src={c.image} alt={c.secteur} loading="lazy" decoding="async" className="w-full h-full object-cover" />
+                <div className="relative photo aspect-[16/10]">
+                  <Image
+                    src={c.image}
+                    alt={c.secteur}
+                    fill
+                    sizes="(min-width: 768px) 33vw, 100vw"
+                    className="object-cover"
+                  />
                 </div>
               )}
               <div className="p-7">
@@ -281,12 +344,15 @@ export default function HomePage() {
 
       {/* ===== CTA pleine largeur (Marseille) ===== */}
       <section className="relative w-full overflow-hidden">
-        <img
+        <Image
           data-parallax="0.12"
-          src="https://images.unsplash.com/photo-1566838217578-1903568a76d9?auto=format&fit=crop&w=2000&q=80"
+          src="/images/bannieres/usine-nuit-financement-projet.jpg"
           alt=""
           aria-hidden="true"
-          className="absolute inset-0 w-full h-[118%] object-cover parallax"
+          fill
+          sizes="100vw"
+          style={{ height: "118%" }}
+          className="object-cover parallax"
         />
         <div className="absolute inset-0 bg-gradient-to-r from-ink/90 via-ink/75 to-ink/45" />
         <div className="relative wrap py-28 lg:py-40">

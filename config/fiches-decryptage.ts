@@ -2,16 +2,15 @@
 // Le PDF est servi directement depuis /public/fiches-decryptage/<fichier>.
 // Téléchargement direct, sans formulaire (contrairement aux livres blancs).
 
-const U = (slug: string) => `https://images.unsplash.com/${slug}?auto=format&fit=crop&w=800&q=78`;
-
-// Visuels par thème (URLs Unsplash déjà vérifiées, utilisées ailleurs sur le site).
+// Visuels par thème, hébergés localement (cf. docs/credits-images.md pour l'attribution
+// Unsplash d'origine) : plus de dépendance à images.unsplash.com (CSP, fiche J.1.13).
 const IMG = {
-  industrie: U("photo-1511454493857-0a29f2c023c7"),
-  foretBois: U("photo-1616761286619-2acae0580383"),
-  recyclage: U("photo-1496247749665-49cf5b1022e9"),
-  agro: U("photo-1513257805917-a0da1146eb15"),
-  biomasse: U("photo-1673208769691-e74104d853fd"),
-  energieSol: U("photo-1560493676-04071c5f467b"),
+  industrie: "/images/secteurs/secteur-industrie.jpg",
+  foretBois: "/images/secteurs/secteur-foret-bois.jpg",
+  recyclage: "/images/secteurs/secteur-industrie-usine.jpg",
+  agro: "/images/secteurs/secteur-agroalimentaire.jpg",
+  biomasse: "/images/secteurs/secteur-biomasse.jpg",
+  energieSol: "/images/secteurs/secteur-agriculture.jpg",
 };
 
 export type FicheDecryptage = {

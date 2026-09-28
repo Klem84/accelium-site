@@ -8,9 +8,9 @@ const CIR_CII_APP_URL = "https://agrement-cir-cii.accelium-conseil.fr";
 
 export const metadata: Metadata = buildMetadata(
   {
-    title: "Application agrément CIR/CII | Ressources Accelium Conseil",
+    title: "Testez votre éligibilité à l'agrément CIR/CII",
     description:
-      "Testez gratuitement votre éligibilité à l'agrément CIR/CII avec notre application en ligne : évaluation en quelques questions, critères attendus et calendrier de dépôt.",
+      "Application gratuite éditée par Accelium : évaluez en quelques minutes votre éligibilité à l'agrément CIR/CII et les étapes du dépôt sur CIROCO.",
   },
   "/ressources/agrement-cir-cii"
 );

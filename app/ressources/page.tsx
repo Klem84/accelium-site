@@ -7,7 +7,7 @@ import { buildMetadata } from "@/lib/seo";
 
 export const metadata: Metadata = buildMetadata(
   {
-    title: "Ressources : livres blancs & outils | Accelium Conseil",
+    title: "Ressources : livres blancs et outils",
     description:
       "Livres blancs et application d'éligibilité à l'agrément CIR/CII, plus notre blog et nos cas clients : nos ressources pour décrypter le financement public.",
   },
