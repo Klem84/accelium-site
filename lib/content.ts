@@ -15,7 +15,7 @@ function readCollection<T = Record<string, unknown>>(name: string): Doc<T>[] {
   if (!fs.existsSync(dir)) return [];
   return fs
     .readdirSync(dir)
-    .filter((f) => f.endsWith(".mdx") || f.endsWith(".md"))
+    .filter((f) => (f.endsWith(".mdx") || f.endsWith(".md")) && !f.startsWith("_"))
     .map((file) => {
       const raw = fs.readFileSync(path.join(dir, file), "utf8");
       const { data, content } = matter(raw);
@@ -26,6 +26,17 @@ function readCollection<T = Record<string, unknown>>(name: string): Doc<T>[] {
 
 function getOne<T>(name: string, slug: string): Doc<T> | undefined {
   return readCollection<T>(name).find((d) => d.slug === slug);
+}
+
+// Lit un fichier MDX unique à la racine de content/ (pas une collection de plusieurs
+// fiches) : le frontmatter porte directement les données (ex. content/glossaire.mdx,
+// content/faq.mdx). Retourne undefined si le fichier n'existe pas encore.
+function readSingle<T = Record<string, unknown>>(filename: string): (T & { body: string }) | undefined {
+  const file = path.join(CONTENT_DIR, filename);
+  if (!fs.existsSync(file)) return undefined;
+  const raw = fs.readFileSync(file, "utf8");
+  const { data, content } = matter(raw);
+  return { ...(data as T), body: content.trim() };
 }
 
 // ── Types de collections (frontmatter) ──
@@ -61,21 +72,97 @@ export type Secteur = {
   derniereVerification?: string;
 };
 
+// Source unique de la fiche : ce frontmatter (§6.1 du plan) est le contrat que suivent
+// les rédacteurs pour content/dispositifs/<slug>.mdx.
 export type Dispositif = {
   slug: string;
   nom: string;
-  annee?: string;
+  nomCourt: string;
+  financeur?: string; // slug d'un financeur existant
+  famille?: "subventions" | "prets" | "garanties" | "exonerations" | "credits-impot";
   h1: string;
   definition: string;
-  enBref?: { pourQui: string; finance: string; combien: string; quand: string };
-  faq?: { question: string; reponse: string }[];
-  financeur?: string;
+  beneficiaires?: string[];
+  depensesEligibles?: string[];
+  tauxPlafond?: string;
+  forme?: string;
+  calendrier?: string;
+  cumul?: string;
+  lienOfficiel?: string;
   secteurs?: string[];
   offres?: string[];
-  related?: Related;
-  seo: Seo;
-  sources?: string[];
+  casClients?: string[];
+  dispositifsVoisins?: string[];
+  accompagnement?: string;
+  sources?: { titre: string; url: string }[];
+  auteur?: string;
   derniereVerification?: string;
+  updatedAt?: string;
+  seo: Seo;
+  faq?: { question: string; reponse: string }[];
+  indexable?: boolean;
+  related?: Related;
+};
+
+// Contrat §6.3 : content/regions/<slug>.mdx.
+export type Region = {
+  slug: string;
+  nom: string;
+  h1: string;
+  definition: string;
+  financeursRegionaux?: { nom: string; role: string; url?: string }[];
+  dispositifsRegionaux?: { nom: string; objet: string; taux?: string; calendrier?: string; source?: string }[];
+  dispositifsNationaux?: string[]; // slugs de pages dispositifs
+  casClients?: string[]; // slugs de content/cas-clients
+  projetsAnonymises?: { secteur: string; projet: string; financeur: string; montant?: string }[];
+  secteursActifs?: string[];
+  sources?: { titre: string; url: string }[];
+  derniereVerification?: string;
+  seo: Seo;
+  faq?: { question: string; reponse: string }[];
+  ordre?: number;
+  statut?: "complete" | "courte";
+};
+
+// Contrat §6.7 : content/newsletters/<aaaa-mm>.mdx.
+export type Newsletter = {
+  slug: string;
+  titre: string;
+  date: string; // AAAA-MM-JJ, utilisé pour le tri antéchronologique
+  numero?: string | number;
+  resume: string;
+  themes?: string[];
+  dispositifsCites?: string[]; // slugs de pages dispositifs
+  // Noms bruts (contrat §6.7). Le filtre confirme: true dans config/references.ts
+  // (à créer par A3) doit être appliqué avant affichage : voir isNomClientConfirme
+  // ci-dessous, à compléter dès que ce fichier existera.
+  clientsFelicites?: string[];
+  seo?: Seo;
+};
+
+// Contrat §5.8 : content/glossaire.mdx (fiche unique, pas de collection).
+export type GlossaireTerme = {
+  terme: string;
+  slug: string;
+  definition: string;
+  lien?: string;
+};
+export type Glossaire = {
+  titre?: string;
+  h1?: string;
+  intro?: string;
+  derniereVerification?: string;
+  sources?: { titre: string; url: string }[];
+  termes: GlossaireTerme[];
+  seo?: Seo;
+};
+
+// Contrat §5.8 : content/faq.mdx (fiche unique).
+export type FaqQuestion = { question: string; reponse: string; lien?: string };
+export type FaqTheme = { theme: string; questions: FaqQuestion[] };
+export type FaqTransversale = {
+  themes: FaqTheme[];
+  seo?: Seo;
 };
 
 export type Financeur = {
@@ -109,16 +196,26 @@ export type Article = {
 export type CasClient = {
   slug: string;
   titre: string;
+  h1?: string;
   secteur: string;
+  region?: string; // slug d'une région (§6.5)
   dispositif?: string;
+  dispositifNom?: string;
   financeur?: string;
+  financeurNom?: string;
   montant: string;
   montantLabel?: string;
+  montantAide?: number;
+  investissement?: string;
+  taux?: string;
+  delai?: string; // ex. "5 mois entre le dépôt et la notification"
+  annee?: number;
   contexte: string;
   resultat?: string;
   image?: string;
   anonymise?: boolean;
   featured?: boolean;
+  indexable?: boolean;
   seo?: Seo;
 };
 
@@ -179,3 +276,25 @@ export const getAuteur = (slug: string) => getOne<Auteur>("auteurs", slug);
 
 export const getPage = (slug: string) => getOne<Page>("pages", slug);
 export const getPages = () => readCollection<Page>("pages");
+
+export const getRegions = () =>
+  readCollection<Region>("regions").sort((a, b) => (a.ordre || 0) - (b.ordre || 0));
+export const getRegion = (slug: string) => getOne<Region>("regions", slug);
+
+export const getNewsletters = () =>
+  readCollection<Newsletter>("newsletters").sort((a, b) => (a.date < b.date ? 1 : -1));
+export const getNewsletter = (slug: string) => getOne<Newsletter>("newsletters", slug);
+
+export const getGlossaire = (): Glossaire =>
+  readSingle<Glossaire>("glossaire.mdx") || { termes: [] };
+
+export const getFaqTransversale = (): FaqTransversale =>
+  readSingle<FaqTransversale>("faq.mdx") || { themes: [] };
+
+// Règle §2.6 du brief commun : un nom de client ne s'affiche que si confirme: true
+// dans config/references.ts. Ce fichier n'existe pas encore (créé par A3) ; en
+// attendant, on masque tout nom par défaut plutôt que d'en afficher un non
+// confirmé. A brancher sur config/references.ts dès sa création.
+export function isNomClientConfirme(_nom: string): boolean {
+  return false;
+}
