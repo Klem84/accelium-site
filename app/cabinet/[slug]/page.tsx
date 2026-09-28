@@ -1,21 +1,18 @@
 import type { Metadata } from "next";
-import Link from "next/link";
 import { notFound } from "next/navigation";
 import { PageHero } from "@/components/blocks/PageHero";
 import { CtaBlock } from "@/components/blocks/CtaBlock";
 import { getPages, getPage } from "@/lib/content";
 import { buildMetadata } from "@/lib/seo";
 import { estNoindexTemporaire } from "@/config/indexation";
-import {
-  atouts,
-  deontologie,
-  mediateurTitre,
-  equipeExpertise,
-  partenairesCibles,
-  type Principe,
-} from "@/lib/cabinetData";
+import { atouts, deontologie, mediateurTitre, type Principe } from "@/lib/cabinetData";
 import { chiffres } from "@/config/chiffres";
-import { IconCheck, IconShield, IconLever } from "@/components/blocks/Icons";
+import { IconCheck, IconShield } from "@/components/blocks/Icons";
+import { EquipeSection } from "@/components/cabinet/EquipeSection";
+import { PartenairesSection } from "@/components/cabinet/PartenairesSection";
+import { EvenementsSection } from "@/components/cabinet/EvenementsSection";
+import { NousRejoindreSection } from "@/components/cabinet/NousRejoindreSection";
+import { SatisfactionSection } from "@/components/cabinet/SatisfactionSection";
 
 const PREFIX = "cabinet-";
 
@@ -24,6 +21,8 @@ const labels: Record<string, string> = {
   "nos-atouts": "Nos atouts",
   equipe: "L'équipe",
   partenaires: "Nos partenaires",
+  evenements: "Événements",
+  "nous-rejoindre": "Nous rejoindre",
   deontologie: "Déontologie",
 };
 
@@ -49,18 +48,11 @@ function getReferencementMediateur(): string | null {
 }
 
 /* Indicateurs de la page À propos : valeurs de config/chiffres.ts uniquement
-   (aucun chiffre en dur). Les champs null ne sont pas affichés. */
+   (aucun chiffre en dur). Les indicateurs de satisfaction, avec leur méthode,
+   sont rendus à part par components/cabinet/SatisfactionSection.tsx. */
 const indicateurs: { valeur: string; libelle: string }[] = [
   { valeur: chiffres.projets.affichage, libelle: chiffres.projets.libelle },
   { valeur: chiffres.clients.affichage, libelle: chiffres.clients.libelle },
-  {
-    valeur: `${String(chiffres.satisfaction.recommandation).replace(".", ",")}/${chiffres.satisfaction.recommandationSur}`,
-    libelle: `de recommandation (${chiffres.satisfaction.methode.toLowerCase()})`,
-  },
-  {
-    valeur: `${String(chiffres.satisfaction.satisfaction).replace(".", ",")}/${chiffres.satisfaction.satisfactionSur}`,
-    libelle: "de satisfaction globale",
-  },
 ];
 
 const histoire = [
@@ -163,7 +155,7 @@ export default function CabinetPage({ params }: { params: { slug: string } }) {
               <h2 className="display h-sec font-600 text-ink">En chiffres</h2>
               <p className="text-[0.88rem] text-slate">{chiffres.dateChiffresLabel}</p>
             </div>
-            <div className="grid grid-cols-2 lg:grid-cols-4 gap-4">
+            <div className="grid grid-cols-2 gap-4 max-w-3xl">
               {indicateurs.map((it) => (
                 <div key={it.libelle} className="rounded-2xl border border-line bg-cream p-7">
                   <div className="display text-[2.4rem] font-600 text-ink leading-none">{it.valeur}</div>
@@ -172,6 +164,8 @@ export default function CabinetPage({ params }: { params: { slug: string } }) {
               ))}
             </div>
           </section>
+
+          <SatisfactionSection />
         </>
       )}
 
@@ -197,100 +191,19 @@ export default function CabinetPage({ params }: { params: { slug: string } }) {
       )}
 
       {/* ===== L'ÉQUIPE ===== */}
-      {slug === "equipe" && (
-        <section className="wrap py-16 lg:py-24">
-          <ul className="flex flex-wrap gap-2 mb-12">
-            {equipeExpertise.map((e) => (
-              <li
-                key={e}
-                className="inline-flex rounded-full border border-line bg-cream px-4 py-2 text-[0.9rem] font-500 text-slateD"
-              >
-                {e}
-              </li>
-            ))}
-          </ul>
+      {slug === "equipe" && <EquipeSection />}
 
-          <div className="flex items-center justify-between gap-4 flex-wrap mb-7">
-            <h2 className="display h-sec font-600 text-ink">Les experts Accelium</h2>
-          </div>
-          <div className="max-w-[64ch] space-y-4 text-body leading-relaxed">
-            <p>
-              L'équipe réunit deux cultures complémentaires : l'analyse financière et le pilotage de
-              projets complexes, acquis dans la banque et le conseil, et la recherche appliquée,
-              acquise en laboratoire et en direction R&amp;D industrielle.
-            </p>
-            <p>
-              Chaque dossier est suivi par un interlocuteur unique, du diagnostic au versement de l'aide,
-              pour des entreprises situées partout en France.
-            </p>
-          </div>
+      {/* ===== PARTENAIRES ET CERCLE ===== */}
+      {slug === "partenaires" && <PartenairesSection />}
 
-          <div className="mt-10">
-            <a
-              href="https://www.linkedin.com/company/accelium-conseil"
-              target="_blank"
-              rel="noopener noreferrer"
-              className="inline-flex items-center gap-1 display text-[1.02rem] font-600 text-ink hover:text-orange700 focusable"
-            >
-              Accelium sur LinkedIn ↗
-            </a>
-          </div>
-        </section>
-      )}
+      {/* ===== ÉVÉNEMENTS ===== */}
+      {slug === "evenements" && <EvenementsSection />}
 
-      {/* ===== PARTENAIRES ===== */}
-      {slug === "partenaires" && (
-        <section className="wrap py-16 lg:py-24">
-          <div className="flex items-center justify-between gap-4 flex-wrap mb-8">
-            <h2 className="display h-sec font-600 text-ink max-w-[20ch]">Notre écosystème</h2>
-          </div>
-          <div className="max-w-[64ch] space-y-4 text-body leading-relaxed mb-16">
-            <p>
-              Un projet financé mobilise souvent plusieurs expertises : bureaux d'études pour le volet
-              technique, experts-comptables pour le plan de financement, banques pour le cofinancement,
-              écoles et laboratoires pour la R&amp;D.
-            </p>
-            <p>
-              Nous travaillons avec ces acteurs dans toute la France, chacun dans son rôle, pour que vos
-              dossiers soient complets et cohérents.
-            </p>
-          </div>
+      {/* ===== NOUS REJOINDRE ===== */}
+      {slug === "nous-rejoindre" && <NousRejoindreSection />}
 
-          <div className="rounded-3xl bg-ink text-white p-8 lg:p-12">
-            <div className="grid lg:grid-cols-12 gap-8 items-center">
-              <div className="lg:col-span-7">
-                <span className="inline-flex items-center justify-center w-12 h-12 rounded-xl bg-orange/15 text-orange2">
-                  <IconLever className="w-6 h-6" />
-                </span>
-                <h3 className="display text-[1.8rem] lg:text-[2.2rem] font-600 mt-5 leading-tight">
-                  Devenez partenaire
-                </h3>
-                <p className="mt-3 text-white/75 leading-relaxed max-w-[46ch]">
-                  Vous êtes expert-comptable, avocat, banquier ou conseil ? Construisons un partenariat au
-                  service de vos clients.
-                </p>
-                <ul className="mt-5 flex flex-wrap gap-2">
-                  {partenairesCibles.map((c) => (
-                    <li
-                      key={c}
-                      className="inline-flex rounded-full bg-white/10 px-3 py-1.5 text-[0.8rem] font-500 text-white/90"
-                    >
-                      {c}
-                    </li>
-                  ))}
-                </ul>
-              </div>
-              <div className="lg:col-span-5 lg:text-right">
-                <Link href="/contact" className="btn-primary focusable rounded-full px-7 py-4 text-[1rem] inline-flex">
-                  Proposer un partenariat
-                </Link>
-              </div>
-            </div>
-          </div>
-        </section>
-      )}
-
-      <CtaBlock />
+      {/* Le CTA diagnostic n'a pas de sens sur la page candidature. */}
+      {slug !== "nous-rejoindre" && <CtaBlock />}
     </>
   );
 }
