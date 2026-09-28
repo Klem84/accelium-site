@@ -2,18 +2,23 @@ import type { Metadata } from "next";
 import Image from "next/image";
 import Link from "next/link";
 import { Button } from "@/components/ui/Button";
-import { CtaBlock } from "@/components/blocks/CtaBlock";
-import { getCasClients } from "@/lib/content";
+import { PresenceNationale } from "@/components/home/PresenceNationale";
+import { FinanceursBand } from "@/components/home/FinanceursBand";
+import { ConfianceSection } from "@/components/home/ConfianceSection";
+import { ResultatsSection } from "@/components/home/ResultatsSection";
+import { RessourcesSection } from "@/components/home/RessourcesSection";
+import { getSecteurs } from "@/lib/content";
 import { buildMetadata } from "@/lib/seo";
 import { site } from "@/config/site";
 import { chiffres } from "@/config/chiffres";
 
 // Titre absolu (fiche J.1.16 amendée) : ignore le template `%s | Accelium` du layout.
+// Description : message national, investissement, innovation et transition (plan V2 §1).
 export const metadata: Metadata = buildMetadata(
   {
     title: "Accelium, conseil en financements publics en France",
     description:
-      "Accelium identifie, obtient et sécurise subventions, prêts bonifiés et crédits d'impôt CIR/CII pour les PME et ETI industrielles, partout en France. Diagnostic gratuit.",
+      "Accelium obtient subventions, prêts et crédits d'impôt (CIR, CII) pour vos projets d'investissement, d'innovation et de transition, partout en France.",
     absoluteTitle: true,
   },
   "/"
@@ -41,7 +46,7 @@ const offres = [
   {
     n: "04",
     titre: "Internalisation du CIR/CII",
-    desc: "Reprendre la main, gagner en autonomie, réduire vos honoraires.",
+    desc: "Reprendre la main et gagner en autonomie sur votre crédit d'impôt.",
     href: "/offres/internaliser-cir-cii",
   },
   {
@@ -52,37 +57,34 @@ const offres = [
   },
 ];
 
-const secteurs = [
-  { nom: "Forêt-bois", slug: "foret-bois", img: "/images/secteurs/secteur-foret-bois.jpg" },
-  { nom: "Industrie", slug: "industrie", img: "/images/secteurs/secteur-industrie.jpg" },
-  { nom: "Biomasse", slug: "biomasse", img: "/images/secteurs/secteur-biomasse.jpg" },
-  { nom: "Port maritime", slug: "port-maritime", img: "/images/secteurs/secteur-port-maritime.jpg" },
-  { nom: "Agriculture", slug: "agriculture", img: "/images/secteurs/secteur-agriculture.jpg" },
-  { nom: "Agroalimentaire", slug: "agroalimentaire", img: "/images/secteurs/secteur-agroalimentaire.jpg" },
-  { nom: "Béton", slug: "beton", img: "/images/secteurs/secteur-beton.jpg" },
-  { nom: "Enrobés", slug: "enrobes", img: "/images/secteurs/secteur-enrobes.jpg" },
-  { nom: "Défense", slug: "defense", img: "/images/secteurs/secteur-defense.jpg" },
-  { nom: "Distillerie", slug: "distillerie", img: "/images/secteurs/secteur-distillerie.jpg" },
-];
-
-const financeurs = ["Bpifrance", "ADEME", "Régions", "FranceAgriMer", "Agences de l'eau", "ASP", "Union européenne", "France 2030"];
-
 /* Chiffres clés : source unique config/chiffres.ts (décision de Clément du
-   27/09/2026). Les deux premiers sont des compteurs animés côté client, rendus
-   avec leur valeur finale dans le HTML (data-count) ; la satisfaction est un
-   ratio, affiché en texte statique (jamais dans un compteur). */
+   27/09/2026). Aucun montant d'aides (montantAidesObtenues est null). Les deux
+   premiers sont des compteurs animés côté client, rendus avec leur valeur finale
+   dans le HTML (data-count) ; la satisfaction est un ratio, affiché en texte
+   statique (jamais dans un compteur). */
 const statsCompteurs = [
   { n: chiffres.projets.compteur, suffix: chiffres.projets.suffixe, label: chiffres.projets.libelle },
   { n: chiffres.clients.compteur, suffix: chiffres.clients.suffixe, label: chiffres.clients.libelle },
 ];
 
+const virgule = (n: number, d: number) => n.toFixed(d).replace(".", ",");
+
+/* Ligne de preuve du hero (plan V2 §5.1), rendue dans le HTML et datée. */
+const nbRegionsClientes = chiffres.regionsClientes?.length ?? 0;
+const preuveHero = [
+  `Plus de ${chiffres.projets.compteur} ${chiffres.projets.libelle}`,
+  `${chiffres.clients.affichage} clients`,
+  `${virgule(chiffres.satisfaction.recommandation, 1)}/${chiffres.satisfaction.recommandationSur} de recommandation`,
+  nbRegionsClientes > 0 ? `Clients dans ${nbRegionsClientes} régions` : null,
+].filter((x): x is string => Boolean(x));
+
 export default function HomePage() {
-  const cas = getCasClients().filter((c) => c.featured).slice(0, 3);
+  const secteurs = getSecteurs();
 
   return (
     <>
-      {/* ===== HERO plein écran ===== */}
-      <section className="relative w-full overflow-hidden min-h-[600px] h-[100svh]">
+      {/* ===== HERO plein écran (image de Paris conservée, arbitrage §1) ===== */}
+      <section className="relative w-full overflow-hidden flex flex-col min-h-[max(600px,100svh)]">
         <Image
           data-parallax="0.18"
           src="/images/bannieres/hero-paris-vue-aerienne.jpg"
@@ -94,39 +96,56 @@ export default function HomePage() {
           className="object-cover parallax"
         />
         <div className="absolute inset-0 bg-gradient-to-t from-ink/85 via-ink/30 to-ink/45" />
-        <div className="absolute inset-0 bg-gradient-to-r from-ink/55 to-transparent" />
+        <div className="absolute inset-0 bg-gradient-to-r from-ink/65 to-transparent" />
 
-        <div className="hero-content relative h-full wrap flex flex-col justify-end pt-32 lg:pt-40 pb-[4vh]">
+        <div className="hero-content relative flex-1 wrap w-full flex flex-col justify-end pt-32 lg:pt-40 pb-[6vh]">
           <div className="reveal">
-            <p className="kicker text-orange2 mb-8 lg:mb-12 leading-[1.6]">
-              Accélère l'obtention de vos
-              <br />
-              financements publics
+            <p className="kicker text-orange2 mb-6 lg:mb-8 leading-[1.6]">
+              Cabinet de conseil en financements publics · Partout en France
             </p>
           </div>
-          <h1
-            className="display h-hero font-600 text-white max-w-[16ch] clip"
-            aria-label="Financez vos projets grâce aux financements publics"
-          >
+          <h1 className="display text-[clamp(2rem,1.1rem_+_3.4vw,4.2rem)] leading-[1.02] font-600 text-white max-w-[1100px] clip">
             <span className="clip-line">
-              <span>Financez vos projets</span>
+              <span>Financez vos projets d'investissement,</span>
+            </span>
+            <span className="clip-line">
+              <span>d'innovation et de transition</span>
             </span>
             <span className="clip-line">
               <span>
-                grâce aux <em className="not-italic text-orange2">financements publics</em>
+                grâce aux <em className="not-italic text-orange2">aides publiques</em>
               </span>
             </span>
           </h1>
-          <p className="lede measure mt-8 lg:mt-8 text-white/80 reveal">
-            Accelium identifie, obtient et sécurise toutes les aides auxquelles votre entreprise peut
-            prétendre. De la start-up à la grande entreprise, partout en France.
+          <p className="lede measure mt-7 text-white/80 reveal">
+            Accelium identifie, obtient et sécurise les subventions, prêts bonifiés et crédits d'impôt de vos
+            projets : nouvelle ligne de production, R&amp;D, décarbonation, relocalisation. Tous les financeurs,
+            de la Région à l'Union européenne, avec un interlocuteur unique jusqu'au versement.
           </p>
-          <div className="mt-7 lg:mt-9 flex flex-wrap items-center gap-4 reveal">
+
+          <p className="mt-6 text-[0.88rem] text-white/80 max-w-[70ch] reveal">
+            {preuveHero.map((item, i) => (
+              <span key={item}>
+                {i > 0 && (
+                  <span aria-hidden="true" className="mx-2 text-orange2">
+                    ·
+                  </span>
+                )}
+                <span className="font-600 text-white">{item}</span>
+              </span>
+            ))}
+            <span aria-hidden="true" className="mx-2 text-orange2">
+              ·
+            </span>
+            <span className="text-white/70">{chiffres.dateChiffresLabel}</span>
+          </p>
+
+          <div className="mt-7 lg:mt-8 flex flex-wrap items-center gap-4 reveal">
             <Button href="/contact" variant="primary" arrow>
-              Obtenir mon diagnostic gratuit
+              Demander un diagnostic gratuit
             </Button>
-            <Button href="/offres" variant="ghost-d">
-              Découvrir nos offres
+            <Button href="/cas-clients" variant="ghost-d">
+              Voir les projets financés
             </Button>
           </div>
         </div>
@@ -141,15 +160,16 @@ export default function HomePage() {
         <div className="grid lg:grid-cols-12 gap-12">
           <div className="lg:col-span-8">
             <h2 className="display h-mega font-500 text-ink reveal">
-              Plusieurs milliers de dispositifs existent.{" "}
-              <span className="text-slate">La plupart des entreprises n'en mobilisent qu'une fraction.</span>{" "}
-              Nous trouvons les vôtres.
+              Plusieurs milliers de dispositifs existent, de la Région à l'Union européenne.{" "}
+              <span className="text-slate">Une entreprise en mobilise rarement plus de deux.</span>{" "}
+              Nous trouvons les vôtres, nous montons les dossiers et nous les défendons.
             </h2>
           </div>
           <div className="lg:col-span-4 flex items-end">
             <p className="lede text-body reveal">
-              Subventions, prêts, crédits d'impôt, CIR/CII : nous couvrons tout le spectre du financement
-              public, de la stratégie au versement.
+              Subventions, prêts, crédits d'impôt, CIR et CII : nous couvrons tout le spectre du financement
+              public, pour les projets industriels comme pour les projets d'innovation et de R&amp;D, de la
+              stratégie au versement.
             </p>
           </div>
         </div>
@@ -168,14 +188,14 @@ export default function HomePage() {
           ))}
           <div>
             <div className="display text-[clamp(2.6rem,1.8rem_+_2vw,3.6rem)] font-600 text-ink">
-              {chiffres.satisfaction.recommandation.toFixed(1).replace(".", ",")}
+              {virgule(chiffres.satisfaction.recommandation, 1)}
               <span className="text-[1.4rem]">/{chiffres.satisfaction.recommandationSur}</span>
             </div>
             <p className="mt-2 text-[0.9rem] text-body">de recommandation</p>
           </div>
           <div>
             <div className="display text-[clamp(2.6rem,1.8rem_+_2vw,3.6rem)] font-600 text-ink">
-              {chiffres.satisfaction.satisfaction.toFixed(2).replace(".", ",")}
+              {virgule(chiffres.satisfaction.satisfaction, 2)}
               <span className="text-[1.4rem]">/{chiffres.satisfaction.satisfactionSur}</span>
             </div>
             <p className="mt-2 text-[0.9rem] text-body">de satisfaction</p>
@@ -225,31 +245,10 @@ export default function HomePage() {
         </div>
       </section>
 
-      {/* ===== BANDEAU VILLE pleine largeur (Lyon) ===== */}
-      <section className="relative h-[60vh] min-h-[420px] w-full overflow-hidden flex items-center">
-        <Image
-          data-parallax="0.15"
-          src="/images/bannieres/ville-lyon-lumiere-doree.jpg"
-          alt="Lyon sous la lumière dorée"
-          fill
-          sizes="100vw"
-          style={{ height: "118%" }}
-          className="object-cover parallax"
-        />
-        <div className="absolute inset-0 bg-ink/55" />
-        <div className="relative wrap text-white">
-          <p className="kicker text-orange2 mb-5 reveal">Une présence nationale</p>
-          <h2 className="display h-mega font-500 max-w-[18ch] reveal">
-            Partout en France, nous mobilisons les financeurs de votre territoire.
-          </h2>
-          <Link href="/le-financement-public" className="mt-8 inline-flex items-center gap-2 text-white font-600 focusable reveal group">
-            Comprendre le financement public{" "}
-            <span className="text-orange2 transition-transform group-hover:translate-x-1">→</span>
-          </Link>
-        </div>
-      </section>
+      {/* ===== PRÉSENCE NATIONALE (remplace le bandeau photo de Lyon) ===== */}
+      <PresenceNationale />
 
-      {/* ===== SECTEURS ===== */}
+      {/* ===== SECTEURS (12 cartes, visuels locaux) ===== */}
       <section id="secteurs" className="wrap py-24 lg:py-32">
         <div className="flex flex-wrap items-end justify-between gap-6 mb-12">
           <div className="reveal">
@@ -262,87 +261,44 @@ export default function HomePage() {
           </p>
         </div>
 
-        <div data-stagger className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-3">
+        <div data-stagger className="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-6 gap-3">
           {secteurs.map((s) => (
             <Link
               key={s.slug}
               href={`/secteurs/${s.slug}`}
-              className="group focusable relative rounded-xl overflow-hidden aspect-[3/4] photo"
+              className="group focusable relative rounded-xl overflow-hidden aspect-[3/4] photo bg-ink"
             >
-              <Image
-                src={s.img}
-                alt={s.nom}
-                fill
-                sizes="(min-width: 1024px) 20vw, (min-width: 768px) 33vw, 50vw"
-                className="object-cover"
-              />
-              <div className="absolute inset-0 bg-gradient-to-t from-ink/85 via-ink/10 to-transparent" />
-              <span className="absolute left-4 bottom-4 text-white font-600 display text-[1.15rem]">{s.nom}</span>
-            </Link>
-          ))}
-        </div>
-      </section>
-
-      {/* ===== FINANCEURS marquee ===== */}
-      <section className="py-14 border-b border-line overflow-hidden">
-        <p className="kicker text-center text-slate mb-8">De l'échelon local à l'Europe, tous les financeurs</p>
-        <div className="mq-mask">
-          <div className="marquee-track display text-[clamp(1.4rem,1rem_+_1.4vw,2.2rem)] font-500 text-ink/60">
-            {[...financeurs, ...financeurs].map((f, i) => (
-              <span key={i}>{f}</span>
-            ))}
-          </div>
-        </div>
-      </section>
-
-      {/* ===== CAS CLIENTS ===== */}
-      <section className="wrap py-24 lg:py-32">
-        <div className="flex flex-wrap items-end justify-between gap-6 mb-14">
-          <div className="reveal">
-            <p className="kicker text-orange700 mb-4">Résultats</p>
-            <h2 className="display h-sec font-600 text-ink max-w-[18ch]">
-              Derrière chaque accompagnement, un projet financé
-            </h2>
-            <p className="mt-4 text-[0.92rem] text-slateD measure">
-              Projets réels accompagnés par Accelium : montants d'aide mobilisés, clients anonymisés.
-            </p>
-          </div>
-          <Link href="/cas-clients" className="btn-ghost focusable rounded-full px-6 py-3 text-[0.92rem] reveal">
-            Tous nos cas clients
-          </Link>
-        </div>
-        <div data-stagger className="grid md:grid-cols-3 gap-4">
-          {cas.map((c) => (
-            <Link
-              key={c.slug}
-              href={`/cas-clients/${c.slug}`}
-              className="group rounded-2xl overflow-hidden border border-line bg-surface shadow-soft block"
-            >
-              {c.image && (
-                <div className="relative photo aspect-[16/10]">
-                  <Image
-                    src={c.image}
-                    alt={c.secteur}
-                    fill
-                    sizes="(min-width: 768px) 33vw, 100vw"
-                    className="object-cover"
-                  />
-                </div>
+              {s.image && (
+                <Image
+                  src={s.image}
+                  alt=""
+                  fill
+                  sizes="(min-width: 1024px) 16vw, (min-width: 768px) 25vw, 50vw"
+                  className="object-cover"
+                />
               )}
-              <div className="p-7">
-                <span className="inline-flex text-[0.72rem] font-600 tracking-wide uppercase text-orange700 bg-orange/10 rounded-full px-3 py-1">
-                  {c.secteur}
-                </span>
-                <p className="display text-[2.2rem] font-600 text-ink mt-4 leading-none">{c.montant}</p>
-                <p className="mt-1 text-[0.82rem] font-600 text-slateD">{c.titre}</p>
-                <p className="mt-2 text-[0.95rem] text-body">{c.contexte}</p>
-              </div>
+              <div className="absolute inset-0 bg-gradient-to-t from-ink/90 via-ink/20 to-transparent" />
+              <span className="absolute left-4 right-4 bottom-4 text-white font-600 display text-[1.05rem] leading-tight">
+                {s.nom}
+              </span>
             </Link>
           ))}
         </div>
       </section>
 
-      {/* ===== CTA pleine largeur (Marseille) ===== */}
+      {/* ===== FINANCEURS (typographie, docs/logos-financeurs.md) ===== */}
+      <FinanceursBand />
+
+      {/* ===== ILS NOUS FONT CONFIANCE (rendue seulement si au moins 5 références confirmées) ===== */}
+      <ConfianceSection />
+
+      {/* ===== RÉSULTATS : 3 cas featured d'aide obtenue ===== */}
+      <ResultatsSection />
+
+      {/* ===== RESSOURCES : dernière newsletter, dernier article, dernier dispositif vérifié ===== */}
+      <RessourcesSection />
+
+      {/* ===== CTA pleine largeur ===== */}
       <section className="relative w-full overflow-hidden">
         <Image
           data-parallax="0.12"
