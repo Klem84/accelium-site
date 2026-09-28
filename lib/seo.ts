@@ -14,6 +14,20 @@ export type Seo = {
 /** Image OG par défaut (générée par scripts/build-og.ts), utilisée quand la page n'en fournit pas. */
 export const defaultOgImage = "/og-default.png";
 
+/** Longueur maximale d'un title rendu (suffixe compris), cf. plan V2 §8 axe F. */
+const TITLE_MAX = 60;
+const SUFFIX = ` | ${site.shortName}`;
+
+/**
+ * Titre final : retire un éventuel suffixe « | Accelium… » saisi à la main, puis
+ * laisse le layout ajouter « | Accelium » seulement si le total tient dans 60 caractères.
+ */
+function resolveTitle(seo: Seo): Metadata["title"] {
+  const title = seo.title.replace(/\s*\|\s*Accelium.*$/i, "").trim();
+  if (seo.absoluteTitle || title.length + SUFFIX.length > TITLE_MAX) return { absolute: title };
+  return title;
+}
+
 export function buildMetadata(seo: Seo, path: string = "/"): Metadata {
   const canonical = seo.canonical || path;
   const url = new URL(canonical, site.url).toString();
@@ -21,7 +35,7 @@ export function buildMetadata(seo: Seo, path: string = "/"): Metadata {
   const ogImageUrl = new URL(ogImage, site.url).toString();
 
   return {
-    title: seo.absoluteTitle ? { absolute: seo.title } : seo.title,
+    title: resolveTitle(seo),
     description: seo.description,
     alternates: { canonical: url },
     robots: seo.noindex ? { index: false, follow: false } : { index: true, follow: true },
