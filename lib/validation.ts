@@ -10,6 +10,9 @@ export const diagnosticSchema = z.object({
   consentement: z.literal(true, {
     errorMap: () => ({ message: "Le consentement est requis." }),
   }),
+  // Contexte de pré-remplissage (?offre=/?secteur=/?dispositif=/?objet=), transmis à la
+  // colonne source Monday pour savoir depuis quelle page la demande provient (L2.7).
+  origine: z.string().max(160).optional().or(z.literal("")),
   // honeypot : doit rester vide
   website: z.string().max(0).optional().or(z.literal("")),
   turnstileToken: z.string().optional().or(z.literal("")),

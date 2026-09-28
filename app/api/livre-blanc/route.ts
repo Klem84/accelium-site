@@ -1,13 +1,15 @@
 import { NextRequest, NextResponse } from "next/server";
 import { livreBlancSchema } from "@/lib/validation";
 import { verifyTurnstile } from "@/lib/turnstile";
-import { sendLivreBlancEmails } from "@/lib/resend";
+import { sendLivreBlancEmails, sendMondayFailureAlert } from "@/lib/resend";
 import { createLeadLivreBlanc } from "@/lib/monday";
 import { getLivreBlanc } from "@/config/livres-blancs";
 
 export const runtime = "nodejs";
 
-// Rate-limiting basique en mémoire (best-effort).
+// Rate-limiting basique en mémoire : 5 requêtes / 60 s / IP (best-effort, cf. commentaire
+// détaillé dans app/api/diagnostic/route.ts). Même règle Vercel WAF à activer en complément
+// sur le chemin /api/livre-blanc.
 const hits = new Map<string, { count: number; ts: number }>();
 const WINDOW = 60_000;
 const MAX = 5;
@@ -76,6 +78,17 @@ export async function POST(req: NextRequest) {
   const host = req.headers.get("x-forwarded-host") || req.headers.get("host");
   const baseUrl = host ? `${proto}://${host}` : undefined;
 
+  // Ordre imposé (fiche H4 / L2.7) : Monday (CRM) d'abord, puis Resend (envoi du document).
+  try {
+    const result = await createLeadLivreBlanc(data, livre.titre, isoDate);
+    if (!result.ok) {
+      await sendMondayFailureAlert(`Livre blanc — ${livre.titre}`, { ...data, isoDate });
+    }
+  } catch (e) {
+    console.error("[livre-blanc] création Monday échouée:", e);
+    await sendMondayFailureAlert(`Livre blanc — ${livre.titre} (exception)`, { ...data, isoDate });
+  }
+
   // Email (avec le lien de téléchargement) — bloquant
   try {
     await sendLivreBlancEmails(data, livre, baseUrl);
@@ -85,13 +98,6 @@ export async function POST(req: NextRequest) {
       { ok: false, error: "Une erreur est survenue lors de l'envoi. Merci de réessayer ou de nous appeler." },
       { status: 502 }
     );
-  }
-
-  // Monday (CRM) — non bloquant
-  try {
-    await createLeadLivreBlanc(data, livre.titre, isoDate);
-  } catch (e) {
-    console.error("[livre-blanc] création Monday échouée:", e);
   }
 
   return NextResponse.json({ ok: true });

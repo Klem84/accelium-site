@@ -3,6 +3,8 @@
 import { useEffect, useRef, useState } from "react";
 import Link from "next/link";
 import Script from "next/script";
+import { useRouter } from "next/navigation";
+import { track } from "@vercel/analytics";
 import { livresBlancs, type LivreBlanc } from "@/config/livres-blancs";
 
 type Status = "idle" | "submitting" | "success" | "error";
@@ -58,6 +60,7 @@ export function LivresBlancs() {
 }
 
 function LivreBlancModal({ livre, onClose }: { livre: LivreBlanc; onClose: () => void }) {
+  const router = useRouter();
   const siteKey = process.env.NEXT_PUBLIC_TURNSTILE_SITE_KEY;
   const [status, setStatus] = useState<Status>("idle");
   const [error, setError] = useState<string>("");
@@ -65,6 +68,7 @@ function LivreBlancModal({ livre, onClose }: { livre: LivreBlanc; onClose: () =>
   const [token, setToken] = useState<string>("");
   const tsRef = useRef<HTMLDivElement>(null);
   const tsId = useRef<string | null>(null);
+  const formRef = useRef<HTMLFormElement>(null);
 
   const renderTurnstile = () => {
     if (siteKey && window.turnstile && tsRef.current && !tsId.current) {
@@ -116,10 +120,18 @@ function LivreBlancModal({ livre, onClose }: { livre: LivreBlanc; onClose: () =>
       const json = await res.json();
       if (res.ok && json.ok) {
         setStatus("success");
+        track("livre_blanc_telecharge", { slug: livre.slug, titre: livre.titre });
+        router.push(`/merci-livre-blanc?doc=${encodeURIComponent(livre.slug)}`);
       } else {
         setStatus("error");
         setError(json.error || "Une erreur est survenue.");
-        setFieldErrors(json.fieldErrors || {});
+        const errs = json.fieldErrors || {};
+        setFieldErrors(errs);
+        if (formRef.current) {
+          const order = ["nom", "email"];
+          const first = order.find((f) => errs[f]?.length);
+          if (first) (formRef.current.elements.namedItem(first) as HTMLElement | null)?.focus();
+        }
         if (window.turnstile && tsId.current) {
           window.turnstile.reset(tsId.current);
           setToken("");
@@ -187,7 +199,7 @@ function LivreBlancModal({ livre, onClose }: { livre: LivreBlanc; onClose: () =>
                 />
               )}
 
-              <form onSubmit={onSubmit} className="mt-6 space-y-4" noValidate>
+              <form ref={formRef} onSubmit={onSubmit} className="mt-6 space-y-4" noValidate>
                 {error && (
                   <p className="rounded-xl bg-orange/10 text-orange700 px-4 py-3 text-[0.92rem]" role="alert">
                     {error}
@@ -198,8 +210,18 @@ function LivreBlancModal({ livre, onClose }: { livre: LivreBlanc; onClose: () =>
                   <label htmlFor="lb-nom" className="block text-[0.85rem] font-600 text-ink mb-1.5">
                     Nom <span className="text-orange">*</span>
                   </label>
-                  <input id="lb-nom" name="nom" required className={fieldClass} autoComplete="name" />
-                  {fieldErrors.nom && <p className="mt-1 text-[0.8rem] text-orange700">{fieldErrors.nom[0]}</p>}
+                  <input
+                    id="lb-nom"
+                    name="nom"
+                    required
+                    className={fieldClass}
+                    autoComplete="name"
+                    aria-invalid={!!fieldErrors.nom}
+                    aria-describedby={fieldErrors.nom ? "err-lb-nom" : undefined}
+                  />
+                  {fieldErrors.nom && (
+                    <p id="err-lb-nom" className="mt-1 text-[0.8rem] text-orange700">{fieldErrors.nom[0]}</p>
+                  )}
                 </div>
 
                 <div>
@@ -213,8 +235,19 @@ function LivreBlancModal({ livre, onClose }: { livre: LivreBlanc; onClose: () =>
                   <label htmlFor="lb-email" className="block text-[0.85rem] font-600 text-ink mb-1.5">
                     Email <span className="text-orange">*</span>
                   </label>
-                  <input id="lb-email" name="email" type="email" required className={fieldClass} autoComplete="email" />
-                  {fieldErrors.email && <p className="mt-1 text-[0.8rem] text-orange700">{fieldErrors.email[0]}</p>}
+                  <input
+                    id="lb-email"
+                    name="email"
+                    type="email"
+                    required
+                    className={fieldClass}
+                    autoComplete="email"
+                    aria-invalid={!!fieldErrors.email}
+                    aria-describedby={fieldErrors.email ? "err-lb-email" : undefined}
+                  />
+                  {fieldErrors.email && (
+                    <p id="err-lb-email" className="mt-1 text-[0.8rem] text-orange700">{fieldErrors.email[0]}</p>
+                  )}
                 </div>
 
                 {/* Honeypot anti-spam (caché) */}
@@ -230,6 +263,8 @@ function LivreBlancModal({ livre, onClose }: { livre: LivreBlanc; onClose: () =>
                     type="checkbox"
                     required
                     className="mt-1 h-5 w-5 accent-orange focusable"
+                    aria-invalid={!!fieldErrors.consentement}
+                    aria-describedby={fieldErrors.consentement ? "err-lb-consentement" : undefined}
                   />
                   <label htmlFor="lb-consentement" className="text-[0.85rem] text-body">
                     J'accepte que mes données soient utilisées pour recevoir ce document et être recontacté(e),
@@ -241,7 +276,7 @@ function LivreBlancModal({ livre, onClose }: { livre: LivreBlanc; onClose: () =>
                   </label>
                 </div>
                 {fieldErrors.consentement && (
-                  <p className="text-[0.8rem] text-orange700">{fieldErrors.consentement[0]}</p>
+                  <p id="err-lb-consentement" className="text-[0.8rem] text-orange700">{fieldErrors.consentement[0]}</p>
                 )}
 
                 {siteKey && <div ref={tsRef} className="cf-turnstile" />}

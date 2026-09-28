@@ -60,6 +60,35 @@ export async function sendLeadEmails(data: DiagnosticInput): Promise<{ ok: boole
   return { ok: true };
 }
 
+// Fiche H4 / L2.7 : si la création du lead dans Monday échoue, on alerte immédiatement une
+// adresse interne pour que le lead ne soit pas silencieusement perdu côté CRM (l'email au
+// prospect a, lui, déjà été envoyé ou va l'être : le lead n'est jamais perdu côté contact).
+export async function sendMondayFailureAlert(contexte: string, data: Record<string, unknown>): Promise<void> {
+  if (!resend) {
+    console.warn("[resend] RESEND_API_KEY manquant — alerte Monday non envoyée (mock).", contexte, data);
+    return;
+  }
+  try {
+    await resend.emails.send({
+      from,
+      to,
+      subject: `⚠ Échec Monday — ${contexte}`,
+      html: `
+      <div style="font-family:system-ui,sans-serif;color:#1B2336">
+        <h2 style="color:#F26122">La création du lead dans Monday a échoué</h2>
+        <p>Contexte : <strong>${esc(contexte)}</strong></p>
+        <p style="color:#5C6B8A">Le lead ci-dessous n'a peut-être pas été enregistré dans le CRM. À vérifier et,
+        si besoin, à saisir manuellement dans le board « Leads Site internet ».</p>
+        <pre style="background:#F5F4EF;padding:12px;border-radius:8px;white-space:pre-wrap">${esc(
+          JSON.stringify(data, null, 2)
+        )}</pre>
+      </div>`,
+    });
+  } catch (e) {
+    console.error("[resend] envoi de l'alerte Monday échoué:", e);
+  }
+}
+
 export async function sendLivreBlancEmails(
   data: LivreBlancInput,
   livre: LivreBlanc,

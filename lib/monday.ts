@@ -18,18 +18,25 @@ const COL = {
 
 export async function createLead(
   data: DiagnosticInput,
-  isoDate: string
-): Promise<{ ok: boolean; skipped?: boolean; id?: string }> {
+  isoDate: string,
+  origine?: string
+): Promise<{ ok: boolean; skipped?: boolean; deduplicated?: boolean; id?: string }> {
   if (!TOKEN) {
     console.warn("[monday] MONDAY_API_TOKEN manquant — création simulée (mock).");
     return { ok: true, skipped: true };
   }
 
+  const existing = await findItemIdByEmail(data.email);
+  if (existing) {
+    return { ok: true, deduplicated: true, id: existing };
+  }
+
+  const source = origine ? `Site — Diagnostic gratuit (${origine})` : "Site — Diagnostic gratuit";
   const columnValues: Record<string, unknown> = {
     [COL.societe]: data.societe,
     [COL.email]: { email: data.email, text: data.email },
     [COL.statut]: { label: "Nouveau" },
-    [COL.source]: "Site — Diagnostic gratuit",
+    [COL.source]: source,
     [COL.consentement]: { checked: "true" },
     [COL.date]: { date: isoDate.slice(0, 10) },
   };
@@ -44,10 +51,15 @@ export async function createLeadLivreBlanc(
   data: LivreBlancInput,
   titreLivre: string,
   isoDate: string
-): Promise<{ ok: boolean; skipped?: boolean; id?: string }> {
+): Promise<{ ok: boolean; skipped?: boolean; deduplicated?: boolean; id?: string }> {
   if (!TOKEN) {
     console.warn("[monday] MONDAY_API_TOKEN manquant — création simulée (mock).");
     return { ok: true, skipped: true };
+  }
+
+  const existing = await findItemIdByEmail(data.email);
+  if (existing) {
+    return { ok: true, deduplicated: true, id: existing };
   }
 
   const columnValues: Record<string, unknown> = {
@@ -60,6 +72,42 @@ export async function createLeadLivreBlanc(
   if (data.societe) columnValues[COL.societe] = data.societe;
 
   return createItem(`${data.nom}${data.societe ? ` — ${data.societe}` : ""}`, columnValues);
+}
+
+// Déduplication (fiche H8 / L2.7) : recherche la présence d'un lead existant par email avant
+// toute création, sans jamais lister ni exporter les leads du board (on ne récupère que
+// l'identifiant du premier item trouvé, pour décider de créer ou non).
+async function findItemIdByEmail(email: string): Promise<string | undefined> {
+  const query = `query ($board: ID!, $col: String!, $val: [String!]!) {
+    items_page_by_column_values(board_id: $board, columns: [{column_id: $col, column_values: $val}], limit: 1) {
+      items { id }
+    }
+  }`;
+
+  try {
+    const res = await fetch("https://api.monday.com/v2", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: TOKEN as string,
+        "API-Version": "2024-10",
+      },
+      body: JSON.stringify({
+        query,
+        variables: { board: BOARD_ID, col: COL.email, val: [email] },
+      }),
+    });
+    const json = await res.json();
+    if (json.errors) {
+      console.error("[monday] erreur recherche par email:", JSON.stringify(json.errors));
+      return undefined;
+    }
+    const items = json.data?.items_page_by_column_values?.items as { id: string }[] | undefined;
+    return items && items.length > 0 ? items[0].id : undefined;
+  } catch (e) {
+    console.error("[monday] exception recherche par email:", e);
+    return undefined;
+  }
 }
 
 async function createItem(

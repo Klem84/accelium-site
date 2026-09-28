@@ -1,4 +1,15 @@
 const SECRET = process.env.TURNSTILE_SECRET_KEY;
+const SITE_KEY = process.env.NEXT_PUBLIC_TURNSTILE_SITE_KEY;
+
+// Fiche H4 / L2.7 : si une seule des deux clés Turnstile est définie, la protection anti-spam
+// est dans un état incohérent (clé publique sans secret côté serveur, ou l'inverse) sans que
+// personne ne s'en aperçoive. On échoue bruyamment au build plutôt que de servir un formulaire
+// mal protégé en production.
+if ((SECRET && !SITE_KEY) || (!SECRET && SITE_KEY)) {
+  throw new Error(
+    "[turnstile] Configuration incohérente : TURNSTILE_SECRET_KEY et NEXT_PUBLIC_TURNSTILE_SITE_KEY doivent être définies ensemble, ou absentes ensemble (mode dégradé volontaire)."
+  );
+}
 
 export async function verifyTurnstile(token: string | undefined, ip?: string): Promise<boolean> {
   // Si aucune clé configurée → on n'impose pas Turnstile (mode dégradé contrôlé).
