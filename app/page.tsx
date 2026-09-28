@@ -85,16 +85,16 @@ export default function HomePage() {
     <>
       {/* ===== HERO plein écran (image de Paris conservée, arbitrage §1) ===== */}
       <section className="relative w-full overflow-hidden flex flex-col min-h-[max(600px,100svh)]">
-        <Image
-          data-parallax="0.18"
-          src="/images/bannieres/hero-paris-vue-aerienne.jpg"
-          alt="Paris au coucher du soleil, vue aérienne"
-          fill
-          priority
-          sizes="100vw"
-          style={{ height: "118%" }}
-          className="object-cover parallax"
-        />
+        <div data-parallax="0.18" className="parallax absolute inset-x-0 top-0 h-[118%]">
+          <Image
+            src="/images/bannieres/hero-paris-vue-aerienne.jpg"
+            alt="Paris au coucher du soleil, vue aérienne"
+            fill
+            priority
+            sizes="100vw"
+            className="object-cover"
+          />
+        </div>
         <div className="absolute inset-0 bg-gradient-to-t from-ink/85 via-ink/30 to-ink/45" />
         <div className="absolute inset-0 bg-gradient-to-r from-ink/65 to-transparent" />
 
@@ -300,16 +300,16 @@ export default function HomePage() {
 
       {/* ===== CTA pleine largeur ===== */}
       <section className="relative w-full overflow-hidden">
-        <Image
-          data-parallax="0.12"
-          src="/images/bannieres/usine-nuit-financement-projet.jpg"
-          alt=""
-          aria-hidden="true"
-          fill
-          sizes="100vw"
-          style={{ height: "118%" }}
-          className="object-cover parallax"
-        />
+        <div data-parallax="0.12" className="parallax absolute inset-x-0 top-0 h-[118%]">
+          <Image
+            src="/images/bannieres/usine-nuit-financement-projet.jpg"
+            alt=""
+            aria-hidden="true"
+            fill
+            sizes="100vw"
+            className="object-cover"
+          />
+        </div>
         <div className="absolute inset-0 bg-gradient-to-r from-ink/90 via-ink/75 to-ink/45" />
         <div className="relative wrap py-28 lg:py-40">
           <div className="max-w-2xl reveal">
