@@ -68,6 +68,18 @@ function extractLinkHref(html: string, rel: string): string | null {
   return m ? m[1] : null;
 }
 
+/** Décode les entités HTML courantes pour mesurer la longueur réelle des textes. */
+function decode(v: string | null): string | null {
+  if (v == null) return v;
+  return v
+    .replace(/&#x27;|&#39;/g, "'")
+    .replace(/&quot;/g, '"')
+    .replace(/&amp;/g, "&")
+    .replace(/&lt;/g, "<")
+    .replace(/&gt;/g, ">")
+    .replace(/&nbsp;/g, " ");
+}
+
 const PLACEHOLDER_RE = /(À COMPLÉTER|A COMPLETER|lorem ipsum)/i;
 
 type PageInfo = {
@@ -79,6 +91,8 @@ type PageInfo = {
   ogTitle: string | null;
   h1Count: number;
   internalLinks: string[];
+  /** Page exclue de l'index (meta robots noindex) ou page technique (404) : ignorée pour doublons et orphelines. */
+  horsIndex: boolean;
 };
 
 const pages: PageInfo[] = [];
@@ -86,15 +100,17 @@ const pages: PageInfo[] = [];
 for (const file of htmlFiles) {
   const html = fs.readFileSync(file, "utf8");
   const url = urlFromFile(file);
-  const title = extractTag(html, "title");
-  const description = extractMeta(html, "description");
+  const title = decode(extractTag(html, "title"));
+  const description = decode(extractMeta(html, "description"));
+  const robots = extractMeta(html, "robots") || "";
+  const horsIndex = /noindex/i.test(robots) || url === "/_not-found";
   const canonical = extractLinkHref(html, "canonical");
   const ogTitle = extractMeta(html, "og:title", "property");
   const h1Matches = html.match(/<h1[^>]*>/gi) || [];
 
   const internalLinks = [...html.matchAll(/<a[^>]*href=["'](\/[^"'#?]*)["'][^>]*>/gi)].map((m) => m[1]);
 
-  pages.push({ url, file, title, description, canonical, ogTitle, h1Count: h1Matches.length, internalLinks });
+  pages.push({ url, file, title, description, canonical, ogTitle, h1Count: h1Matches.length, internalLinks, horsIndex });
 
   if (!title) {
     report(url, "title-absent", "Aucun <title>.");
@@ -146,6 +162,7 @@ function h1Count(html: string): number {
 function findDuplicates(getValue: (p: PageInfo) => string | null, label: string) {
   const byValue = new Map<string, string[]>();
   for (const p of pages) {
+    if (p.horsIndex) continue;
     const v = getValue(p);
     if (!v) continue;
     byValue.set(v, [...(byValue.get(v) || []), p.url]);
@@ -165,6 +182,7 @@ findDuplicates((p) => p.description, "description");
 // H1 dupliqué : extrait le premier H1 texte pour comparaison.
 const h1Texts = new Map<string, string | null>();
 for (const p of pages) {
+  if (p.horsIndex) continue;
   const html = fs.readFileSync(p.file, "utf8");
   const m = html.match(/<h1[^>]*>([\s\S]*?)<\/h1>/i);
   h1Texts.set(p.url, m ? m[1].replace(/<[^>]+>/g, "").replace(/\s+/g, " ").trim() : null);
@@ -196,7 +214,7 @@ for (const p of pages) {
   const normalizedUrl = p.url.replace(/\/$/, "") || "/";
   const isHomepage = normalizedUrl === "/";
   const isLegalOrUtility = /^\/(mentions-legales|politique-de-confidentialite|cgu|cookies)$/.test(normalizedUrl);
-  if (!isHomepage && !linkedTargets.has(normalizedUrl)) {
+  if (!p.horsIndex && !isHomepage && !linkedTargets.has(normalizedUrl)) {
     report(p.url, "page-orpheline", "Aucun lien interne entrant trouvé depuis les autres pages HTML générées." + (isLegalOrUtility ? " (page légale : vérifier le lien footer.)" : ""));
   }
 }
