@@ -1,6 +1,6 @@
 import type { SVGProps } from "react";
 
-/* Jeu d'icônes maison — trait fin (1.6), cohérent avec le pictogramme Accelium. */
+/* Jeu d'icônes maison, trait fin (1.6), cohérent avec le pictogramme Accelium. */
 
 type IconProps = SVGProps<SVGSVGElement>;
 
@@ -134,5 +134,11 @@ export const IconLever = (p: IconProps) => (
   <Base {...p}>
     <path d="M3 17h18M5 17l8-9M13 8l3 3M13 8l-2.5-2.5M16 11l4.5-4.5" />
     <circle cx="6.5" cy="15" r="1.4" />
+  </Base>
+);
+
+export const IconPhone = (p: IconProps) => (
+  <Base {...p}>
+    <path d="M6.5 3.5h3l1.4 4.2-2 1.5a12.5 12.5 0 0 0 5.9 5.9l1.5-2 4.2 1.4v3a1.5 1.5 0 0 1-1.6 1.5A17 17 0 0 1 4.5 5.1 1.5 1.5 0 0 1 6 3.5Z" />
   </Base>
 );

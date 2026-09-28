@@ -51,7 +51,9 @@ export function RelatedLinks({ related, title = "Pour aller plus loin" }: { rela
               <span className="kicker text-orange700">{l.group}</span>
               <span className="mt-2 flex items-center justify-between gap-3">
                 <span className="display text-[1.15rem] font-500 text-ink">{l.label}</span>
-                <span className="text-orange text-xl transition-transform group-hover:translate-x-1">→</span>
+                <span aria-hidden="true" className="text-orange700 text-xl transition-transform group-hover:translate-x-1">
+                  →
+                </span>
               </span>
             </Link>
           ))}

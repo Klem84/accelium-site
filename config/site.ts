@@ -26,7 +26,7 @@ export const site = {
     telHref: "+33699798585",
     email: "contact@accelium-conseil.fr",
     adresse: "57 avenue de Grammont, 37000 Tours",
-    horaires: "Du lundi au vendredi, 8h–19h",
+    horaires: "Du lundi au vendredi, de 8h à 19h",
     linkedin: "https://www.linkedin.com/company/accelium-conseil",
   },
   cta: {

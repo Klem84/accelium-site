@@ -20,7 +20,11 @@ export function Breadcrumb({ items }: { items: Crumb[] }) {
                 {c.name}
               </span>
             )}
-            {i < full.length - 1 && <span className="text-line">/</span>}
+            {i < full.length - 1 && (
+              <span className="text-slate" aria-hidden="true">
+                /
+              </span>
+            )}
           </li>
         ))}
       </ol>

@@ -20,9 +20,9 @@ export default function MotionProvider() {
         .then(({ default: Lenis }) => {
           lenis = new Lenis({
             duration: 0.55,
-            wheelMultiplier: 2,
+            wheelMultiplier: 1,
             smoothWheel: true,
-            touchMultiplier: 2.2,
+            touchMultiplier: 1.5,
           });
           const raf = (t: number) => {
             lenis?.raf(t);
@@ -92,17 +92,21 @@ export default function MotionProvider() {
     }
 
     // ── Compteurs ──
+    // La valeur finale (avec son suffixe éventuel, ex. « 130+ ») est déjà dans le
+    // HTML rendu côté serveur (J.1.6) : on ne fait qu'animer depuis 0 jusqu'à cette
+    // valeur, en conservant tout ce qui suit le nombre (« + », « M€ »…).
     const countUp = (el: HTMLElement) => {
       const target = Number(el.dataset.count || "0");
+      const suffix = (el.textContent || "").replace(/^-?\d+/, "");
       if (reduce) {
-        el.textContent = String(target);
+        el.textContent = target + suffix;
         return;
       }
       const dur = 1600;
       const t0 = performance.now();
       const tick = (now: number) => {
         const p = Math.min((now - t0) / dur, 1);
-        el.textContent = String(Math.round((1 - Math.pow(1 - p, 3)) * target));
+        el.textContent = Math.round((1 - Math.pow(1 - p, 3)) * target) + suffix;
         if (p < 1) requestAnimationFrame(tick);
       };
       requestAnimationFrame(tick);

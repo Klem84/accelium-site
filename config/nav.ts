@@ -14,6 +14,8 @@ export const mainNav: NavItem[] = [
       { label: "Comprendre le financement public", href: "/le-financement-public", description: "La carte des aides aux entreprises" },
       { label: "Les types d'aides", href: "/le-financement-public/types-d-aides", description: "Subventions, prêts, garanties, crédits d'impôt…" },
       { label: "Les financeurs", href: "/le-financement-public/financeurs", description: "Régions, Europe, ADEME, Bpifrance…" },
+      { label: "Les dispositifs", href: "/le-financement-public/dispositifs", description: "Fonds Chaleur, CIR, France 2030…" },
+      { label: "Les aides par région", href: "/regions", description: "La couverture nationale, région par région" },
     ],
   },
   {
@@ -67,6 +69,28 @@ export const mainNav: NavItem[] = [
 ];
 
 export const footerNav = {
+  comprendre: {
+    title: "Comprendre",
+    links: [
+      { label: "Les types d'aides", href: "/le-financement-public/types-d-aides" },
+      { label: "Les financeurs", href: "/le-financement-public/financeurs" },
+      { label: "Les dispositifs", href: "/le-financement-public/dispositifs" },
+      { label: "Les aides par région", href: "/regions" },
+      { label: "Glossaire", href: "/le-financement-public/glossaire" },
+      { label: "Questions fréquentes", href: "/le-financement-public/questions-frequentes" },
+    ],
+  },
+  secteurs: {
+    title: "Secteurs",
+    links: [
+      { label: "Forêt-bois", href: "/secteurs/foret-bois" },
+      { label: "Industrie", href: "/secteurs/industrie" },
+      { label: "Agroalimentaire", href: "/secteurs/agroalimentaire" },
+      { label: "Biomasse", href: "/secteurs/biomasse" },
+      { label: "Béton", href: "/secteurs/beton" },
+      { label: "Enrobés", href: "/secteurs/enrobes" },
+    ],
+  },
   offres: {
     title: "Offres",
     links: [
@@ -91,6 +115,8 @@ export const footerNav = {
     links: [
       { label: "À propos", href: "/cabinet/a-propos" },
       { label: "Nos atouts", href: "/cabinet/nos-atouts" },
+      { label: "L'équipe", href: "/cabinet/equipe" },
+      { label: "Nos partenaires", href: "/cabinet/partenaires" },
       { label: "Déontologie", href: "/cabinet/deontologie" },
       { label: "Contact", href: "/contact" },
     ],
