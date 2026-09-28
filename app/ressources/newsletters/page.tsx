@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
 import Link from "next/link";
 import { PageHero } from "@/components/blocks/PageHero";
-import { CtaContext } from "@/components/collections/CtaContext";
+import { NewsletterSignup } from "@/components/forms/NewsletterSignup";
 import { getNewsletters } from "@/lib/content";
 import { buildMetadata } from "@/lib/seo";
 
@@ -66,12 +66,14 @@ export default function NewslettersHub() {
           </div>
 
           <aside className="lg:col-span-4">
-            <CtaContext
-              label="Recevoir la prochaine newsletter"
-              param="objet"
-              value="newsletter"
-              text="Un email par mois, sans spam, avec un lien de désinscription."
-            />
+            <div className="rounded-2xl border border-line bg-cream p-6">
+              <p className="kicker text-orange700 mb-2">S'inscrire</p>
+              <h2 className="display text-[1.1rem] font-600 text-ink mb-1">Recevoir la prochaine newsletter</h2>
+              <p className="text-[0.9rem] text-body mb-5">
+                Un email par mois, sans spam, avec un lien de désinscription dans chaque envoi.
+              </p>
+              <NewsletterSignup />
+            </div>
           </aside>
         </div>
       </section>
