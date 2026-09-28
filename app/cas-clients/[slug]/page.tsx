@@ -14,10 +14,14 @@ export function generateStaticParams() {
 export function generateMetadata({ params }: { params: { slug: string } }): Metadata {
   const c = getCasClient(params.slug);
   if (!c) return {};
-  return buildMetadata(
-    c.seo || { title: `Cas client ${c.montant} | Accelium`, description: c.contexte },
-    `/cas-clients/${c.slug}`
-  );
+  const seo = c.seo || { title: `Cas client : ${c.montant}`, description: c.contexte };
+  const metadata = buildMetadata(seo, `/cas-clients/${c.slug}`);
+  // Les fiches non indexables (contrat §6.5) restent accessibles mais ne doivent
+  // pas être proposées à l'indexation.
+  if (c.indexable === false) {
+    return { ...metadata, robots: { index: false, follow: true } };
+  }
+  return metadata;
 }
 
 export default function CasClientPage({ params }: { params: { slug: string } }) {
@@ -25,12 +29,16 @@ export default function CasClientPage({ params }: { params: { slug: string } }) 
   if (!c) notFound();
   const secteur = getSecteur(c.secteur);
   const dispositif = c.dispositif ? getDispositif(c.dispositif) : undefined;
+  // Les fiches indexables (§6.5) portent tout le récit dans le corps MDX : afficher
+  // Contexte/Résultat en plus le répéterait. On ne les affiche donc que pour les
+  // fiches encore sommaires (pas de corps rédigé, ou explicitement non indexables).
+  const repeterContexteResultat = c.indexable !== true;
 
   return (
     <>
       <PageHero
         kicker={secteur?.nom || "Cas client"}
-        title={`${c.montant} ${c.titre}`}
+        title={c.h1 || `${c.montant} ${c.titre}`}
         crumbs={[
           { name: "Cas clients", url: "/cas-clients" },
           { name: c.montant, url: `/cas-clients/${c.slug}` },
@@ -38,12 +46,16 @@ export default function CasClientPage({ params }: { params: { slug: string } }) 
       />
       <section className="wrap py-16 lg:py-24 grid lg:grid-cols-12 gap-12">
         <div className="lg:col-span-8">
-          <h2 className="display text-[1.4rem] font-600 text-ink">Contexte</h2>
-          <p className="mt-3 text-body lede">{c.contexte}</p>
-          {c.resultat && (
+          {repeterContexteResultat && (
             <>
-              <h2 className="display text-[1.4rem] font-600 text-ink mt-10">Résultat</h2>
-              <p className="mt-3 text-body lede">{c.resultat}</p>
+              <h2 className="display text-[1.4rem] font-600 text-ink">Contexte</h2>
+              <p className="mt-3 text-body lede">{c.contexte}</p>
+              {c.resultat && (
+                <>
+                  <h2 className="display text-[1.4rem] font-600 text-ink mt-10">Résultat</h2>
+                  <p className="mt-3 text-body lede">{c.resultat}</p>
+                </>
+              )}
             </>
           )}
           {c.body && (
