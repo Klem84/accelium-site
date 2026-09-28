@@ -11,8 +11,8 @@ export type Seo = {
   absoluteTitle?: boolean;
 };
 
-/** Image OG par défaut (générée par app/opengraph-image.tsx), utilisée quand la page n'en fournit pas. */
-export const defaultOgImage = "/opengraph-image";
+/** Image OG par défaut (générée par scripts/build-og.ts), utilisée quand la page n'en fournit pas. */
+export const defaultOgImage = "/og-default.png";
 
 export function buildMetadata(seo: Seo, path: string = "/"): Metadata {
   const canonical = seo.canonical || path;

@@ -47,7 +47,7 @@ export function organizationSchema() {
   };
 }
 
-const defaultOgImagePath = "/opengraph-image";
+const defaultOgImagePath = "/og-default.png";
 
 /** WebSite, @id #website, publisher pointant vers #organization. */
 export function websiteSchema() {
