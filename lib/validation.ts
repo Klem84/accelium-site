@@ -34,3 +34,15 @@ export const livreBlancSchema = z.object({
 });
 
 export type LivreBlancInput = z.infer<typeof livreBlancSchema>;
+
+export const newsletterSchema = z.object({
+  email: z.string().email("Adresse email invalide."),
+  consentement: z.literal(true, {
+    errorMap: () => ({ message: "Le consentement est requis." }),
+  }),
+  // honeypot : doit rester vide
+  website: z.string().max(0).optional().or(z.literal("")),
+  turnstileToken: z.string().optional().or(z.literal("")),
+});
+
+export type NewsletterInput = z.infer<typeof newsletterSchema>;
