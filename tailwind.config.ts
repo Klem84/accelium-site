@@ -22,8 +22,9 @@ const config: Config = {
         orange700: "#C2480F",
       },
       fontFamily: {
-        display: ['"Clash Display"', "system-ui", "sans-serif"],
-        sans: ['"General Sans"', "system-ui", "sans-serif"],
+        // Polices chargées via next/font/local (app/layout.tsx) : variables CSS générées.
+        display: ["var(--font-display)", "system-ui", "sans-serif"],
+        sans: ["var(--font-sans)", "system-ui", "sans-serif"],
       },
       fontWeight: {
         "500": "500",

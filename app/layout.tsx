@@ -1,4 +1,5 @@
-import type { Metadata } from "next";
+import type { Metadata, Viewport } from "next";
+import localFont from "next/font/local";
 import "./globals.css";
 import { Analytics } from "@vercel/analytics/react";
 import { SpeedInsights } from "@vercel/speed-insights/next";
@@ -8,11 +9,36 @@ import MotionProvider from "@/components/motion/MotionProvider";
 import { JsonLd, organizationSchema } from "@/lib/schema-org";
 import { site } from "@/config/site";
 
+// Polices auto-hébergées via next/font/local : 4 graisses au total (2 par famille), pour
+// ne charger que ce qui est réellement utilisé par les classes font-500 / font-600.
+// ClashDisplay-700 et GeneralSans-700 (inutilisées, cf. grep "font-700") ne sont plus servies.
+const clashDisplay = localFont({
+  src: [
+    { path: "../public/fonts/ClashDisplay-500.woff2", weight: "500", style: "normal" },
+    { path: "../public/fonts/ClashDisplay-600.woff2", weight: "600", style: "normal" },
+  ],
+  variable: "--font-display",
+  display: "swap",
+});
+
+const generalSans = localFont({
+  src: [
+    { path: "../public/fonts/GeneralSans-400.woff2", weight: "400", style: "normal" },
+    { path: "../public/fonts/GeneralSans-600.woff2", weight: "600", style: "normal" },
+  ],
+  variable: "--font-sans",
+  display: "swap",
+});
+
+export const viewport: Viewport = {
+  themeColor: "#1B2336",
+};
+
 export const metadata: Metadata = {
   metadataBase: new URL(site.url),
   title: {
-    default: "Cabinet de conseil en financements publics | Accelium",
-    template: "%s | Accelium",
+    default: "Accelium, conseil en financements publics en France",
+    template: `%s | ${site.shortName}`,
   },
   description: site.description,
   applicationName: site.name,
@@ -31,11 +57,7 @@ export const metadata: Metadata = {
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
-    <html lang="fr">
-      <head>
-        <link rel="preload" href="/fonts/ClashDisplay-600.woff2" as="font" type="font/woff2" crossOrigin="anonymous" />
-        <link rel="preload" href="/fonts/GeneralSans-400.woff2" as="font" type="font/woff2" crossOrigin="anonymous" />
-      </head>
+    <html lang="fr" className={`${clashDisplay.variable} ${generalSans.variable}`}>
       <body className="font-sans">
         <JsonLd data={organizationSchema()} />
         <a
