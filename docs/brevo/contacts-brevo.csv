@@ -1,0 +1,19 @@
+EMAIL;PRENOM;NOM;ORGANISATION;FONCTION;CIBLE;PRIORITE;PAGE_CIBLE;CANAL
+contact@telos-sante.fr;;;Telos Santé;Contact général;partenaire-client;P1;https://www.accelium-conseil.fr/;email
+contact@devup-centrevaldeloire.fr;;;Dev'up Centre-Val de Loire;Contact général;institution;P2;https://www.accelium-conseil.fr/regions/centre-val-de-loire;email
+contact@fibois-cvl.fr;;;Fibois Centre-Val de Loire;Contact général;reseau-federation;P3;https://www.accelium-conseil.fr/secteurs/foret-bois;email
+contact@fibois-france.fr;;;Fibois France;Contact général;reseau-federation;P3;https://www.accelium-conseil.fr/secteurs/foret-bois;email
+;;;Médiateur des entreprises (référencement CIR-CII);Autorité de référencement;institution;P1;https://www.accelium-conseil.fr/offres/credit-impot-recherche-innovation;https://www.economie.gouv.fr/mediateur-des-entreprises/les-missions/linnovation/le-referencement-cir-cii
+;;;La French Fab (Bpifrance);Annuaire des entreprises;annuaire-plateforme;P1;https://www.accelium-conseil.fr/;https://www.lafrenchfab.fr/ (espace entreprise avec le compte existant)
+;;;Pépinières d'entreprises de Tours Métropole Val de Loire;Accueil de la pépinière;institution;P1;https://www.accelium-conseil.fr/contact;https://www.tours-metropole.fr/pepinieres-dentreprises
+;;;Hellopro;Inscription fournisseur;annuaire-plateforme;P1;https://www.accelium-conseil.fr/;https://www.hellopro.fr/online/page_fournisseur.php
+;;;Trustfolio;Inscription prestataire;annuaire-plateforme;P1;https://www.accelium-conseil.fr/cas-clients;https://www.trustfolio.co/
+;;;compass-financement;A requalifier (cabinet concurrent);annuaire-plateforme;P2;https://www.accelium-conseil.fr/;ne pas envoyer en l'état (voir envoi-manuel.md)
+;;;CCI Touraine;Accueil entreprises;institution;P2;https://www.accelium-conseil.fr/contact;https://www.touraine.cci.fr/
+;;;Kompass;Création ou revendication de fiche;annuaire-plateforme;P2;https://www.accelium-conseil.fr/;https://fr.kompass.com/
+;;;Bpifrance (Club PAI et RIA);Organisateurs de l'événement;reseau-federation;P2;https://www.accelium-conseil.fr/cabinet/equipe;contact de l'organisateur de l'intervention du 04/06/2024 (voir envoi-manuel.md)
+;;;Lead Innovation Day (EDHEC Paris);Organisateurs de l'événement;reseau-federation;P3;https://www.accelium-conseil.fr/cabinet/equipe;https://leadinnovation.day/
+;;;INTERFACES (Centrale Lyon);Réseau des anciens;reseau-federation;P3;https://www.accelium-conseil.fr/cabinet/equipe;https://www.centraliens-lyon.net/contact
+;;;Fédération nationale du bois (FNB);Contact général;reseau-federation;P3;https://www.accelium-conseil.fr/secteurs/foret-bois;https://www.fnbois.com/contactez-nous/
+;;;UNPG (Union nationale des producteurs de granulats);Contact général;reseau-federation;P3;https://www.accelium-conseil.fr/secteurs/beton;https://www.unpg.fr/contact/
+;;;Routes de France;Contact général;reseau-federation;P3;https://www.accelium-conseil.fr/secteurs/enrobes;https://www.routesdefrance.com/contact/
