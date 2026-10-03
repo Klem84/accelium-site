@@ -1,9 +1,9 @@
-name: CI
+﻿name: CI
 
 on:
   pull_request:
   push:
-    branches: [main]
+    branches: [main, 'v2/**']
 
 concurrency:
   group: ci-${{ github.ref }}
@@ -15,7 +15,7 @@ jobs:
     env:
       NEXT_PUBLIC_SITE_URL: https://www.accelium-conseil.fr
     steps:
-      - name: Récupération du dépôt
+      - name: RÃ©cupÃ©ration du dÃ©pÃ´t
         uses: actions/checkout@v4
 
       - name: Installation de Node.js
@@ -25,22 +25,22 @@ jobs:
           cache: npm
           cache-dependency-path: package-lock.json
 
-      - name: Installation des dépendances
+      - name: Installation des dÃ©pendances
         run: npm ci
 
-      - name: Vérifications de contenu, SEO, liens, fraîcheur (npm run check)
+      - name: VÃ©rifications de contenu, SEO, liens, fraÃ®cheur (npm run check)
         run: npm run check
 
       - name: Build Next.js
         run: npm run build
 
-      - name: Vérifications SEO et liens (post-build)
+      - name: VÃ©rifications SEO et liens (post-build)
         run: npm run check:seo && npm run check:links
 
       - name: Installation des navigateurs Playwright
         run: npx playwright install --with-deps chromium
 
-      - name: Tests Playwright (e2e + accessibilité)
+      - name: Tests Playwright (e2e + accessibilitÃ©)
         run: npm run test:e2e
 
       - name: Lighthouse CI
