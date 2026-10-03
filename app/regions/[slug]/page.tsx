@@ -5,6 +5,7 @@ import { PageHero } from "@/components/blocks/PageHero";
 import { CtaBlock } from "@/components/blocks/CtaBlock";
 import { Mdx } from "@/components/Mdx";
 import { FaqBlock } from "@/components/collections/FaqBlock";
+import { VerifiedBadge } from "@/components/collections/VerifiedBadge";
 import { SourcesBlock } from "@/components/collections/SourcesBlock";
 import { getRegion, getRegions, getDispositif } from "@/lib/content";
 import { buildMetadata } from "@/lib/seo";
@@ -41,7 +42,7 @@ export default function RegionPage({ params }: { params: { slug: string } }) {
           description: r.seo.description,
           url: `/regions/${r.slug}`,
           datePublished: r.derniereVerification || new Date().toISOString(),
-          authorName: "Accelium Conseil",
+          auteur: r.auteur,
         })}
       />
 
@@ -56,6 +57,8 @@ export default function RegionPage({ params }: { params: { slug: string } }) {
       />
 
       <section className="wrap py-16 lg:py-24 max-w-3xl space-y-14">
+        <VerifiedBadge derniereVerification={r.derniereVerification} auteur={r.auteur} />
+
         {r.body && <Mdx source={r.body} />}
 
         {dispositifsNationaux.length > 0 && (
