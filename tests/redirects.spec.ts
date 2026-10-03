@@ -16,8 +16,9 @@ test.describe("Redirections 301 (ancien site -> nouveau site)", () => {
     });
   }
 
-  test("/le-financement-public/dispositifs/un-slug-quelconque -> /le-financement-public/types-d-aides (wildcard)", async ({ page }) => {
-    await page.goto("/le-financement-public/dispositifs/un-slug-quelconque", { waitUntil: "domcontentloaded" });
-    expect(new URL(page.url()).pathname).toBe("/le-financement-public/types-d-aides");
+  test("un slug de dispositif inconnu renvoie une 404", async ({ page }) => {
+    const response = await page.goto("/le-financement-public/dispositifs/un-slug-quelconque", { waitUntil: "domcontentloaded" });
+    expect(response?.status()).toBe(404);
+    expect(new URL(page.url()).pathname).toBe("/le-financement-public/dispositifs/un-slug-quelconque");
   });
 });

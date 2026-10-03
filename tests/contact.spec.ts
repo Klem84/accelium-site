@@ -30,11 +30,13 @@ test.describe("Formulaire de contact / diagnostic", () => {
 
     await page.getByRole("button", { name: /Obtenir mon diagnostic gratuit/i }).click();
 
-    await expect(page.getByRole("alert")).toContainText("Merci de corriger les champs signalés.");
+    await expect(page.locator("form [role=alert]")).toContainText("Merci de corriger les champs signalés");
     await expect(page.locator("#nom")).toBeVisible();
-    await expect(page.getByText("Le nom est requis.")).toBeVisible();
-    await expect(page.getByText("L'entreprise est requise.")).toBeVisible();
-    await expect(page.getByText("Le consentement est requis.")).toBeVisible();
+    await expect(page.locator("#err-nom")).toBeVisible();
+    await expect(page.locator("#err-societe")).toBeVisible();
+    await expect(page.locator("#err-consentement")).toBeVisible();
+    await expect(page.locator("#nom")).toHaveAttribute("aria-describedby", "err-nom");
+    await expect(page.locator("#nom")).toBeFocused();
   });
 
   test("affiche un succès quand /api/diagnostic répond ok (mock)", async ({ page }) => {
@@ -55,6 +57,8 @@ test.describe("Formulaire de contact / diagnostic", () => {
 
     await page.getByRole("button", { name: /Obtenir mon diagnostic gratuit/i }).click();
 
-    await expect(page.getByRole("status")).toContainText("Merci, c'est reçu");
+    // Succès : le formulaire redirige vers la page de remerciement.
+    await expect(page).toHaveURL(/\/merci-diagnostic/);
+    await expect(page.getByRole("heading", { level: 1 })).toContainText("votre demande est bien reçue");
   });
 });

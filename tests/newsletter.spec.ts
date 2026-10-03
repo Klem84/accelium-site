@@ -24,7 +24,7 @@ test.describe("Formulaire d'inscription newsletter (composant NewsletterSignup)"
     // Le consentement n'est volontairement pas coché.
     await page.getByRole("button", { name: /Recevoir la newsletter/i }).click();
 
-    await expect(page.getByRole("alert")).toContainText("Merci de corriger les champs signalés");
+    await expect(page.locator("form [role=alert]")).toContainText("Merci de corriger les champs signalés");
     await expect(page.locator("#newsletter-consentement")).toHaveAttribute("aria-invalid", "true");
     await expect(page.getByText("Le consentement est requis.")).toBeVisible();
   });
