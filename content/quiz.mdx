@@ -1,0 +1,132 @@
+---
+titre: "Testez vos connaissances sur le financement public"
+intro: "Douze questions issues de nos quiz LinkedIn, vérifiées et mises à jour. Chaque réponse est expliquée et renvoie vers la page qui détaille le sujet."
+derniereVerification: "2026-10-03"
+sources:
+  - { titre: "Commission européenne, règlement (UE) n° 651/2014 dit RGEC (effet incitatif, cumul, entreprise en difficulté)", url: "https://eur-lex.europa.eu/legal-content/FR/TXT/?uri=CELEX:32014R0651" }
+  - { titre: "Insee, définition de la petite et moyenne entreprise", url: "https://www.insee.fr/fr/metadonnees/definition/c1962" }
+  - { titre: "Légifrance, loi n° 2012-1559 du 31 décembre 2012 relative à la création de la Banque publique d'investissement", url: "https://www.legifrance.gouv.fr/loda/id/JORFTEXT000026871127" }
+  - { titre: "Les agences de l'eau, site commun des six agences", url: "https://www.lesagencesdeleau.fr/" }
+  - { titre: "Légifrance, article L. 1511-3 du code général des collectivités territoriales (aides à l'immobilier d'entreprise)", url: "https://www.legifrance.gouv.fr/codes/texte_lc/LEGITEXT000006070633" }
+# Format des props du composant components/collections/Quiz.tsx : questions[] (id, legende,
+# reponses[] avec id, label, pistes) et dispositifs (catalogue des pistes). Les champs
+# bonneReponse, explication et lien sont des données complémentaires pour un mode
+# « connaissances » (non lus par le composant actuel, voir rapport A7).
+questions:
+  - id: "pme"
+    legende: "Quelle définition correspond à une PME au sens européen ?"
+    reponses:
+      - { id: "a", label: "Moins de 250 personnes, et au plus 50 M€ de chiffre d'affaires ou 43 M€ de total de bilan", pistes: ["credit-impot-innovation-cii"] }
+      - { id: "b", label: "Moins de 500 personnes, quel que soit le chiffre d'affaires", pistes: ["credit-impot-innovation-cii"] }
+      - { id: "c", label: "Moins de 50 personnes et moins de 10 M€ de chiffre d'affaires", pistes: ["credit-impot-innovation-cii"] }
+    bonneReponse: "a"
+    explication: "Une PME emploie moins de 250 personnes et réalise un chiffre d'affaires d'au plus 50 M€ ou un total de bilan d'au plus 43 M€. Moins de 50 personnes et au plus 10 M€, c'est la petite entreprise, une sous-catégorie. Le statut de PME ouvre des taux d'aide plus élevés et des dispositifs réservés, comme le crédit d'impôt innovation."
+    lien: "/le-financement-public/dispositifs/credit-impot-innovation-cii"
+  - id: "aides-etat"
+    legende: "Qui fixe le cadre des aides publiques accordées aux entreprises en France ?"
+    reponses:
+      - { id: "a", label: "Le gouvernement français", pistes: [] }
+      - { id: "b", label: "La Banque centrale européenne", pistes: [] }
+      - { id: "c", label: "L'Union européenne", pistes: [] }
+      - { id: "d", label: "La Banque de France", pistes: [] }
+    bonneReponse: "c"
+    explication: "Le traité sur le fonctionnement de l'Union européenne interdit en principe les aides d'État, puis prévoit des dérogations. Les régimes d'aides, dont le règlement général d'exemption par catégorie (RGEC), fixent les bénéficiaires, les dépenses éligibles et les taux maximaux que l'État et les collectivités doivent respecter."
+    lien: "/le-financement-public"
+  - id: "engagement"
+    legende: "Pour une subvention, à quel moment peut-on signer le devis de l'équipement ?"
+    reponses:
+      - { id: "a", label: "Quand on veut, l'aide est calculée sur les factures", pistes: [] }
+      - { id: "b", label: "Après le dépôt de la demande d'aide, sauf règle plus stricte du dispositif", pistes: [] }
+      - { id: "c", label: "Uniquement après le versement de l'aide", pistes: [] }
+    bonneReponse: "b"
+    explication: "C'est la règle de l'effet incitatif : la demande écrite doit être déposée avant le début des travaux, et un devis signé, un bon de commande ou un acompte vaut début des travaux. Certains dispositifs exigent davantage, par exemple l'accord préalable du fournisseur d'énergie pour une prime CEE. Le crédit d'impôt recherche, déclaré après coup, n'est pas concerné."
+    lien: "/offres/financements-publics"
+  - id: "europe"
+    legende: "Une entreprise française peut-elle recevoir un financement de l'Union européenne ?"
+    reponses:
+      - { id: "a", label: "Oui, directement ou par l'intermédiaire des Régions", pistes: ["feder-efficacite-energetique-enr-entreprises", "feader-investissements-agroalimentaire-scieries"] }
+      - { id: "b", label: "Non, seules les aides françaises la concernent", pistes: ["feder-efficacite-energetique-enr-entreprises", "feader-investissements-agroalimentaire-scieries"] }
+    bonneReponse: "a"
+    explication: "L'Union européenne finance directement certains projets, par exemple via Horizon Europe pour la recherche, et indirectement via les fonds gérés par les Régions : FEDER pour l'énergie et l'innovation, FEADER pour l'agroalimentaire, la forêt et le bois, FEAMPA pour la mer et la pêche."
+    lien: "/le-financement-public/financeurs/ue"
+  - id: "difficulte"
+    legende: "Une entreprise en difficulté financière peut-elle obtenir une aide à l'investissement ?"
+    reponses:
+      - { id: "a", label: "Oui, les aides sont faites pour cela", pistes: [] }
+      - { id: "b", label: "En général non, les règles européennes l'excluent de la plupart des régimes", pistes: [] }
+      - { id: "c", label: "Oui, si elle a plus de dix ans d'existence", pistes: [] }
+    bonneReponse: "b"
+    explication: "Les régimes d'aides d'État excluent les entreprises en difficulté, par exemple lorsque les pertes ont absorbé plus de la moitié du capital social ou en cas de procédure collective. Une PME de moins de trois ans n'est pas considérée en difficulté à ce titre, sauf procédure collective. L'aide accompagne un projet viable, pas une trésorerie."
+    lien: "/le-financement-public"
+  - id: "cumul"
+    legende: "Peut-on obtenir plusieurs aides publiques pour une même dépense ?"
+    reponses:
+      - { id: "a", label: "Oui, sans limite", pistes: [] }
+      - { id: "b", label: "Oui, dans la limite de l'intensité maximale du régime d'aide", pistes: [] }
+      - { id: "c", label: "Non, jamais", pistes: [] }
+    bonneReponse: "b"
+    explication: "Une même ligne de dépenses peut être cofinancée par plusieurs financeurs, tant que le total des aides reste sous l'intensité maximale fixée par le régime applicable, qui dépend de la taille de l'entreprise, du projet et de la localisation. Pour le CIR, les subventions reçues pour les mêmes travaux sont déduites de l'assiette."
+    lien: "/offres/financements-publics"
+  - id: "collectivites"
+    legende: "Vrai ou faux : une intercommunalité peut aider financièrement le projet d'une entreprise."
+    reponses:
+      - { id: "a", label: "Vrai", pistes: [] }
+      - { id: "b", label: "Faux", pistes: [] }
+    bonneReponse: "a"
+    explication: "Vrai. Les Régions sont chefs de file du développement économique, mais communes et intercommunalités peuvent intervenir, notamment pour les aides à l'immobilier d'entreprise (article L. 1511-3 du code général des collectivités territoriales) et, en complément des Régions, par convention."
+    lien: "/le-financement-public/financeurs/regions"
+  - id: "agences-eau"
+    legende: "Combien d'agences de l'eau compte la France métropolitaine ?"
+    reponses:
+      - { id: "a", label: "4", pistes: ["aides-agences-de-l-eau"] }
+      - { id: "b", label: "6", pistes: ["aides-agences-de-l-eau"] }
+      - { id: "c", label: "9", pistes: ["aides-agences-de-l-eau"] }
+      - { id: "d", label: "13", pistes: ["aides-agences-de-l-eau"] }
+    bonneReponse: "b"
+    explication: "Six agences, une par grand bassin : Adour-Garonne, Artois-Picardie, Loire-Bretagne, Rhin-Meuse, Rhône Méditerranée Corse et Seine-Normandie. Leur 12e programme couvre 2025 à 2030 et finance notamment les économies d'eau, le recyclage et le traitement des effluents des entreprises."
+    lien: "/le-financement-public/dispositifs/aides-agences-de-l-eau"
+  - id: "bpifrance"
+    legende: "En quelle année Bpifrance, la banque publique d'investissement, a-t-elle été créée ?"
+    reponses:
+      - { id: "a", label: "1998", pistes: ["prets-verts-bpifrance"] }
+      - { id: "b", label: "2008", pistes: ["prets-verts-bpifrance"] }
+      - { id: "c", label: "2012", pistes: ["prets-verts-bpifrance"] }
+      - { id: "d", label: "2020", pistes: ["prets-verts-bpifrance"] }
+    bonneReponse: "c"
+    explication: "La banque publique d'investissement a été créée par la loi n° 2012-1559 du 31 décembre 2012, publiée au Journal officiel le 1er janvier 2013. Elle a notamment repris les activités d'OSEO et finance aujourd'hui l'innovation, le développement et la transition écologique des entreprises, par exemple avec ses prêts verts."
+    lien: "/le-financement-public/financeurs/bpifrance"
+  - id: "afr"
+    legende: "Que signifie le sigle AFR dans le financement public ?"
+    reponses:
+      - { id: "a", label: "Aide financière régionale", pistes: [] }
+      - { id: "b", label: "Aide à finalité régionale", pistes: [] }
+      - { id: "c", label: "Avantage fiscal renforcé", pistes: [] }
+      - { id: "d", label: "Appui à la filière régionale", pistes: [] }
+    bonneReponse: "b"
+    explication: "Les zones d'aide à finalité régionale, définies par une carte 2022-2027 approuvée par la Commission européenne, permettent d'accorder des aides majorées à l'investissement et à l'emploi dans les territoires fragiles. Un site situé en zone AFR bénéficie ainsi souvent de taux bonifiés, par exemple pour DECARB FLASH."
+    lien: "/regions"
+  - id: "trl"
+    legende: "Vrai ou faux : l'échelle TRL mesure le niveau de maturité technologique d'un projet."
+    reponses:
+      - { id: "a", label: "Vrai", pistes: ["france-2030-premiere-usine-i-demo"] }
+      - { id: "b", label: "Faux", pistes: ["france-2030-premiere-usine-i-demo"] }
+    bonneReponse: "a"
+    explication: "Vrai. L'échelle TRL (Technology Readiness Level) compte neuf niveaux, du principe de base observé (TRL 1) au système éprouvé en conditions réelles (TRL 9). La Commission européenne l'utilise dans Horizon Europe, et de nombreux appels à projets français l'emploient pour situer un projet entre recherche, démonstration et industrialisation."
+    lien: "/le-financement-public/dispositifs/france-2030-premiere-usine-i-demo"
+  - id: "fonds-vert"
+    legende: "Vrai ou faux : le Fonds vert peut financer des projets d'entreprises, pas seulement de collectivités."
+    reponses:
+      - { id: "a", label: "Vrai", pistes: ["fonds-vert-friches-territoires-industrie"] }
+      - { id: "b", label: "Faux", pistes: ["fonds-vert-friches-territoires-industrie"] }
+    bonneReponse: "a"
+    explication: "Vrai. Le Fonds vert s'adresse surtout aux collectivités, mais deux de ses mesures concernent directement les entreprises : le recyclage foncier des friches et Territoires d'industrie en transition écologique, qui subventionne des investissements industriels d'au moins 400 000 € situés dans un Territoire d'industrie."
+    lien: "/le-financement-public/dispositifs/fonds-vert-friches-territoires-industrie"
+dispositifs:
+  credit-impot-innovation-cii: { nom: "Crédit d'impôt innovation (CII)", financeur: "État", phrase: "20 % des dépenses de conception de prototypes des PME, dans la limite de 400 000 € par an.", href: "/le-financement-public/dispositifs/credit-impot-innovation-cii" }
+  feder-efficacite-energetique-enr-entreprises: { nom: "FEDER énergie", financeur: "Union européenne, géré par les Régions", phrase: "Efficacité énergétique des procédés et énergies renouvelables des entreprises.", href: "/le-financement-public/dispositifs/feder-efficacite-energetique-enr-entreprises" }
+  feader-investissements-agroalimentaire-scieries: { nom: "FEADER agroalimentaire et scieries", financeur: "Union européenne, géré par les Régions", phrase: "Investissements de transformation des produits agricoles et, selon les Régions, du bois.", href: "/le-financement-public/dispositifs/feader-investissements-agroalimentaire-scieries" }
+  aides-agences-de-l-eau: { nom: "Aides des agences de l'eau", financeur: "Six agences de l'eau", phrase: "Économies et recyclage d'eau, traitement des effluents, 12e programme 2025-2030.", href: "/le-financement-public/dispositifs/aides-agences-de-l-eau" }
+  prets-verts-bpifrance: { nom: "Prêts verts Bpifrance", financeur: "Bpifrance", phrase: "Prêts à taux fixe pour les projets de transition écologique des TPE, PME et ETI.", href: "/le-financement-public/dispositifs/prets-verts-bpifrance" }
+  france-2030-premiere-usine-i-demo: { nom: "France 2030 : Première Usine et i-Démo", financeur: "État, Bpifrance, ADEME", phrase: "Innovation et premier site industriel, en subvention et avance récupérable.", href: "/le-financement-public/dispositifs/france-2030-premiere-usine-i-demo" }
+  fonds-vert-friches-territoires-industrie: { nom: "Fonds vert : friches et Territoires d'industrie", financeur: "État, ADEME", phrase: "Reconversion de friches et investissements industriels en Territoire d'industrie.", href: "/le-financement-public/dispositifs/fonds-vert-friches-territoires-industrie" }
+---
