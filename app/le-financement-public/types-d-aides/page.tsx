@@ -17,7 +17,7 @@ const types = [
   {
     slug: "subventions",
     nom: "Subventions",
-    desc: "L'aide non remboursable, en soutien d'un projet d'investissement, d'innovation ou de transition. La plus recherchée — tout se joue dans le dossier.",
+    desc: "L'aide non remboursable, en soutien d'un projet d'investissement, d'innovation ou de transition. La plus recherchée : tout se joue dans le dossier.",
   },
   {
     slug: "prets",
@@ -37,7 +37,7 @@ const types = [
   {
     slug: "credits-impot",
     nom: "Crédits d'impôt",
-    desc: "CIR, CII, C3IV : la voie fiscale. Vous vous l'« auto-attribuez » — à condition de sécuriser l'assiette et la justification.",
+    desc: "CIR, CII, C3IV : la voie fiscale. Vous vous l'« auto-attribuez », à condition de sécuriser l'assiette et la justification.",
   },
 ];
 
@@ -47,7 +47,7 @@ export default function TypesAidesHub() {
       <PageHero
         kicker="Types d'aides"
         title="Sous quelles formes sont versées les aides ?"
-        intro="Cinq grandes formes, souvent cumulables. Accelium est spécialisé sur l'ensemble du spectre — au-delà du seul crédit d'impôt — pour combiner les leviers et maximiser votre financement."
+        intro="Cinq grandes formes, souvent cumulables. Accelium est spécialisé sur l'ensemble du spectre (au-delà du seul crédit d'impôt) pour combiner les leviers et maximiser votre financement."
         crumbs={[
           { name: "Le financement public", url: "/le-financement-public" },
           { name: "Types d'aides", url: "/le-financement-public/types-d-aides" },
