@@ -94,6 +94,45 @@ Rappels :
   décision prise, ou un nouveau déploiement preview avant) : Vercel ne relit pas les variables
   d'environnement d'un déploiement déjà construit.
 
+### 3.1 Limite de débit des formulaires (anti-spam), à activer avant la production
+
+Le code limite chaque route (`/api/diagnostic`, `/api/livre-blanc`, `/api/newsletter`) à 5 requêtes
+par minute et par IP (`lib/ratelimit.ts`). Sans configuration, le compteur est en mémoire, donc
+propre à chaque instance serverless : c'est une simple première barrière. Choisir UNE des deux
+options ci-dessous (gratuites, aucune ligne de code à modifier).
+
+**Option A, base Upstash Redis gratuite depuis Vercel (recommandée)**
+
+1. Ouvrir vercel.com, projet du site, onglet Storage.
+2. Cliquer sur Create Database (ou Connect Store), choisir Upstash puis Redis (Marketplace).
+3. Choisir l'offre gratuite (Free), une région européenne (ex. Paris ou Francfort), nommer la base
+   `accelium-ratelimit`, valider la création.
+4. Accepter de connecter la base au projet pour les environnements Production et Preview. Vercel
+   ajoute automatiquement `KV_REST_API_URL` et `KV_REST_API_TOKEN` dans Environment Variables.
+5. Redéployer (un nouveau déploiement preview suffit) : Vercel ne relit pas les variables d'un
+   déploiement déjà construit.
+6. Vérifier : envoyer 6 fois de suite une requête invalide à `/api/newsletter` (PowerShell,
+   `Invoke-WebRequest -Method POST`) : la 6e réponse doit être 429, y compris en alternant
+   plusieurs instances. Dans la console Upstash (Data Browser), des clés `rl:...` apparaissent.
+
+Si Upstash est injoignable, le code retombe automatiquement sur le compteur en mémoire (le
+formulaire ne tombe jamais en panne à cause du limiteur).
+
+**Option B, règle Vercel Firewall (sans base de données)**
+
+1. Ouvrir vercel.com, projet du site, onglet Firewall.
+2. Cliquer sur Configure puis Add New Rule (ou Custom Rules > New Rule).
+3. Nommer la règle `Rate limit API 5/min/IP`.
+4. Condition : Request Path, Starts with, `/api/`.
+5. Action : Rate Limit ; fenêtre fixe de 60 secondes ; 5 requêtes ; clé = IP address ; réponse
+   `429 Too Many Requests` (ou Deny).
+6. Enregistrer, puis Review Changes et Publish (la règle ne s'applique qu'après publication).
+7. Vérifier comme à l'étape 6 de l'option A.
+
+Les deux options peuvent coexister. Ne pas créer la base ni la règle avant d'avoir décidé de la
+date de mise en production (le plan Hobby limite le nombre de règles ; l'offre gratuite Upstash
+suffit largement pour ce trafic).
+
 ## 4. Déploiement preview puis production
 
 1. Depuis `accelium-site`, avec le token Vercel valide : `vercel` (sans `--prod`) crée un

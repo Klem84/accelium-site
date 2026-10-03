@@ -1,32 +1,11 @@
 import { NextRequest, NextResponse } from "next/server";
 import { diagnosticSchema } from "@/lib/validation";
 import { verifyTurnstile } from "@/lib/turnstile";
+import { isRateLimited } from "@/lib/ratelimit";
 import { sendLeadEmails, sendMondayFailureAlert } from "@/lib/resend";
 import { createLead } from "@/lib/monday";
 
 export const runtime = "nodejs";
-
-// Rate-limiting basique en mémoire : 5 requêtes / 60 s / IP (fiche H4 / L2.7).
-// Limite connue : sur Vercel serverless, chaque instance a sa propre Map, donc ce
-// limiteur n'est qu'une première barrière (best-effort), pas une garantie globale.
-// Règle Vercel WAF équivalente à activer en complément (aucun service payant requis,
-// incluse dans le plan Vercel) : Project Settings > Firewall > Rate Limiting >
-// règle "Rate Limit" sur le chemin /api/diagnostic, clé = IP, seuil 5 requêtes / 60 s,
-// action = "Deny" (ou "Challenge" si des faux positifs apparaissent).
-const hits = new Map<string, { count: number; ts: number }>();
-const WINDOW = 60_000;
-const MAX = 5;
-
-function rateLimited(ip: string): boolean {
-  const now = Date.now();
-  const rec = hits.get(ip);
-  if (!rec || now - rec.ts > WINDOW) {
-    hits.set(ip, { count: 1, ts: now });
-    return false;
-  }
-  rec.count += 1;
-  return rec.count > MAX;
-}
 
 export async function POST(req: NextRequest) {
   const ip =
@@ -34,7 +13,7 @@ export async function POST(req: NextRequest) {
     req.headers.get("x-real-ip") ||
     "unknown";
 
-  if (rateLimited(ip)) {
+  if (await isRateLimited("diagnostic", ip)) {
     return NextResponse.json(
       { ok: false, error: "Trop de demandes. Merci de réessayer dans une minute." },
       { status: 429 }

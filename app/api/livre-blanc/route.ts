@@ -1,29 +1,12 @@
 import { NextRequest, NextResponse } from "next/server";
 import { livreBlancSchema } from "@/lib/validation";
 import { verifyTurnstile } from "@/lib/turnstile";
+import { isRateLimited } from "@/lib/ratelimit";
 import { sendLivreBlancEmails, sendMondayFailureAlert } from "@/lib/resend";
 import { createLeadLivreBlanc } from "@/lib/monday";
 import { getLivreBlanc } from "@/config/livres-blancs";
 
 export const runtime = "nodejs";
-
-// Rate-limiting basique en mémoire : 5 requêtes / 60 s / IP (best-effort, cf. commentaire
-// détaillé dans app/api/diagnostic/route.ts). Même règle Vercel WAF à activer en complément
-// sur le chemin /api/livre-blanc.
-const hits = new Map<string, { count: number; ts: number }>();
-const WINDOW = 60_000;
-const MAX = 5;
-
-function rateLimited(ip: string): boolean {
-  const now = Date.now();
-  const rec = hits.get(ip);
-  if (!rec || now - rec.ts > WINDOW) {
-    hits.set(ip, { count: 1, ts: now });
-    return false;
-  }
-  rec.count += 1;
-  return rec.count > MAX;
-}
 
 export async function POST(req: NextRequest) {
   const ip =
@@ -31,7 +14,7 @@ export async function POST(req: NextRequest) {
     req.headers.get("x-real-ip") ||
     "unknown";
 
-  if (rateLimited(ip)) {
+  if (await isRateLimited("livre-blanc", ip)) {
     return NextResponse.json(
       { ok: false, error: "Trop de demandes. Merci de réessayer dans une minute." },
       { status: 429 }
