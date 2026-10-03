@@ -49,7 +49,7 @@ export const lastmodPagesStatiques: Record<string, string> = {
   "/politique-de-confidentialite": "2026-09-27",
   "/cookies": "2026-09-27",
   "/cgu": "2026-09-27",
-  "cabinet/a-propos": "2026-09-27",
+  "cabinet/a-propos": "2026-10-03",
   "cabinet/deontologie": "2026-09-27",
   "cabinet/equipe": "2026-09-28",
   "cabinet/evenements": "2026-09-28",
