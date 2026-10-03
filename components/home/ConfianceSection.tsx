@@ -14,7 +14,7 @@ export function ConfianceSection() {
   if (refs.length < SEUIL) return null;
 
   return (
-    <section className="wrap py-20 lg:py-28 border-b border-line">
+    <section className="cv-auto wrap py-20 lg:py-28 border-b border-line">
       <div className="flex flex-wrap items-end justify-between gap-6 mb-12">
         <div className="reveal">
           <p className="kicker text-orange700 mb-4">Références</p>

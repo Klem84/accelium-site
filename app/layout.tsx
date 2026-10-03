@@ -1,34 +1,11 @@
 import type { Metadata, Viewport } from "next";
-import localFont from "next/font/local";
 import "./globals.css";
-import { Analytics } from "@vercel/analytics/react";
-import { SpeedInsights } from "@vercel/speed-insights/next";
+import Telemetry from "@/components/layout/Telemetry";
 import Header from "@/components/layout/Header";
 import Footer from "@/components/layout/Footer";
 import MotionProvider from "@/components/motion/MotionProvider";
 import { JsonLd, organizationSchema, websiteSchema } from "@/lib/schema-org";
 import { site } from "@/config/site";
-
-// Polices auto-hébergées via next/font/local : 4 graisses au total (2 par famille), pour
-// ne charger que ce qui est réellement utilisé par les classes font-500 / font-600.
-// ClashDisplay-700 et GeneralSans-700 (inutilisées, cf. grep "font-700") ne sont plus servies.
-const clashDisplay = localFont({
-  src: [
-    { path: "../public/fonts/ClashDisplay-500.woff2", weight: "500", style: "normal" },
-    { path: "../public/fonts/ClashDisplay-600.woff2", weight: "600", style: "normal" },
-  ],
-  variable: "--font-display",
-  display: "swap",
-});
-
-const generalSans = localFont({
-  src: [
-    { path: "../public/fonts/GeneralSans-400.woff2", weight: "400", style: "normal" },
-    { path: "../public/fonts/GeneralSans-600.woff2", weight: "600", style: "normal" },
-  ],
-  variable: "--font-sans",
-  display: "swap",
-});
 
 export const viewport: Viewport = {
   themeColor: "#1B2336",
@@ -52,7 +29,13 @@ export const metadata: Metadata = {
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
-    <html lang="fr" className={`${clashDisplay.variable} ${generalSans.variable}`}>
+    <html lang="fr">
+      <head>
+        {/* Polices auto-hébergées (@font-face dans globals.css) : seules les 2 graisses de
+            General Sans visibles dès le hero sont préchargées, en parallèle du CSS. */}
+        <link rel="preload" href="/fonts/GeneralSans-400.woff2" as="font" type="font/woff2" crossOrigin="anonymous" />
+        <link rel="preload" href="/fonts/GeneralSans-600.woff2" as="font" type="font/woff2" crossOrigin="anonymous" />
+      </head>
       <body className="font-sans">
         <JsonLd data={organizationSchema()} />
         <JsonLd data={websiteSchema()} />
@@ -66,8 +49,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
         <Header />
         <main id="contenu">{children}</main>
         <Footer />
-        <Analytics />
-        <SpeedInsights />
+        <Telemetry />
       </body>
     </html>
   );

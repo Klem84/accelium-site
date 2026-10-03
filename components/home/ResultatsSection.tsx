@@ -22,7 +22,7 @@ export function ResultatsSection() {
   if (cas.length === 0) return null;
 
   return (
-    <section className="wrap py-24 lg:py-32">
+    <section className="cv-auto wrap py-24 lg:py-32">
       <div className="flex flex-wrap items-end justify-between gap-6 mb-14">
         <div className="reveal">
           <p className="kicker text-orange700 mb-4">Résultats</p>

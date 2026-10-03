@@ -66,7 +66,7 @@ export function RessourcesSection() {
   if (cartes.length === 0) return null;
 
   return (
-    <section className="bg-cream border-t border-line">
+    <section className="cv-auto bg-cream border-t border-line">
       <div className="wrap py-24 lg:py-32">
         <div className="flex flex-wrap items-end justify-between gap-6 mb-14">
           <div className="reveal">

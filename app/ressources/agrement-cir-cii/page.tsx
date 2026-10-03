@@ -87,7 +87,7 @@ export default function AgrementCirCiiPage() {
                 d'impôt de vos clients. À devis égal, un prestataire agréé est plus compétitif. C'est un
                 véritable avantage commercial.
               </p>
-              <p className="mt-5 text-[0.85rem] text-white/55">
+              <p className="mt-5 text-[0.85rem] text-white/70">
                 Application éditée par Accelium Conseil ·{" "}
                 <a
                   href={CIR_CII_APP_URL}

@@ -5,8 +5,58 @@
 /* Polices auto-hébergées via next/font/local (app/layout.tsx : variables --font-display et
    --font-sans, cf. tailwind.config.ts). Les anciennes déclarations @font-face manuelles ont
    été retirées pour éviter un double chargement des mêmes fichiers woff2. */
+/* Polices auto-hébergées (public/fonts). Les familles portent un nom interne distinct de
+   « Clash Display » / « General Sans » : le rendu actuel (titres .display en system-ui) est
+   conservé tel quel, seul le chargement est optimisé (préchargement dans app/layout.tsx).
+   Les faces de repli ajustées (size-adjust) évitent tout décalage au swap. */
+@font-face {
+  font-family: "AcceliumSans";
+  src: url("/fonts/GeneralSans-400.woff2") format("woff2");
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+}
+@font-face {
+  font-family: "AcceliumSans";
+  src: url("/fonts/GeneralSans-600.woff2") format("woff2");
+  font-weight: 600;
+  font-style: normal;
+  font-display: swap;
+}
+@font-face {
+  font-family: "AcceliumSans Fallback";
+  src: local("Arial");
+  ascent-override: 99.89%;
+  descent-override: 23.74%;
+  line-gap-override: 9.89%;
+  size-adjust: 101.11%;
+}
+@font-face {
+  font-family: "AcceliumDisplay";
+  src: url("/fonts/ClashDisplay-500.woff2") format("woff2");
+  font-weight: 500;
+  font-style: normal;
+  font-display: swap;
+}
+@font-face {
+  font-family: "AcceliumDisplay";
+  src: url("/fonts/ClashDisplay-600.woff2") format("woff2");
+  font-weight: 600;
+  font-style: normal;
+  font-display: swap;
+}
+@font-face {
+  font-family: "AcceliumDisplay Fallback";
+  src: local("Arial");
+  ascent-override: 81.56%;
+  descent-override: 22.91%;
+  line-gap-override: 8.25%;
+  size-adjust: 109.12%;
+}
 :root {
   --ease: cubic-bezier(0.16, 1, 0.3, 1);
+  --font-sans: "AcceliumSans", "AcceliumSans Fallback";
+  --font-display: "AcceliumDisplay", "AcceliumDisplay Fallback";
 }
 
 /* Lenis pilote le défilement lissé dès que le JS est actif (html.js) : on ne
@@ -129,41 +179,69 @@ button {
   background: #f5f4ef;
 }
 
-/* ── Reveals / motion (activés quand <html class="js">) ── */
-.js .reveal {
-  opacity: 0;
-  transform: translateY(28px);
-}
-.js .reveal.in {
-  opacity: 1;
-  transform: none;
-  transition: opacity 1s var(--ease), transform 1s var(--ease);
-}
-.js [data-stagger] > * {
-  opacity: 0;
-  transform: translateY(22px);
-}
-.js [data-stagger].in > * {
-  opacity: 1;
-  transform: none;
-  transition: opacity 0.85s var(--ease), transform 0.85s var(--ease);
-}
-/* Chaque ligne du titre est masquée par .clip-line (overflow hidden) pendant que
-   le span intérieur glisse depuis le bas : sans ce masque, le texte translaté
-   déborde de son propre bloc et chevauche le paragraphe suivant, notamment sur
-   mobile 375 px où le H1 est sur 3 lignes visuelles (correction du chevauchement
-   H1/paragraphe du hero). */
-.js .clip .clip-line {
+/* ── Reveals / motion ──
+   Uniquement sur bureau (grand écran, pointeur précis, sans prefers-reduced-motion) :
+   sur mobile le contenu est visible dès le HTML, sans état masqué (LCP, TBT).
+   Les états masqués dépendent de <html class="js"> (ajouté par MotionProvider) ; la
+   1ère section de la page s'anime en CSS pur, sans attendre l'hydratation. */
+/* Chaque ligne du titre est un bloc : le masque (overflow hidden) n'est actif que
+   sur bureau, pendant que le span intérieur glisse depuis le bas. */
+.clip .clip-line,
+.clip .clip-line > span {
   display: block;
-  overflow: hidden;
 }
-.js .clip .clip-line > span {
-  display: block;
-  transform: translateY(110%);
+@media (min-width: 1024px) and (hover: hover) and (prefers-reduced-motion: no-preference) {
+  .js .reveal {
+    opacity: 0;
+    transform: translateY(28px);
+  }
+  .js .reveal.in {
+    opacity: 1;
+    transform: none;
+    transition: opacity 1s var(--ease), transform 1s var(--ease);
+  }
+  .js [data-stagger] > * {
+    opacity: 0;
+    transform: translateY(22px);
+  }
+  .js [data-stagger].in > * {
+    opacity: 1;
+    transform: none;
+    transition: opacity 0.85s var(--ease), transform 0.85s var(--ease);
+  }
+  .clip .clip-line {
+    overflow: hidden;
+  }
+  main > section:first-child .reveal {
+    animation: rv-in 1s var(--ease) both;
+  }
+  main > section:first-child .clip .clip-line > span {
+    animation: clip-in 1.1s var(--ease) both;
+  }
+  .js .clip:not(.in) .clip-line > span {
+    transform: translateY(110%);
+  }
+  .js .clip.in .clip-line > span {
+    transform: translateY(0);
+    transition: transform 1.1s var(--ease);
+  }
 }
-.js .clip.in .clip-line > span {
-  transform: translateY(0);
-  transition: transform 1.1s var(--ease);
+@keyframes rv-in {
+  from {
+    opacity: 0;
+    transform: translateY(28px);
+  }
+}
+@keyframes clip-in {
+  from {
+    transform: translateY(110%);
+  }
+}
+
+/* Sections sous la ligne de flottaison : rendu différé par le navigateur. */
+.cv-auto {
+  content-visibility: auto;
+  contain-intrinsic-size: auto 720px;
 }
 
 /* ── Focus accessible ── */

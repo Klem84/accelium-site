@@ -1,9 +1,9 @@
 "use client";
 
-import { Suspense, useEffect, useMemo, useRef, useState } from "react";
+import { useEffect, useMemo, useRef, useState } from "react";
 import Link from "next/link";
 import Script from "next/script";
-import { useRouter, useSearchParams } from "next/navigation";
+import { useRouter } from "next/navigation";
 import { track } from "@vercel/analytics";
 
 type Status = "idle" | "submitting" | "success" | "error";
@@ -47,7 +47,15 @@ function validateField(name: string, value: string): string | null {
 
 function DiagnosticFormInner({ secteurs }: { secteurs: { slug: string; nom: string }[] }) {
   const router = useRouter();
-  const searchParams = useSearchParams();
+  // Paramètres d'URL lus après montage (et non via useSearchParams) : useSearchParams sous
+  // Suspense fait basculer tout le formulaire en rendu client, d'où un formulaire absent du
+  // HTML et un décalage de mise en page (CLS 0,27) quand il apparaît. Ici le formulaire est
+  // rendu dans le HTML statique et seuls le select et le textarea sont remontés (key) si un
+  // pré-remplissage existe.
+  const [searchParams, setSearchParams] = useState<URLSearchParams>(() => new URLSearchParams());
+  useEffect(() => {
+    setSearchParams(new URLSearchParams(window.location.search));
+  }, []);
   const siteKey = process.env.NEXT_PUBLIC_TURNSTILE_SITE_KEY;
   const [status, setStatus] = useState<Status>("idle");
   const [error, setError] = useState<string>("");
@@ -279,7 +287,7 @@ function DiagnosticFormInner({ secteurs }: { secteurs: { slug: string; nom: stri
           <label htmlFor="secteur" className="block text-[0.85rem] font-600 text-ink mb-1.5">
             Votre secteur
           </label>
-          <select id="secteur" name="secteur" className={fieldClass(false)} defaultValue={secteurInitial}>
+          <select key={secteurInitial} id="secteur" name="secteur" className={fieldClass(false)} defaultValue={secteurInitial}>
             <option value="">Sélectionnez</option>
             {secteurs.map((s) => (
               <option key={s.slug} value={s.nom}>
@@ -295,6 +303,7 @@ function DiagnosticFormInner({ secteurs }: { secteurs: { slug: string; nom: stri
             Votre projet
           </label>
           <textarea
+            key={`${dispositif}|${objet}`}
             id="projet"
             name="projet"
             rows={4}
@@ -339,7 +348,7 @@ function DiagnosticFormInner({ secteurs }: { secteurs: { slug: string; nom: stri
           </p>
         )}
 
-        {siteKey && <div ref={tsRef} className="cf-turnstile" />}
+        {siteKey && <div ref={tsRef} className="cf-turnstile min-h-[65px]" />}
 
         <button
           type="submit"
@@ -354,9 +363,5 @@ function DiagnosticFormInner({ secteurs }: { secteurs: { slug: string; nom: stri
 }
 
 export function DiagnosticForm({ secteurs }: { secteurs: { slug: string; nom: string }[] }) {
-  return (
-    <Suspense fallback={null}>
-      <DiagnosticFormInner secteurs={secteurs} />
-    </Suspense>
-  );
+  return <DiagnosticFormInner secteurs={secteurs} />;
 }

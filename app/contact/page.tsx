@@ -34,19 +34,19 @@ export default function ContactPage() {
             <p className="kicker text-orange2 mb-5">Coordonnées</p>
             <ul className="space-y-4 text-[0.95rem] text-white/85">
               <li>
-                <span className="block text-white/45 text-[0.78rem] uppercase tracking-wider">Téléphone</span>
+                <span className="block text-white/70 text-[0.78rem] uppercase tracking-wider">Téléphone</span>
                 <a href={`tel:${site.contact.telHref}`} className="hover:text-orange2 focusable">{site.contact.tel}</a>
               </li>
               <li>
-                <span className="block text-white/45 text-[0.78rem] uppercase tracking-wider">Email</span>
+                <span className="block text-white/70 text-[0.78rem] uppercase tracking-wider">Email</span>
                 <a href={`mailto:${site.contact.email}`} className="hover:text-orange2 focusable">{site.contact.email}</a>
               </li>
               <li>
-                <span className="block text-white/45 text-[0.78rem] uppercase tracking-wider">Adresse</span>
+                <span className="block text-white/70 text-[0.78rem] uppercase tracking-wider">Adresse</span>
                 {site.contact.adresse}
               </li>
               <li>
-                <span className="block text-white/45 text-[0.78rem] uppercase tracking-wider">Horaires</span>
+                <span className="block text-white/70 text-[0.78rem] uppercase tracking-wider">Horaires</span>
                 {site.contact.horaires}
               </li>
               <li>

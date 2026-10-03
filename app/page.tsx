@@ -91,6 +91,7 @@ export default function HomePage() {
             alt="Paris au coucher du soleil, vue aérienne"
             fill
             priority
+            quality={60}
             sizes="100vw"
             className="object-cover"
           />
@@ -156,7 +157,7 @@ export default function HomePage() {
       </section>
 
       {/* ===== STATEMENT + PREUVE ===== */}
-      <section className="wrap py-24 lg:py-36">
+      <section className="cv-auto wrap py-24 lg:py-36">
         <div className="grid lg:grid-cols-12 gap-12">
           <div className="lg:col-span-8">
             <h2 className="display h-mega font-500 text-ink reveal">
@@ -207,7 +208,7 @@ export default function HomePage() {
       </section>
 
       {/* ===== OFFRES ===== */}
-      <section id="offres" className="bg-cream border-y border-line">
+      <section id="offres" className="cv-auto bg-cream border-y border-line">
         <div className="wrap py-24 lg:py-32">
           <div className="flex flex-wrap items-end justify-between gap-6 mb-14">
             <div className="reveal">
@@ -299,7 +300,7 @@ export default function HomePage() {
       <RessourcesSection />
 
       {/* ===== CTA pleine largeur ===== */}
-      <section className="relative w-full overflow-hidden">
+      <section className="cv-auto relative w-full overflow-hidden">
         <div data-parallax="0.12" className="parallax absolute inset-x-0 top-0 h-[118%]">
           <Image
             src="/images/bannieres/usine-nuit-financement-projet.jpg"

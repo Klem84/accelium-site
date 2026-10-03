@@ -21,14 +21,14 @@ const financeurs = [
 
 export function FinanceursBand() {
   return (
-    <section aria-labelledby="financeurs-titre" className="border-y border-line">
+    <section aria-labelledby="financeurs-titre" className="cv-auto border-y border-line">
       <div className="wrap py-16 lg:py-20 text-center">
         <h2 id="financeurs-titre" className="kicker text-orange700 mb-8">
           Les financeurs que nous mobilisons
         </h2>
         <ul
           aria-label="Financeurs mobilisés"
-          className="flex flex-wrap justify-center items-baseline gap-x-3 gap-y-3 max-w-5xl mx-auto"
+          className="flex flex-wrap justify-center items-baseline gap-x-3 gap-y-1 max-w-5xl mx-auto"
         >
           {financeurs.map((f, i) => (
             <li key={f.slug} className="inline-flex items-baseline gap-3">
@@ -39,7 +39,7 @@ export function FinanceursBand() {
               )}
               <Link
                 href={`/le-financement-public/financeurs/${f.slug}`}
-                className="display font-600 text-[clamp(1.1rem,0.95rem_+_0.8vw,1.75rem)] text-ink/70 hover:text-ink hover:underline decoration-orange underline-offset-4 transition-colors focusable"
+                className="display font-600 inline-block py-1 text-[clamp(1.1rem,0.95rem_+_0.8vw,1.75rem)] text-ink/70 hover:text-ink hover:underline decoration-orange underline-offset-4 transition-colors focusable"
               >
                 {f.nom}
               </Link>

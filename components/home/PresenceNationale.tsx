@@ -29,7 +29,7 @@ export function PresenceNationale() {
   ].filter((s) => s.n > 0);
 
   return (
-    <section id="presence-nationale" className="border-b border-line">
+    <section id="presence-nationale" className="cv-auto border-b border-line">
       <div className="wrap py-24 lg:py-32 grid lg:grid-cols-12 gap-12 lg:gap-16 items-center">
         <div className="lg:col-span-5 order-2 lg:order-1 rounded-2xl bg-cream p-6 lg:p-8">
           <RegionMap items={items} />

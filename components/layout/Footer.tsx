@@ -7,7 +7,7 @@ import { IconPhone } from "@/components/blocks/Icons";
 export default function Footer() {
   const cols = [footerNav.comprendre, footerNav.secteurs, footerNav.offres, footerNav.ressources, footerNav.cabinet];
   return (
-    <footer className="bg-ink text-white border-t border-white/10">
+    <footer className="cv-auto bg-ink text-white border-t border-white/10">
       <div className="wrap py-16">
         <div className="grid lg:grid-cols-12 gap-10">
           <div className="lg:col-span-3">
@@ -47,7 +47,7 @@ export default function Footer() {
                 </a>
               </li>
             </ul>
-            <p className="mt-4 text-[0.84rem] text-white/55">{site.contact.horaires}</p>
+            <p className="mt-4 text-[0.84rem] text-white/70">{site.contact.horaires}</p>
           </div>
 
           <div className="lg:col-span-9 grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-5 gap-8">
@@ -68,7 +68,7 @@ export default function Footer() {
           </div>
         </div>
 
-        <div className="mt-12 pt-6 border-t border-white/12 flex flex-col md:flex-row items-center justify-between gap-4 text-[0.84rem] text-white/50">
+        <div className="mt-12 pt-6 border-t border-white/12 flex flex-col md:flex-row items-center justify-between gap-4 text-[0.84rem] text-white/70">
           <p>© {new Date().getFullYear()} Accelium Conseil. Tous droits réservés.</p>
           <div className="flex flex-wrap items-center gap-5">
             {legalNav.map((l) => (
