@@ -58,14 +58,15 @@ export const chiffres = {
   /** Montant d'aides obtenues : somme des aides conventionnées trouvées dans les dossiers
       clients (actifs et archivés), recensement du 03/10/2026 (_run-v2/conventions-dossiers-*.md).
       Décision de Clément : toute aide trouvée est comptée, convention signée ou non.
-      31 aides, 21 clients : 7 926 831,75 € (dossiers actifs) + 1 571 600,80 € (archives).
-      Hors total : crédits d'impôt et aides antérieures à 2022 ou montées hors Accelium. */
-  montantAidesObtenues: 9498432 as number | null,
+      38 aides : 7 926 831,75 € (dossiers actifs) + 1 571 600,80 € (archives)
+      + 3 853 760,35 € (7 aides antérieures à 2022 ou liées, ajoutées sur décision de Clément,
+      sans tenir compte de la date). Hors total : crédits d'impôt. */
+  montantAidesObtenues: 13352193 as number | null,
   montantAides: {
-    valeur: 9.4,
-    affichage: "9,4 M€",
-    libelle: "d'aides obtenues pour nos clients depuis 2022",
-    nombreAides: 31,
+    valeur: 13.3,
+    affichage: "13,3 M€",
+    libelle: "d'aides obtenues pour nos clients",
+    nombreAides: 38,
     dateLabel: "au 03/10/2026",
   },
 
