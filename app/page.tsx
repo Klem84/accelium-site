@@ -57,14 +57,20 @@ const offres = [
   },
 ];
 
-/* Chiffres clés : source unique config/chiffres.ts (décision de Clément du
-   27/09/2026). Aucun montant d'aides (montantAidesObtenues est null). Les deux
-   premiers sont des compteurs animés côté client, rendus avec leur valeur finale
-   dans le HTML (data-count) ; la satisfaction est un ratio, affiché en texte
-   statique (jamais dans un compteur). */
+/* Chiffres clés : source unique config/chiffres.ts (décisions de Clément du
+   27/09/2026 et du 03/10/2026). Le montant d'aides obtenues (montantAides) est
+   affiché en texte statique : le compteur animé de MotionProvider ne gère que les
+   entiers (une décimale avec virgule serait faussée pendant l'animation). Le nombre
+   de projets reste un compteur animé côté client, rendu avec sa valeur finale dans
+   le HTML (data-count) ; la satisfaction est un ratio, affichée en texte statique
+   (jamais dans un compteur). Le nombre de clients figure dans la ligne de preuve
+   du hero et sur la page À propos. */
+const montantAides = chiffres.montantAidesObtenues !== null ? chiffres.montantAides : null;
 const statsCompteurs = [
   { n: chiffres.projets.compteur, suffix: chiffres.projets.suffixe, label: chiffres.projets.libelle },
-  { n: chiffres.clients.compteur, suffix: chiffres.clients.suffixe, label: chiffres.clients.libelle },
+  ...(montantAides
+    ? []
+    : [{ n: chiffres.clients.compteur, suffix: chiffres.clients.suffixe, label: chiffres.clients.libelle }]),
 ];
 
 const virgule = (n: number, d: number) => n.toFixed(d).replace(".", ",");
@@ -72,6 +78,7 @@ const virgule = (n: number, d: number) => n.toFixed(d).replace(".", ",");
 /* Ligne de preuve du hero (plan V2 §5.1), rendue dans le HTML et datée. */
 const nbRegionsClientes = chiffres.regionsClientes?.length ?? 0;
 const preuveHero = [
+  montantAides ? `${montantAides.affichage} ${montantAides.libelle}` : null,
   `Plus de ${chiffres.projets.compteur} ${chiffres.projets.libelle}`,
   `${chiffres.clients.affichage} clients`,
   `${virgule(chiffres.satisfaction.recommandation, 1)}/${chiffres.satisfaction.recommandationSur} de recommandation`,
@@ -176,6 +183,14 @@ export default function HomePage() {
         </div>
 
         <div data-stagger className="mt-20 grid grid-cols-2 lg:grid-cols-4 gap-y-12 gap-x-8 border-t border-line pt-12">
+          {montantAides && (
+            <div>
+              <div className="display text-[clamp(2.6rem,1.8rem_+_2vw,3.6rem)] font-600 text-ink">
+                {montantAides.affichage}
+              </div>
+              <p className="mt-2 text-[0.9rem] text-body">{montantAides.libelle}</p>
+            </div>
+          )}
           {statsCompteurs.map((s) => (
             <div key={s.label}>
               <div className="display text-[clamp(2.6rem,1.8rem_+_2vw,3.6rem)] font-600 text-ink">
@@ -203,7 +218,9 @@ export default function HomePage() {
           </div>
         </div>
         <p className="mt-6 text-[0.8rem] text-slate">
-          {chiffres.dateChiffresLabel} · {chiffres.satisfaction.methode}
+          {chiffres.dateChiffresLabel}
+          {montantAides && ` (montant d'aides ${montantAides.dateLabel}, ${montantAides.nombreAides} aides conventionnées)`} ·{" "}
+          {chiffres.satisfaction.methode}
         </p>
       </section>
 

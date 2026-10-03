@@ -5,6 +5,9 @@
  * offres, dispositifs, financeurs, types d'aides, secteurs, régions, glossaire et FAQ,
  * chacun précédé de son URL et de sa date de vérification. Appelé par `prebuild`.
  *
+ * Chiffres clés lus dans config/chiffres.ts (aucun chiffre en dur), alignés sur la
+ * ligne « Chiffres clés » de public/llms.txt (fichier statique, à tenir à jour à la main).
+ *
  * Tolère l'absence de collections pas encore livrées (content/dispositifs, content/regions).
  */
 import fs from "node:fs";
@@ -19,6 +22,7 @@ import {
   getFaqTransversale,
 } from "../lib/content";
 import { site } from "../config/site";
+import { chiffres } from "../config/chiffres";
 
 const OUT_PATH = path.join(process.cwd(), "public", "llms-full.txt");
 
@@ -31,8 +35,21 @@ function verif(date?: string): string {
   return date ? `Vérifié : ${date}` : "Vérifié : non daté";
 }
 
+const virgule = (n: number, d: number) => n.toFixed(d).replace(".", ",");
+
+function chiffresCles(): string {
+  const items = [
+    `plus de ${chiffres.projets.compteur} ${chiffres.projets.libelle} (${chiffres.dateChiffresLabel.toLowerCase()})`,
+    chiffres.montantAidesObtenues !== null
+      ? `${chiffres.montantAides.affichage} ${chiffres.montantAides.libelle} (${chiffres.montantAides.nombreAides} aides conventionnées, ${chiffres.montantAides.dateLabel})`
+      : null,
+    `${virgule(chiffres.satisfaction.recommandation, 1)}/${chiffres.satisfaction.recommandationSur} de recommandation et ${virgule(chiffres.satisfaction.satisfaction, 2)}/${chiffres.satisfaction.satisfactionSur} de satisfaction (${chiffres.satisfaction.methode.toLowerCase()})`,
+  ].filter((x): x is string => Boolean(x));
+  return `Chiffres clés : ${items.join(" ; ")}.\n`;
+}
+
 function main() {
-  const parts: string[] = [`# ${site.name} : contenu complet\n`];
+  const parts: string[] = [`# ${site.name} : contenu complet\n`, chiffresCles()];
 
   parts.push(
     section(

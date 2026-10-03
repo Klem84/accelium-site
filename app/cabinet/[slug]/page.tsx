@@ -48,9 +48,13 @@ function getReferencementMediateur(): string | null {
 }
 
 /* Indicateurs de la page À propos : valeurs de config/chiffres.ts uniquement
-   (aucun chiffre en dur). Les indicateurs de satisfaction, avec leur méthode,
+   (aucun chiffre en dur), montant d'aides obtenues en tête (décision du 03/10/2026).
+   Les indicateurs de satisfaction, avec leur méthode,
    sont rendus à part par components/cabinet/SatisfactionSection.tsx. */
 const indicateurs: { valeur: string; libelle: string }[] = [
+  ...(chiffres.montantAidesObtenues !== null
+    ? [{ valeur: chiffres.montantAides.affichage, libelle: `${chiffres.montantAides.libelle} (${chiffres.montantAides.dateLabel})` }]
+    : []),
   { valeur: chiffres.projets.affichage, libelle: chiffres.projets.libelle },
   { valeur: chiffres.clients.affichage, libelle: chiffres.clients.libelle },
 ];
@@ -155,7 +159,7 @@ export default function CabinetPage({ params }: { params: { slug: string } }) {
               <h2 className="display h-sec font-600 text-ink">En chiffres</h2>
               <p className="text-[0.88rem] text-slate">{chiffres.dateChiffresLabel}</p>
             </div>
-            <div className="grid grid-cols-2 gap-4 max-w-3xl">
+            <div className="grid grid-cols-2 lg:grid-cols-3 gap-4 max-w-5xl">
               {indicateurs.map((it) => (
                 <div key={it.libelle} className="rounded-2xl border border-line bg-cream p-7">
                   <div className="display text-[2.4rem] font-600 text-ink leading-none">{it.valeur}</div>
