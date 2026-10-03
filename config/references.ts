@@ -195,7 +195,7 @@ export const references: Reference[] = [
     region: "hauts-de-france",
     site: "https://www.scieriecrozat.fr/",
     logo: L("clients/crozat-freres.png"),
-    dispositif: "Investissement Performance Industrielle ; AAP IPPB 2024 (convention ADEME en cours de signature)",
+    dispositif: "Investissement Performance Industrielle ; AAP IPPB 2024 (aide ADEME obtenue)",
     financeur: "Région Hauts-de-France ; ADEME",
     phrase:
       "Entreprise familiale centenaire, la scierie modernise son outil avec une nouvelle ligne de production numérique, soutenue par la Région Hauts-de-France ; l'ADEME lui a aussi accordé une aide pour valoriser les bois dépérissants.",
@@ -212,7 +212,7 @@ export const references: Reference[] = [
     site: "https://vallery.fr/",
     logo: L("clients/charpentes-vallery.svg"),
     logoFondSombre: true,
-    dispositif: "AAP IPPB 2024 (aide accordée, convention en cours de signature)",
+    dispositif: "AAP IPPB 2024 (aide obtenue)",
     financeur: "ADEME",
     phrase:
       "Référence des charpentes en pin maritime, Vallery modernise son outil avec une ligne de montage automatisée et développe des ombrières photovoltaïques en bois des Landes.",
