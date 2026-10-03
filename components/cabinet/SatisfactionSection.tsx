@@ -1,5 +1,6 @@
 import { chiffres } from "@/config/chiffres";
 import { temoignagesAffichables } from "@/config/references";
+import { Testimonial } from "@/components/collections/Testimonial";
 
 /* Satisfaction client et témoignages (§5.6.3) pour /cabinet/a-propos.
    Indicateurs : config/chiffres.ts uniquement, avec leur méthode.
@@ -8,14 +9,6 @@ import { temoignagesAffichables } from "@/config/references";
    rendue tant que l'entreprise n'a pas confirmé). */
 
 const virgule = (n: number) => String(n).replace(".", ",");
-
-function formatMois(iso: string): string {
-  return new Date(`${iso}T00:00:00Z`).toLocaleDateString("fr-FR", {
-    timeZone: "UTC",
-    month: "long",
-    year: "numeric",
-  });
-}
 
 export function SatisfactionSection() {
   const s = chiffres.satisfaction;
@@ -49,20 +42,17 @@ export function SatisfactionSection() {
           {temoignages.length > 0 && (
             <div className="lg:col-span-7 space-y-10">
               {temoignages.map(({ temoignage: t, auteur }) => (
-                <figure key={t.id} className="max-w-3xl">
-                  <span aria-hidden="true" className="display text-[3rem] lg:text-[4rem] leading-none text-orange">
-                    «
-                  </span>
-                  <blockquote className="display text-[clamp(1.3rem,1.1rem_+_0.8vw,1.7rem)] font-500 text-ink leading-snug">
-                    {t.citation}
-                  </blockquote>
-                  <figcaption className="mt-5 flex items-center gap-3 text-[0.9rem] text-slateD">
-                    <span aria-hidden="true" className="inline-block w-6 h-px bg-orange" />
-                    <span>
-                      {auteur}, {formatMois(t.date)}, note de recommandation {t.note}/10
-                    </span>
-                  </figcaption>
-                </figure>
+                <Testimonial
+                  key={t.id}
+                  item={{
+                    citation: t.citation || "",
+                    auteur,
+                    date: t.date,
+                    detail: `note de recommandation ${t.note}/10`,
+                    // Le filtrage (accord, refus, citation à valider) est fait par temoignagesAffichables().
+                    confirme: true,
+                  }}
+                />
               ))}
             </div>
           )}

@@ -167,6 +167,12 @@ export default function CabinetPage({ params }: { params: { slug: string } }) {
                 </div>
               ))}
             </div>
+            {chiffres.montantAidesObtenues !== null && (
+              <p className="mt-4 max-w-5xl text-[0.85rem] text-slateD">
+                {chiffres.montantAides.nombreAides} aides conventionnées recensées dans nos dossiers clients,{" "}
+                {chiffres.montantAides.dateLabel}.
+              </p>
+            )}
           </section>
 
           <SatisfactionSection />

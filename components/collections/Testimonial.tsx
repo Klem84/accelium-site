@@ -13,7 +13,8 @@
  * - confirme : le composant ne rend rien si `confirme` n'est pas strictement
  *   `true` (même règle que PartnerCard).
  * - secteur : optionnel, précision affichée après l'entreprise.
- * - date : optionnelle, ISO (AAAA-MM-JJ), affichée sous la citation.
+ * - date : optionnelle, ISO (AAAA-MM-JJ), affichée (mois et année) dans la légende.
+ * - detail : optionnel, précision de la légende (ex. « note de recommandation 10/10 »).
  *
  * Ne rend rien si `confirme !== true`, si `citation` est vide, ou si `auteur`
  * est vide. Aucune note ni étoile inventée : la note globale du cabinet vient de
@@ -25,21 +26,23 @@ export type TestimonialData = {
   entreprise?: string;
   secteur?: string;
   date?: string;
+  detail?: string;
   confirme: boolean;
 };
 
 export function Testimonial({ item }: { item: TestimonialData }) {
   if (!item.confirme || !item.citation?.trim() || !item.auteur?.trim()) return null;
 
-  const contexte = [item.auteur, item.entreprise, item.secteur].filter(Boolean).join(", ");
+  const mois =
+    item.date && !Number.isNaN(new Date(`${item.date}T00:00:00Z`).getTime())
+      ? new Date(`${item.date}T00:00:00Z`).toLocaleDateString("fr-FR", { timeZone: "UTC", month: "long", year: "numeric" })
+      : undefined;
+  const contexte = [item.auteur, item.entreprise, item.secteur, mois, item.detail].filter(Boolean).join(", ");
 
   return (
     <figure className="max-w-3xl">
-      <span aria-hidden="true" className="display text-[4rem] leading-none text-orange block">
-        &ldquo;
-      </span>
       <blockquote className="display text-[clamp(1.35rem,1.1rem_+_1vw,1.9rem)] font-500 text-ink leading-snug">
-        {item.citation}
+        &laquo;&nbsp;{item.citation}&nbsp;&raquo;
       </blockquote>
       <figcaption className="mt-5 text-[0.9rem] text-slateD flex items-center gap-3">
         <span aria-hidden="true" className="inline-block h-px w-6 bg-orange" />
