@@ -55,9 +55,19 @@ export const chiffres = {
     methode: "Enquête auprès de 18 clients, mai-juin 2025",
   },
 
-  /** Montant d'aides obtenues : non vérifié dans le board Conventions au 27/09/2026.
-      NE PAS afficher de montant tant que ce champ reste `null`. */
-  montantAidesObtenues: null as number | null,
+  /** Montant d'aides obtenues : somme des aides conventionnées trouvées dans les dossiers
+      clients (actifs et archivés), recensement du 03/10/2026 (_run-v2/conventions-dossiers-*.md).
+      Décision de Clément : toute aide trouvée est comptée, convention signée ou non.
+      31 aides, 21 clients : 7 926 831,75 € (dossiers actifs) + 1 571 600,80 € (archives).
+      Hors total : crédits d'impôt et aides antérieures à 2022 ou montées hors Accelium. */
+  montantAidesObtenues: 9498432 as number | null,
+  montantAides: {
+    valeur: 9.4,
+    affichage: "9,4 M€",
+    libelle: "d'aides obtenues pour nos clients depuis 2022",
+    nombreAides: 31,
+    dateLabel: "au 03/10/2026",
+  },
 
   /** Référencement CIR/CII du Médiateur des entreprises : statut à vérifier (§2.4).
       La ligne correspondante (lib/cabinetData.ts : mediateurTitre) reste masquée
