@@ -20,3 +20,47 @@ export const noindexTemporaire: Record<string, boolean> = {
 export function estNoindexTemporaire(path: string): boolean {
   return noindexTemporaire[path] === true;
 }
+
+/**
+ * Dates de dernière modification éditoriale des pages sans fiche de contenu datée (sitemap).
+ * Constantes : ne PAS utiliser la date du build (elle change à chaque déploiement et rend
+ * le lastmod inutilisable). À mettre à jour à la main quand le contenu d'une page change
+ * réellement (relevé : dernier commit du fichier source au 03/10/2026).
+ * Clé : chemin avec slash initial ("" = accueil).
+ */
+export const lastmodPagesStatiques: Record<string, string> = {
+  "": "2026-10-03",
+  "/offres": "2026-10-03",
+  "/secteurs": "2026-09-27",
+  "/le-financement-public": "2026-10-03",
+  "/le-financement-public/types-d-aides": "2026-10-03",
+  "/le-financement-public/financeurs": "2026-10-03",
+  "/le-financement-public/dispositifs": "2026-10-03",
+  "/regions": "2026-09-28",
+  "/cas-clients": "2026-10-03",
+  "/blog": "2026-10-03",
+  "/blog/rss.xml": "2026-10-03",
+  "/contact": "2026-10-03",
+  "/ressources": "2026-10-03",
+  "/ressources/livres-blancs": "2026-09-28",
+  "/ressources/agrement-cir-cii": "2026-10-03",
+  "/ressources/newsletters": "2026-09-28",
+  "/mentions-legales": "2026-09-27",
+  "/politique-de-confidentialite": "2026-09-27",
+  "/cookies": "2026-09-27",
+  "/cgu": "2026-09-27",
+  "cabinet/a-propos": "2026-09-27",
+  "cabinet/deontologie": "2026-09-27",
+  "cabinet/equipe": "2026-09-28",
+  "cabinet/evenements": "2026-09-28",
+  "cabinet/nos-atouts": "2026-09-27",
+  "cabinet/nous-rejoindre": "2026-09-28",
+  "cabinet/partenaires": "2026-09-28",
+};
+
+/** Date de repli (dernière mise à jour du site), jamais la date du build. */
+export const lastmodDefaut = "2026-10-03";
+
+export function lastmodStatique(path: string): Date {
+  return new Date(lastmodPagesStatiques[path] || lastmodDefaut);
+}

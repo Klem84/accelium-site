@@ -1,6 +1,6 @@
 import type { MetadataRoute } from "next";
 import { site } from "@/config/site";
-import { noindexTemporaire } from "@/config/indexation";
+import { noindexTemporaire, lastmodStatique } from "@/config/indexation";
 import {
   getOffres,
   getSecteurs,
@@ -43,7 +43,7 @@ function lastMod(doc: Doc, fallback: Date): Date {
 
 export default function sitemap(): MetadataRoute.Sitemap {
   const base = site.url;
-  const now = new Date();
+  const now = lastmodStatique("__defaut__"); // date fixe (config/indexation.ts), jamais la date du build
 
   const staticPaths = [
     "",
@@ -70,7 +70,7 @@ export default function sitemap(): MetadataRoute.Sitemap {
   const noindexPages = getPages().filter((p) => p.seo?.noindex).map((p) => p.slug);
   const staticRoutes = staticPaths
     .filter((p) => !noindexPages.includes(p.replace(/^\//, "")))
-    .map((p) => ({ url: `${base}${p}`, lastModified: now }));
+    .map((p) => ({ url: `${base}${p}`, lastModified: lastmodStatique(p) }));
 
   // Pages du dossier content/pages/cabinet-*.mdx : « équipe » et « partenaires » sont hors
   // sitemap tant que config/indexation.ts les marque `true` (L1.10, Lots 4/5 non livrés).
@@ -78,7 +78,7 @@ export default function sitemap(): MetadataRoute.Sitemap {
     .filter((p) => p.slug.startsWith("cabinet-"))
     .map((p) => ({ path: `cabinet/${p.slug.replace("cabinet-", "")}`, doc: p }))
     .filter(({ path, doc }) => isIndexable(doc as Doc, path))
-    .map(({ path }) => ({ url: `${base}/${path}`, lastModified: now }));
+    .map(({ path }) => ({ url: `${base}/${path}`, lastModified: lastmodStatique(path) }));
 
   const offres = getOffres().map((o) => ({ url: `${base}/offres/${o.slug}`, lastModified: lastMod(o as Doc, now) }));
 
@@ -93,7 +93,7 @@ export default function sitemap(): MetadataRoute.Sitemap {
 
   const typesAides = ["subventions", "prets", "garanties", "exonerations", "credits-impot"].map((s) => ({
     url: `${base}/le-financement-public/types-d-aides/${s}`,
-    lastModified: now,
+    lastModified: lastmodStatique("/le-financement-public/types-d-aides"),
   }));
 
   const dispositifs = getDispositifs()
