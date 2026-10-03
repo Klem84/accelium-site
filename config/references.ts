@@ -16,8 +16,10 @@
 // Logos : public/logos/references/ (README-logos.md). Un logo absent = champ vide,
 // jamais de chemin inventé.
 //
-// Verbatims : uniquement issus du questionnaire de satisfaction (mai-juin 2025).
-// Jamais de verbatim d'Edeis ni de MEBOR (retours critiques). Arboriste du Sud a
+// Verbatims : uniquement issus de la campagne de satisfaction de mai-juin 2025
+// (questionnaire Monday 1816693203, puis réponses écrites à l'email de
+// remerciement et de demande de recommandation ; détail des sources dans
+// _run-v2/temoignages-sources.md). Jamais de verbatim d'Edeis ni de MEBOR (retours critiques). Arboriste du Sud a
 // refusé toute publication : `refuse: true`, ne jamais l'afficher.
 // Aucune donnée de contact de personne physique (email, téléphone) dans ce fichier.
 
@@ -993,12 +995,13 @@ export const temoignages: Temoignage[] = [
     note: 10,
     date: "2025-05-06",
     // Le questionnaire ne contient pas de remarque écrite pour Breizh Bell. La phrase
-    // ci-dessous figure dans sa réponse écrite à la demande de recommandation (Monday,
-    // tableau Liste clients) : à faire valider explicitement par l'entreprise.
+    // ci-dessous figure dans sa réponse écrite du 29/05/2025 à la demande de
+    // recommandation (Monday, tableau Liste clients, et email). Citation validée par
+    // Clément le 03/10/2026.
     citation:
       "J'indique à tous nos participants ou autres entreprises qui cherchent des chasseurs de subventions qu'Accelium est parfaite.",
     sourceCitation: "Réponse écrite à la demande de recommandation (Monday, Liste clients, 2025)",
-    citationAValider: true,
+    citationAValider: false,
   },
   {
     id: "human-ocean",
@@ -1021,7 +1024,14 @@ export const temoignages: Temoignage[] = [
     region: "bourgogne-franche-comte",
     note: 10,
     date: "2025-05-06",
-    // Note de 10/10 sans remarque écrite : citation à recueillir via l'email de confirmation.
+    // Note de 10/10 sans remarque écrite dans le questionnaire. La phrase ci-dessous
+    // est extraite de sa réponse écrite du 28/05/2025 à la demande de recommandation
+    // (Monday, tableau Liste clients, et email) ; seul « En revanche » a été retiré en
+    // tête. À faire valider par l'entreprise dans l'email de confirmation.
+    citation:
+      "Je garde ceci en tête si on me demande ce genre de compétences dans mon réseau et je peux vous aider si vous devez convaincre un prospect.",
+    sourceCitation: "Réponse écrite à la demande de recommandation (Monday, Liste clients, 2025)",
+    citationAValider: true,
   },
 ];
 
