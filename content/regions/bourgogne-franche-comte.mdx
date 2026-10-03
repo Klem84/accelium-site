@@ -2,9 +2,9 @@
 slug: bourgogne-franche-comte
 nom: "Bourgogne-Franche-Comté"
 ordre: 12
-statut: courte
+statut: complete
 h1: "Financements publics pour les entreprises en Bourgogne-Franche-Comté"
-definition: "En Bourgogne-Franche-Comté, une entreprise qui investit peut mobiliser la Région (aide à l'investissement matériel, décarbonation des industries), l'Agence économique régionale AER BFC, l'ADEME, les agences de l'eau du territoire et Bpifrance. Les aides régionales aux PME vont d'une avance remboursable de 20 % (30 % en zone AFR) à une subvention de décarbonation de 100 000 € au plus."
+definition: "En Bourgogne-Franche-Comté, une entreprise qui investit peut mobiliser la Région (aide à l'investissement matériel, décarbonation des industries, études de chaufferies bois, FEDER), l'Agence économique régionale AER BFC, l'ADEME, les agences de l'eau du territoire et Bpifrance. Les aides régionales aux PME vont d'une avance remboursable de 20 % (30 % en zone AFR) à une subvention de décarbonation de 100 000 € au plus."
 financeursRegionaux:
   - nom: "Région Bourgogne-Franche-Comté"
     role: "Aides directes aux entreprises, autorité de gestion du FEDER et du FEADER"
@@ -13,7 +13,7 @@ financeursRegionaux:
     role: "Accompagnement des entreprises (développement, implantation, innovation, ingénierie financière)"
     url: "https://aer-bfc.com/"
   - nom: "ADEME Bourgogne-Franche-Comté"
-    role: "Fonds Chaleur, décarbonation, économie circulaire et appels à projets France 2030 instruits en région"
+    role: "Fonds Chaleur, décarbonation, études de faisabilité, économie circulaire et appels à projets France 2030 instruits en région"
     url: "https://www.ademe.fr/les-territoires-en-transition/lademe-en-region/"
   - nom: "Agences de l'eau Rhône-Méditerranée-Corse, Seine-Normandie et Loire-Bretagne"
     role: "Aides aux économies d'eau et à la réduction des pollutions, selon le bassin du site"
@@ -26,17 +26,17 @@ financeursRegionaux:
     url: "https://bourgogne-franche-comte.dreets.gouv.fr/"
 dispositifsRegionaux:
   - nom: "Aide à l'investissement matériel des PME"
-    objet: "Investissements liés à l'outil de production, en complément d'un financement bancaire représentant au moins 80 % de l'investissement"
-    taux: "Avance remboursable de 20 % de l'assiette éligible (30 % en zone AFR) ; 250 000 € au plus"
+    objet: "Investissements liés à l'outil de production, en complément d'un prêt bancaire ou d'un crédit-bail représentant au moins 80 % de l'investissement"
+    taux: "Avance remboursable de 20 % de l'assiette éligible (30 % en zone AFR), plafonnée à 250 000 €"
     calendrier: "Dépôt avant le 31 décembre 2026, avant engagement des dépenses, dans la limite des budgets"
     source: "https://www.bourgognefranchecomte.fr/node/267"
   - nom: "Décarbonation des industries : aide à l'investissement"
-    objet: "Investissements de décarbonation des PME industrielles, après un audit, une étude ou une visite réalisés selon le cahier des charges de l'ADEME"
-    taux: "Aide régionale de 10 000 € à 100 000 €"
+    objet: "Investissements de décarbonation des PME industrielles, après un audit, une étude ou une visite réalisés selon le cahier des charges de l'ADEME ou par un partenaire de l'ADEME"
+    taux: "Aide régionale de 10 000 € à 100 000 € par entreprise"
     calendrier: "Dépôt avant le 31 décembre 2026, avant engagement des dépenses, dans la limite des budgets"
     source: "https://www.bourgognefranchecomte.fr/node/3332"
   - nom: "Études de faisabilité de chaufferies bois"
-    objet: "Étude de faisabilité d'une chaufferie alimentée principalement en plaquettes ou autres combustibles bois admis, associée à un réseau de chaleur ; ouverte notamment aux entreprises industrielles et de services, aux coopératives agricoles et forestières et aux associations"
+    objet: "Étude de faisabilité d'une chaufferie alimentée principalement en plaquettes ou autres combustibles bois admis, associée à un réseau de chaleur ; ouverte notamment aux entreprises industrielles, tertiaires et de services, aux coopératives agricoles et forestières et aux associations"
     taux: "Subvention de 50 % au plus, sur une dépense plafonnée à 10 000 € par étude ; aide minimale de 2 000 €"
     calendrier: "Dépôt sur la plateforme de subventions de la Région (fiche ENRI-BOIS)"
     source: "https://les-aides.fr/aide/UFef3w/region-bourgogne-franche-comte/aide-aux-investissements-chaufferies-bois.html"
@@ -48,19 +48,42 @@ dispositifsRegionaux:
 dispositifsNationaux:
   - fonds-chaleur
   - decarbonation-industrie-decarb
+  - diagnostics-cofinances-decarbonation
   - certificats-economies-energie-cee
   - aides-agences-de-l-eau
   - feader-investissements-agroalimentaire-scieries
+  - feder-efficacite-energetique-enr-entreprises
   - fonds-vert-friches-territoires-industrie
   - france-2030-premiere-usine-i-demo
   - prets-verts-bpifrance
   - credit-impot-recherche-cir
   - credit-impot-innovation-cii
-casClients: []
-projetsAnonymises: []
+casClients:
+  - foret-bois-ademe-palettes
+  - biomasse-ademe-53
+  - industrie-public-65
+  - biomasse-fonds-54
+  - industrie-ademe-61
+  - industrie-regions-63
+  - industrie-public-62
+projetsAnonymises:
+  - secteur: "Forêt et bois"
+    projet: "Production de palettes neuves en bois local et recyclé : bâtiments, lignes de sciage et de clouage, automatisation du reconditionnement (appel à projets IPPB 2024)"
+    financeur: "ADEME (France 2030)"
+    montant: "263 k€"
+  - secteur: "Forêt et bois"
+    projet: "Étude de faisabilité d'une chaufferie biomasse sur le site du même fabricant de palettes"
+    financeur: "ADEME"
+  - secteur: "Biomasse et énergie"
+    projet: "Étude de faisabilité d'une géothermie sur sondes verticales, puis demande d'aide à l'installation pour un réseau de chaleur"
+    financeur: "ADEME (Fonds Chaleur)"
+  - secteur: "Industrie, recyclage"
+    projet: "Automatisation et renforcement des capacités d'un site de recyclage et de dépollution"
+    financeur: "ADEME, Région Bourgogne-Franche-Comté, CARSAT"
 secteursActifs:
-  - industrie
+  - foret-bois
   - biomasse
+  - industrie
 sources:
   - titre: "Région Bourgogne-Franche-Comté, aide à l'investissement matériel"
     url: "https://www.bourgognefranchecomte.fr/node/267"
@@ -78,25 +101,39 @@ derniereVerification: "2026-10-03"
 updatedAt: "2026-10-03"
 seo:
   title: "Aides aux entreprises en Bourgogne-Franche-Comté"
-  description: "Investissement matériel, décarbonation des industries, AER BFC, ADEME, agences de l'eau : les aides régionales en Bourgogne-Franche-Comté."
+  description: "Investissement matériel, décarbonation des industries, chaufferies bois, AER BFC, ADEME, agences de l'eau : les aides en Bourgogne-Franche-Comté en 2026."
 faq:
   - question: "Quelle aide régionale pour l'investissement de production d'une PME en Bourgogne-Franche-Comté ?"
-    reponse: "L'aide à l'investissement matériel est une avance remboursable de 20 % de l'assiette éligible (30 % en zone AFR), plafonnée à 250 000 €. La demande doit être déposée avant le 31 décembre 2026 et avant tout engagement de dépense."
+    reponse: "L'aide à l'investissement matériel est une avance remboursable de 20 % de l'assiette éligible (30 % en zone AFR), plafonnée à 250 000 €. Elle suppose un prêt bancaire ou un crédit-bail couvrant au moins 80 % de l'investissement. La demande doit être déposée avant le 31 décembre 2026 et avant tout engagement de dépense."
   - question: "La Région finance-t-elle la décarbonation des PME industrielles ?"
-    reponse: "Oui, par une aide de 10 000 à 100 000 € pour les investissements de décarbonation des PME, à condition qu'un audit, une étude ou une visite ait été réalisé selon le cahier des charges de l'ADEME."
+    reponse: "Oui, par une aide de 10 000 à 100 000 € pour les investissements de décarbonation des PME, à condition qu'un audit, une étude ou une visite ait été réalisé selon le cahier des charges de l'ADEME ou par un partenaire de l'ADEME. Le dépôt est possible jusqu'au 31 décembre 2026."
+  - question: "Que se passe-t-il pour un projet prévu en 2027 ?"
+    reponse: "L'aide à l'investissement matériel et l'aide à la décarbonation arrivent à échéance le 31 décembre 2026. Un projet dont les dépenses commencent en 2027 peut être déposé avant cette date, à condition de ne rien engager avant le dépôt ; sinon, il faudra attendre la reconduction éventuelle des règlements."
   - question: "Peut-on encore déposer un dossier FEDER pour une chaufferie bois en Bourgogne-Franche-Comté ?"
     reponse: "Pas pour l'instant : l'appel à projets FEDER 2026 consacré aux chaufferies bois avec réseau de chaleur est clos depuis le 10 juillet 2026, et la prochaine édition n'était pas annoncée au 3 octobre 2026. En attendant, la Région finance l'étude de faisabilité à 50 %, sur une dépense plafonnée à 10 000 €, et le Fonds Chaleur de l'ADEME reste mobilisable."
+  - question: "Quelle agence de l'eau contacter en Bourgogne-Franche-Comté ?"
+    reponse: "Cela dépend du bassin versant du site : Rhône-Méditerranée-Corse pour les bassins de la Saône et du Doubs, Seine-Normandie pour l'Yonne et le nord de la Côte-d'Or, Loire-Bretagne pour la majeure partie de la Nièvre et l'ouest de la Saône-et-Loire. Le rattachement se vérifie à la commune."
   - question: "Intervenez-vous en Bourgogne-Franche-Comté ?"
     reponse: "Oui, comme dans toute la France : le montage se fait à distance et nous nous déplaçons pour la visite du site ou les réunions avec les financeurs lorsque le projet le justifie."
 ---
 
+Forêt et transformation du bois, plasturgie, mécanique, automobile, agroalimentaire et filières fromagères, recyclage : la Bourgogne-Franche-Comté associe une industrie diversifiée et une grande forêt. Les aides publiques y suivent ces deux réalités, avec des outils régionaux pour l'investissement productif et la décarbonation, et un fort soutien au bois énergie. Cette page présente les financeurs, les dispositifs vérifiés le 3 octobre 2026 et les projets que nous y avons accompagnés.
+
 ## Les financeurs en Bourgogne-Franche-Comté
 
-La **Région Bourgogne-Franche-Comté** attribue les aides directes aux entreprises, souvent en avance remboursable pour l'investissement productif, et gère le FEDER et le FEADER. L'**AER BFC**, agence économique régionale présente à Besançon, à Dijon et dans les départements, accompagne le développement, l'implantation et l'innovation des entreprises et propose une ingénierie financière.
+La **Région Bourgogne-Franche-Comté** attribue les aides directes aux entreprises, souvent en avance remboursable pour l'investissement productif, et gère le FEDER et le FEADER. Ses appels à projets FEDER financent notamment les chaufferies bois et les réseaux de chaleur.
 
-L'**ADEME** instruit le Fonds Chaleur et les aides à la décarbonation. Pour l'eau, la région est partagée entre trois bassins : **Rhône-Méditerranée-Corse**, **Seine-Normandie** et **Loire-Bretagne**, selon la localisation du site. **Bpifrance** intervient en prêts, garanties et aides à l'innovation, et la **DREETS** relaie les appels à projets de l'État.
+L'**AER BFC**, agence économique régionale présente à Besançon, à Dijon et dans les départements, accompagne le développement, l'implantation et l'innovation des entreprises et propose une ingénierie financière. Elle est un bon point d'entrée pour qualifier un projet auprès des services de la Région.
+
+La **direction régionale de l'ADEME** instruit le Fonds Chaleur, les aides à la décarbonation et les études de faisabilité. Elle finance aussi, pour l'État, les appels à projets France 2030 de la filière bois, comme l'industrialisation des produits bois.
+
+Pour l'eau, la région est partagée entre trois bassins : **Rhône-Méditerranée-Corse**, **Seine-Normandie** et **Loire-Bretagne**, selon la localisation du site. Chaque agence a son propre programme d'aides ; le rattachement se vérifie à la commune avant de préparer le dossier.
+
+**Bpifrance** intervient en prêts, garanties et aides à l'innovation, et la **DREETS** relaie les appels à projets de l'État, dont le Fonds vert.
 
 ## Les dispositifs régionaux
+
+Le tableau présente les dispositifs vérifiés le 3 octobre 2026 sur le site de la Région et sur celui des fonds européens en Bourgogne-Franche-Comté.
 
 | Dispositif | Pour quoi | Taux et plafond | Calendrier |
 |---|---|---|---|
@@ -105,12 +142,30 @@ L'**ADEME** instruit le Fonds Chaleur et les aides à la décarbonation. Pour l'
 | Études de faisabilité de chaufferies bois | Étude préalable d'une chaufferie bois avec réseau de chaleur | 50 %, dépense plafonnée à 10 000 € par étude | Plateforme de subventions de la Région |
 | FEDER chaufferies bois (appel 2026) | Chaufferie bois d'au moins 100 kW avec réseau de chaleur, hors grandes entreprises | Jusqu'à 50 %, de 50 000 à 500 000 € par projet | Clos depuis le 10/07/2026 |
 
-L'aide à l'investissement matériel et l'aide à la décarbonation arrivent à échéance le 31 décembre 2026 : un projet prévu pour 2027 doit être déposé avant cette date, ou attendre la reconduction éventuelle des règlements. L'aide à l'investissement matériel suppose un financement bancaire d'au moins 80 % de l'investissement, et l'aide à la décarbonation un audit ou une étude préalable réalisés selon le cahier des charges de l'ADEME : ces pièces conditionnent le dépôt.
+L'aide à l'investissement matériel et l'aide à la décarbonation arrivent à échéance le 31 décembre 2026 : un projet prévu pour 2027 doit être déposé avant cette date, ou attendre la reconduction éventuelle des règlements. L'aide à l'investissement matériel suppose un prêt bancaire ou un crédit-bail d'au moins 80 % de l'investissement, et l'aide à la décarbonation un audit, une étude ou une visite préalables réalisés selon le cahier des charges de l'ADEME : ces pièces conditionnent le dépôt. Les secteurs éligibles sont précisés dans les règlements d'intervention et se vérifient avant tout travail de rédaction.
 
-Pour une chaufferie bois avec réseau de chaleur, l'appel à projets FEDER 2026 est clos depuis le 10 juillet 2026 (aide plafonnée à 500 000 € par projet) et la prochaine édition n'est pas annoncée. Le bon réflexe reste de lancer l'étude de faisabilité, financée par la Région à 50 % sur une dépense plafonnée à 10 000 € : elle est exigée par le FEDER comme par le Fonds Chaleur de l'ADEME. Nous détaillons ce calendrier dans notre [décryptage du FEDER chaufferies bois en Bourgogne-Franche-Comté](/blog/decryptage-bourgogne-franche-comte-chaufferies-bois).
+Pour une chaufferie bois avec réseau de chaleur, l'appel à projets FEDER 2026 est clos depuis le 10 juillet 2026 (aide plafonnée à 500 000 € par projet) et la prochaine édition n'est pas annoncée. Le bon réflexe reste de lancer l'étude de faisabilité, financée par la Région à 50 % sur une dépense plafonnée à 10 000 € : elle est exigée par le FEDER comme par le Fonds Chaleur de l'ADEME. Nous détaillons ce calendrier dans notre [décryptage du FEDER chaufferies bois en Bourgogne-Franche-Comté](/blog/decryptage-bourgogne-franche-comte-chaufferies-bois), et les règles nationales dans notre [décryptage des aides aux chaufferies biomasse](/blog/decryptage-chaufferies-biomasse).
 
-Ces aides se combinent avec les dispositifs nationaux (Fonds Chaleur, DECARB IND, CEE, France 2030, crédits d'impôt recherche et innovation).
+Ces aides se combinent avec les dispositifs nationaux : Fonds Chaleur, DECARB IND, CEE, France 2030, crédits d'impôt recherche et innovation. Pour la filière bois, l'appel à projets IPPB de l'ADEME finance l'industrialisation de la transformation du bois ; voir notre [décryptage d'IPPB](/blog/decryptage-ippb).
+
+## Nos projets financés en Bourgogne-Franche-Comté
+
+Nous accompagnons en Bourgogne-Franche-Comté des entreprises de la filière bois, de l'énergie et du recyclage.
+
+- **Un fabricant et reconditionneur de palettes** a obtenu [263 k€ de l'ADEME](/cas-clients/foret-bois-ademe-palettes) au titre de l'appel à projets IPPB 2024, soit 50 % de 526 k€ de dépenses éligibles, pour produire des palettes neuves en bois local et recyclé avec une ligne de sciage et une ligne de clouage. La décision date de décembre 2024, cinq mois après le dépôt. Nous avons aussi obtenu pour lui une aide de l'ADEME à l'étude de faisabilité d'une chaufferie biomasse sur le site, et préparé une demande auprès de l'Assurance Maladie pour l'automatisation de ses lignes, au titre de la prévention des risques professionnels.
+- **Un projet de géothermie sur sondes verticales** a bénéficié d'une aide de l'ADEME pour son étude de faisabilité ; nous avons ensuite déposé la demande d'aide à l'installation au Fonds Chaleur, pour alimenter un réseau de chaleur.
+- **Un site de recyclage et de dépollution** qui automatise et renforce ses capacités : nous avons construit un plan de financement combinant l'ADEME, la Région et la CARSAT, chacun sur la partie du programme qui le concerne.
+
+Ces parcours ont un point commun : une étude préalable financée ouvre la voie à l'aide à l'investissement. C'est la logique du Fonds Chaleur comme de l'aide régionale à la décarbonation. Dans la filière bois, le même raisonnement vaut pour les scieries et les fabricants d'emballages : un projet d'investissement productif se présente à l'ADEME ou à la Région, tandis que la chaufferie alimentée par les connexes de scierie relève d'un dossier énergie distinct, avec son propre calendrier.
 
 ## Comment nous intervenons
 
-Nous intervenons en Bourgogne-Franche-Comté comme partout en France, à distance et sur site. L'échéance du 31 décembre 2026 structure aujourd'hui notre calendrier dans la région : pour un projet d'investissement matériel ou de décarbonation prévu en 2027, nous vérifions d'abord que les pièces préalables (accord bancaire, audit ou étude conforme au cahier des charges de l'ADEME) peuvent être réunies à temps. Nous identifions ensuite l'agence de l'eau compétente selon la commune du site, puis nous articulons l'aide régionale avec le Fonds Chaleur ou les CEE. Dans la région, nous avons notamment accompagné un fabricant de palettes qui a obtenu [263 k€ de l'ADEME](/cas-clients/foret-bois-ademe-palettes) pour une ligne de sciage et de clouage.
+Nous appliquons en Bourgogne-Franche-Comté la méthode que nous suivons partout en France.
+
+1. **Diagnostic** : un premier échange à distance pour comprendre le projet, son calendrier et son budget, et repérer les aides régionales, nationales et européennes possibles.
+2. **Stratégie de financement** : l'échéance du 31 décembre 2026 structure aujourd'hui notre calendrier dans la région. Pour un projet d'investissement matériel ou de décarbonation prévu en 2027, nous vérifions d'abord que les pièces préalables (accord bancaire, audit ou étude conforme au cahier des charges de l'ADEME) peuvent être réunies à temps.
+3. **Montage du dossier** : identification de l'agence de l'eau compétente, articulation de l'aide régionale avec le Fonds Chaleur ou les CEE, rédaction et annexes techniques.
+4. **Échanges avec les financeurs** : rendez-vous avec la Région, l'AER BFC ou l'ADEME, réponses aux demandes de compléments.
+5. **Suivi jusqu'au versement** : conventionnement, justificatifs et demandes de paiement.
+
+Le travail se fait surtout à distance. Nous nous déplaçons sur site lorsque c'est utile : visite des installations, réunion technique ou rendez-vous avec un financeur.

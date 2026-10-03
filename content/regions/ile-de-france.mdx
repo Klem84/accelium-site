@@ -2,42 +2,48 @@
 slug: ile-de-france
 nom: "Île-de-France"
 ordre: 11
-statut: courte
+statut: complete
 h1: "Financements publics pour les entreprises en Île-de-France"
-definition: "En Île-de-France, une entreprise qui investit ou innove peut mobiliser la Région (PM'up, Innov'up avec Bpifrance), l'agence Choose Paris Region, l'ADEME, l'agence de l'eau Seine-Normandie et Bpifrance. PM'up finance jusqu'à 50 % des dépenses éligibles des PME, dans la limite de 250 000 €, et Innov'up de 25 à 70 % des projets d'innovation."
+definition: "En Île-de-France, une entreprise qui investit ou innove peut mobiliser la Région (PM'up, TP'up, Innov'up avec Bpifrance), l'agence Choose Paris Region, l'ADEME, l'agence de l'eau Seine-Normandie et Bpifrance. PM'up finance jusqu'à 50 % des dépenses éligibles des PME, dans la limite de 250 000 €, TP'up jusqu'à 55 000 € pour les TPE, et Innov'up de 25 à 70 % des projets d'innovation."
 financeursRegionaux:
   - nom: "Région Île-de-France"
-    role: "Aides directes aux entreprises (PM'up, Innov'up), autorité de gestion du FEDER"
+    role: "Aides directes aux entreprises (PM'up, TP'up, Innov'up), autorité de gestion du FEDER"
     url: "https://www.iledefrance.fr/"
   - nom: "Choose Paris Region"
-    role: "Agence d'attractivité et de développement économique de la région"
+    role: "Agence d'attractivité et de développement économique de la région : implantation, développement et mise en relation"
     url: "https://www.chooseparisregion.org/"
   - nom: "ADEME Île-de-France"
     role: "Fonds Chaleur, décarbonation, économie circulaire et appels à projets France 2030 instruits en région"
     url: "https://www.ademe.fr/les-territoires-en-transition/lademe-en-region/"
   - nom: "Agence de l'eau Seine-Normandie"
-    role: "Aides à la sobriété en eau et à la réduction des pollutions des activités économiques"
+    role: "Aides à la sobriété en eau et à la réduction des pollutions des activités économiques, sur toute la région"
     url: "https://www.eau-seine-normandie.fr/"
   - nom: "Bpifrance, directions régionales d'Île-de-France"
-    role: "Prêts, garanties et aides à l'innovation, cofinanceur d'Innov'up"
+    role: "Prêts, garanties et aides à l'innovation, cofinanceur et instructeur d'Innov'up"
     url: "https://www.bpifrance.fr/contactez-nous/direction-regionale-paris"
   - nom: "DRIEETS Île-de-France"
     role: "Services de l'État en région : Fonds vert, emploi, relais des appels à projets nationaux"
     url: "https://idf.drieets.gouv.fr/"
 dispositifsRegionaux:
   - nom: "PM'up"
-    objet: "Projets de transformation écologique (décarbonation, circularité), de production stratégique, de relocalisation ou d'international des PME de 5 à 250 salariés"
-    taux: "Jusqu'à 50 % des dépenses éligibles ; subvention plafonnée à 250 000 €, portée à 375 000 € pour certains projets en zone de reconquête"
+    objet: "Projets de transformation écologique (décarbonation, circularité), de production stratégique, de relocalisation, de croissance créatrice d'emplois ou d'international des PME de 5 à 250 salariés (chiffre d'affaires de 50 M€ ou bilan de 43 M€ au plus, non affiliées à un groupe plus grand)"
+    taux: "Jusqu'à 50 % des dépenses éligibles ; subvention plafonnée à 250 000 €, portée à 375 000 € à titre exceptionnel en zone de reconquête économique ou pour un projet à fort impact écologique"
     calendrier: "Dépôt au fil de l'eau sur mesdemarches.iledefrance.fr, jury de sélection mensuel"
     source: "https://www.iledefrance.fr/aides-et-appels-a-projets/pmup"
+  - nom: "TP'up"
+    objet: "Mêmes objectifs que PM'up pour les très petites entreprises de 1 à 9 salariés, de moins de 2 M€ de chiffre d'affaires et d'au moins un an d'existence"
+    taux: "Subvention plafonnée à 55 000 €, portée à 82 500 € à titre exceptionnel en zone de reconquête économique pour un projet à fort impact écologique"
+    calendrier: "Dépôt au fil de l'eau sur mesdemarches.iledefrance.fr, comité de sélection mensuel"
+    source: "https://www.iledefrance.fr/aides-et-appels-a-projets/tpup"
   - nom: "Innov'up (Région Île-de-France et Bpifrance)"
-    objet: "Projets de recherche, développement et innovation des TPE, PME, ETI et associations, de la faisabilité à l'expérimentation"
+    objet: "Projets de recherche, développement et innovation des TPE, PME, ETI et associations ayant une activité économique, de la faisabilité à l'expérimentation"
     taux: "25 à 70 % selon la taille et la nature du projet ; subvention jusqu'à 500 000 € et prêt ou avance récupérable jusqu'à 3 M€"
     calendrier: "Dépôt au fil de l'eau, avant le démarrage du projet"
     source: "https://www.iledefrance.fr/aides-et-appels-a-projets/innovup"
 dispositifsNationaux:
   - fonds-chaleur
   - decarbonation-industrie-decarb
+  - diagnostics-cofinances-decarbonation
   - certificats-economies-energie-cee
   - aides-agences-de-l-eau
   - feder-efficacite-energetique-enr-entreprises
@@ -46,8 +52,16 @@ dispositifsNationaux:
   - prets-verts-bpifrance
   - credit-impot-recherche-cir
   - credit-impot-innovation-cii
-casClients: []
-projetsAnonymises: []
+casClients:
+  - industrie-france-68
+  - industrie-credit-69
+projetsAnonymises:
+  - secteur: "Industrie, traitement de l'air"
+    projet: "Développement d'un procédé de traitement des polluants atmosphériques, présenté à Bpifrance au titre de l'aide à l'innovation"
+    financeur: "Bpifrance"
+  - secteur: "Industrie, traitement de l'air"
+    projet: "Volet fiscal du même projet : dépenses de conception de prototypes déclarées au crédit d'impôt innovation"
+    financeur: "État (crédit d'impôt innovation)"
 secteursActifs:
   - industrie
   - numerique
@@ -55,40 +69,84 @@ secteursActifs:
 sources:
   - titre: "Région Île-de-France, PM'up"
     url: "https://www.iledefrance.fr/aides-et-appels-a-projets/pmup"
+  - titre: "Région Île-de-France, TP'up"
+    url: "https://www.iledefrance.fr/aides-et-appels-a-projets/tpup"
   - titre: "Région Île-de-France, Innov'up"
     url: "https://www.iledefrance.fr/aides-et-appels-a-projets/innovup"
+  - titre: "Agence de l'eau Seine-Normandie"
+    url: "https://www.eau-seine-normandie.fr/"
   - titre: "Choose Paris Region"
     url: "https://www.chooseparisregion.org/"
-derniereVerification: "2026-09-27"
+derniereVerification: "2026-10-03"
+updatedAt: "2026-10-03"
 seo:
-  title: "Aides aux entreprises en Île-de-France 2026-2027"
-  description: "PM'up, Innov'up, ADEME, agence de l'eau Seine-Normandie, Bpifrance : les financeurs et dispositifs régionaux mobilisables en Île-de-France."
+  title: "Aides aux entreprises en Île-de-France : guide 2026"
+  description: "PM'up, TP'up, Innov'up, ADEME, agence de l'eau Seine-Normandie, Bpifrance : financeurs, taux et calendriers 2026 pour les entreprises franciliennes."
 faq:
   - question: "Quelles entreprises peuvent demander PM'up ?"
-    reponse: "Les PME de 5 à 250 salariés, avec un chiffre d'affaires de 50 M€ au plus, non affiliées à un groupe plus grand et disposant d'au moins un établissement en Île-de-France. Certains secteurs sont exclus (négoce, conseil, finance, hôtellerie, agriculture notamment)."
+    reponse: "Les PME de 5 à 250 salariés, avec un chiffre d'affaires de 50 M€ ou un bilan de 43 M€ au plus, non affiliées à un groupe plus grand et disposant d'au moins un établissement en Île-de-France. Plusieurs secteurs sont exclus, notamment le négoce, le conseil, la finance, l'immobilier, l'hôtellerie, la logistique, le transport routier de marchandises, les services numériques et l'agriculture."
+  - question: "Quel est le montant maximal de PM'up ?"
+    reponse: "La subvention couvre au plus 50 % des dépenses éligibles et elle est plafonnée à 250 000 €. Le plafond peut atteindre 375 000 € à titre exceptionnel, pour un projet situé en zone de reconquête économique ou à fort impact écologique."
+  - question: "Quelle aide régionale pour une TPE francilienne ?"
+    reponse: "TP'up, pour les entreprises de 1 à 9 salariés réalisant moins de 2 M€ de chiffre d'affaires et existant depuis au moins un an. La subvention est plafonnée à 55 000 €, et peut atteindre 82 500 € à titre exceptionnel. Les dossiers passent devant un comité de sélection mensuel."
   - question: "Comment financer un projet d'innovation en Île-de-France ?"
-    reponse: "Innov'up, porté par la Région et Bpifrance, combine une subvention (jusqu'à 500 000 €) et un prêt ou une avance récupérable (jusqu'à 3 M€), à un taux de 25 à 70 % selon la taille et le projet. La demande se dépose avant le démarrage."
+    reponse: "Innov'up, porté par la Région et Bpifrance, combine une subvention (jusqu'à 500 000 €) et un prêt ou une avance récupérable (jusqu'à 3 M€), à un taux de 25 à 70 % selon la taille et le projet. La demande se dépose avant le démarrage. Elle se combine avec le crédit d'impôt recherche ou innovation, la subvention étant déduite de l'assiette du crédit d'impôt."
+  - question: "Quelle agence de l'eau contacter en Île-de-France ?"
+    reponse: "L'agence de l'eau Seine-Normandie, compétente sur toute la région. Elle finance la sobriété en eau et la réduction des rejets des sites industriels, à condition de déposer la demande avant tout engagement."
   - question: "Intervenez-vous en Île-de-France ?"
     reponse: "Oui, comme dans toute la France : le montage se fait à distance et nous nous déplaçons pour la visite du site ou les réunions avec les financeurs lorsque le projet le justifie."
 ---
 
+L'Île-de-France concentre les sièges sociaux, la recherche publique et privée, les industries de santé, l'aéronautique, le numérique et un tissu de PME industrielles en petite et grande couronne. Les aides régionales y sont pensées pour la croissance et la transformation des PME et des TPE, et pour l'innovation, avec Bpifrance comme partenaire principal. Cette page présente les financeurs, les dispositifs vérifiés le 3 octobre 2026 et notre façon d'accompagner les entreprises franciliennes.
+
 ## Les financeurs en Île-de-France
 
-La **Région Île-de-France** attribue les aides directes aux entreprises, avec deux dispositifs principaux : PM'up pour la croissance et la transformation écologique des PME, Innov'up pour l'innovation, cofinancé par Bpifrance. Elle gère aussi le FEDER. **Choose Paris Region**, l'agence d'attractivité et de développement économique, accompagne les implantations et les projets de développement.
+La **Région Île-de-France** attribue les aides directes aux entreprises, avec trois dispositifs principaux : PM'up pour la croissance et la transformation écologique des PME, TP'up pour les très petites entreprises, Innov'up pour l'innovation, cofinancé par Bpifrance. Elle gère aussi le FEDER. Les demandes se déposent sur sa plateforme en ligne, mesdemarches.iledefrance.fr.
 
-L'**ADEME** instruit le Fonds Chaleur et les aides à la décarbonation. L'**agence de l'eau Seine-Normandie** finance la sobriété en eau et la réduction des pollutions des sites industriels. **Bpifrance** intervient en prêts, garanties et aides à l'innovation, et la **DRIEETS** relaie les appels à projets de l'État, dont le Fonds vert.
+**Choose Paris Region**, l'agence d'attractivité et de développement économique, accompagne les implantations d'entreprises françaises et étrangères et les projets de développement, et met en relation avec les financeurs.
+
+La **direction régionale de l'ADEME** instruit le Fonds Chaleur, les aides à la décarbonation et les études énergétiques. Dans une région où l'industrie lourde est moins présente, ses aides concernent souvent la chaleur renouvelable, la récupération de chaleur et l'économie circulaire. Les demandes se déposent sur sa plateforme Agir pour la transition, avant tout engagement de dépense.
+
+L'**agence de l'eau Seine-Normandie** couvre toute la région. Elle finance la sobriété en eau et la réduction des pollutions des activités économiques ; notre [décryptage de son aide aux pressions économiques](/blog/decryptage-seine-normandie-pressions-economiques) en détaille les conditions.
+
+**Bpifrance** intervient en prêts, garanties et aides à l'innovation et instruit Innov'up avec la Région. La **DRIEETS** relaie les appels à projets de l'État, dont le Fonds vert.
 
 ## Les dispositifs régionaux
 
+Le tableau présente les dispositifs vérifiés le 3 octobre 2026 sur le site de la Région.
+
 | Dispositif | Pour quoi | Taux et plafond | Calendrier |
 |---|---|---|---|
-| PM'up | Transformation écologique, production stratégique, relocalisation des PME | Jusqu'à 50 %, 250 000 € (375 000 € en zone de reconquête) | Au fil de l'eau, jury mensuel |
-| Innov'up | Recherche, développement, innovation | 25 à 70 %, subvention jusqu'à 500 000 € et prêt jusqu'à 3 M€ | Au fil de l'eau, avant démarrage |
+| PM'up | Transformation écologique, production stratégique, relocalisation, croissance des PME de 5 à 250 salariés | Jusqu'à 50 %, 250 000 € (375 000 € à titre exceptionnel) | Au fil de l'eau, jury mensuel |
+| TP'up | Mêmes projets pour les TPE de 1 à 9 salariés | Subvention jusqu'à 55 000 € (82 500 € à titre exceptionnel) | Au fil de l'eau, comité mensuel |
+| Innov'up | Recherche, développement, innovation | 25 à 70 % ; subvention jusqu'à 500 000 €, prêt ou avance jusqu'à 3 M€ | Au fil de l'eau, avant démarrage |
 
-PM'up exclut plusieurs secteurs (négoce, conseil, finance, hôtellerie, agriculture, logistique notamment) et les filiales de groupes de taille supérieure : l'éligibilité se vérifie avant tout travail de rédaction. Les dossiers passent devant un jury mensuel, ce qui impose de soigner la présentation du projet et de ses retombées. Pour Innov'up, le dépôt doit précéder le démarrage des travaux de recherche ou d'innovation.
+**PM'up** finance des dépenses variées : investissements matériels et immatériels, prestations de conseil, dépôt de brevets, recrutements stratégiques et développement international. Il exclut plusieurs secteurs (négoce, conseil, professions réglementées, finance, assurance, immobilier, hôtellerie, organismes de formation, transport routier de marchandises, logistique, services numériques, communication, services à la personne, agriculture) ainsi que les filiales de groupes de taille supérieure : l'éligibilité se vérifie avant tout travail de rédaction. Les dossiers passent devant un jury mensuel, ce qui impose de présenter clairement le projet, son plan de financement et ses retombées économiques et environnementales.
 
-Ces aides se combinent avec les dispositifs nationaux (France 2030, CEE, Fonds Chaleur, crédits d'impôt recherche et innovation).
+**TP'up** reprend la logique de PM'up pour les entreprises de moins de 10 salariés, avec les mêmes exclusions sectorielles, un plafond de 55 000 € et la possibilité de financer un recrutement lié à la transition écologique.
+
+**Innov'up** couvre la faisabilité, le développement et l'expérimentation de produits, de services ou de procédés, dans des filières prioritaires comme la santé, l'aéronautique, la construction durable, l'énergie, les mobilités, l'agroalimentaire, l'intelligence artificielle ou la numérisation de l'industrie. Le taux dépend de la taille de l'entreprise et de la nature du projet ; la demande doit précéder le démarrage des travaux. La Région organise des webinaires de présentation du dispositif, annoncés pour le 16 octobre et le 27 novembre 2026 puis le 8 janvier 2027. Nous détaillons son fonctionnement dans notre [décryptage d'Innov'up](/blog/decryptage-ile-de-france-innov-up).
+
+Ces aides se combinent avec les dispositifs nationaux : France 2030, Fonds Chaleur, CEE, prêts verts de Bpifrance et crédits d'impôt recherche et innovation. Le cumul se raisonne dépense par dépense, en respectant les plafonds de l'encadrement européen des aides d'État.
+
+## Nos projets financés en Île-de-France
+
+En Île-de-France, nos dossiers portent surtout sur l'innovation industrielle, où les aides de Bpifrance et les crédits d'impôt se complètent.
+
+- **Une entreprise qui développe un procédé de traitement des polluants atmosphériques** : nous avons présenté son programme de développement à Bpifrance au titre de l'aide à l'innovation, puis préparé le volet fiscal du même projet au titre du crédit d'impôt innovation, pour les dépenses de conception de prototypes. Les deux demandes ont été construites ensemble, afin que la subvention soit correctement déduite de l'assiette du crédit d'impôt.
+
+Ce type de projet est représentatif de la demande francilienne : des entreprises technologiques, souvent jeunes, qui doivent financer plusieurs années de développement avant les premières ventes. La bonne séquence consiste en général à sécuriser d'abord une aide à l'innovation (Innov'up ou Bpifrance), puis à déclarer chaque année le crédit d'impôt recherche ou innovation sur les dépenses restantes, et enfin à préparer l'industrialisation avec PM'up ou les appels à projets de France 2030.
 
 ## Comment nous intervenons
 
-Nous intervenons en Île-de-France comme partout en France, à distance et sur site. Pour PM'up, nous vérifions d'abord les critères d'exclusion (secteur, appartenance à un groupe), puis nous préparons la présentation du projet devant le jury en chiffrant ses retombées économiques et environnementales. Pour un projet d'innovation, nous articulons Innov'up avec les crédits d'impôt recherche et innovation, en tenant compte du fait que les subventions reçues pour les mêmes opérations sont déduites de l'assiette du crédit d'impôt. Dans la région, nous avons accompagné une entreprise qui développe un procédé de traitement des polluants atmosphériques, à la fois auprès de Bpifrance et au titre du crédit d'impôt innovation. Les rendez-vous avec la Région et Bpifrance se préparent en amont, sur la base d'un plan de financement déjà chiffré.
+Nous appliquons en Île-de-France la méthode que nous suivons partout en France.
+
+1. **Diagnostic** : un premier échange à distance pour comprendre le projet, son calendrier et son budget, et vérifier les critères d'exclusion de PM'up et de TP'up (secteur, appartenance à un groupe, effectif).
+2. **Stratégie de financement** : choix entre Innov'up, PM'up et les aides nationales, ordre de dépôt, cumuls avec les crédits d'impôt.
+3. **Montage du dossier** : rédaction, chiffrage des retombées économiques et environnementales attendues par le jury, annexes techniques et financières.
+4. **Échanges avec les financeurs** : préparation des rendez-vous avec la Région et Bpifrance sur la base d'un plan de financement chiffré, réponses aux demandes de compléments.
+5. **Suivi jusqu'au versement** : conventionnement, justificatifs et demandes de paiement.
+
+Un point revient souvent en Île-de-France : le siège est à Paris ou en petite couronne, mais le site de production ou le laboratoire se trouve dans une autre région. Les aides régionales s'apprécient selon le lieu de l'établissement qui porte le projet. PM'up, TP'up et Innov'up exigent un établissement en Île-de-France ; un investissement réalisé ailleurs relève de la Région où se situe le site, et de l'agence de l'eau du bassin correspondant. Nous clarifions ce point dès le diagnostic, avant de choisir les guichets.
+
+Le travail se fait surtout à distance. Nous nous déplaçons sur site lorsque c'est utile : visite des installations, réunion technique ou rendez-vous avec un financeur.
