@@ -2,12 +2,8 @@
 @tailwind components;
 @tailwind utilities;
 
-/* Polices auto-hébergées via next/font/local (app/layout.tsx : variables --font-display et
-   --font-sans, cf. tailwind.config.ts). Les anciennes déclarations @font-face manuelles ont
-   été retirées pour éviter un double chargement des mêmes fichiers woff2. */
-/* Polices auto-hébergées (public/fonts). Les familles portent un nom interne distinct de
-   « Clash Display » / « General Sans » : le rendu actuel (titres .display en system-ui) est
-   conservé tel quel, seul le chargement est optimisé (préchargement dans app/layout.tsx).
+/* Polices de la charte auto-hébergées (public/fonts) : General Sans (texte) et Clash Display
+   (titres), exposées par --font-sans et --font-display. Préchargement dans app/layout.tsx.
    Les faces de repli ajustées (size-adjust) évitent tout décalage au swap. */
 @font-face {
   font-family: "AcceliumSans";
@@ -84,7 +80,7 @@ body {
 
 /* ── Typographie display ── */
 .display {
-  font-family: "Clash Display", system-ui, sans-serif;
+  font-family: var(--font-display), system-ui, sans-serif;
   letter-spacing: -0.02em;
   line-height: 0.98;
   text-wrap: balance;
@@ -308,7 +304,7 @@ button {
   margin-top: 1.1rem;
 }
 .prose-accelium h2 {
-  font-family: "Clash Display", system-ui, sans-serif;
+  font-family: var(--font-display), system-ui, sans-serif;
   font-weight: 600;
   color: #1b2336;
   font-size: clamp(1.5rem, 1.1rem + 1.2vw, 2.1rem);
@@ -318,7 +314,7 @@ button {
   scroll-margin-top: 7rem;
 }
 .prose-accelium h3 {
-  font-family: "Clash Display", system-ui, sans-serif;
+  font-family: var(--font-display), system-ui, sans-serif;
   font-weight: 600;
   color: #1b2336;
   font-size: clamp(1.2rem, 1rem + 0.6vw, 1.5rem);
