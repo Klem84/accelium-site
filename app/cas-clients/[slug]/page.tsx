@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import { notFound } from "next/navigation";
 import Link from "next/link";
+import Image from "next/image";
 import { PageHero } from "@/components/blocks/PageHero";
 import { CtaBlock } from "@/components/blocks/CtaBlock";
 import { Mdx } from "@/components/Mdx";
@@ -46,6 +47,11 @@ export default function CasClientPage({ params }: { params: { slug: string } }) 
       />
       <section className="wrap py-16 lg:py-24 grid lg:grid-cols-12 gap-12">
         <div className="lg:col-span-8">
+          {c.image && (
+            <div className="relative aspect-[16/9] rounded-2xl overflow-hidden border border-line photo mb-8">
+              <Image src={c.image} alt="" fill sizes="(min-width: 1024px) 60vw, 100vw" className="object-cover" />
+            </div>
+          )}
           {repeterContexteResultat && (
             <>
               <h2 className="display text-[1.4rem] font-600 text-ink">Contexte</h2>

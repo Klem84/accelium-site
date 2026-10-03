@@ -7,7 +7,8 @@ import { RelatedLinks } from "@/components/blocks/RelatedLinks";
 import { Accordion } from "@/components/ui/Accordion";
 import { Mdx } from "@/components/Mdx";
 import { Button } from "@/components/ui/Button";
-import { getOffre, getOffres } from "@/lib/content";
+import { getOffre, getOffres, getCasClients } from "@/lib/content";
+import { CasGrid, type CasCard } from "@/components/blocks/CasGrid";
 import { buildMetadata } from "@/lib/seo";
 import { JsonLd, serviceSchema, faqSchema } from "@/lib/schema-org";
 import { site } from "@/config/site";
@@ -23,7 +24,7 @@ export function generateMetadata({ params }: { params: { slug: string } }): Meta
   return buildMetadata(o.seo, `/offres/${o.slug}`);
 }
 
-/* Retire les marqueurs de travail [À COMPLÉTER ...] / [À VALIDER ...] du contenu. */
+/* Retire les éventuels marqueurs de travail (à compléter, à valider) du contenu. */
 function cleanBody(body: string): string {
   const kept = body.split("\n").filter((l) => !/À (COMPLÉTER|VALIDER)/.test(l));
   return kept
@@ -34,9 +35,9 @@ function cleanBody(body: string): string {
 function cleanText(s: string): string {
   return s.replace(/\s*\[À (COMPLÉTER|VALIDER)[^\]]*\]/g, "").trim();
 }
-/* "Niveau 3 — Titre" -> { n: "3", titre: "Titre" } */
+/* "Niveau 3 : Titre" -> { n: "3", titre: "Titre" } */
 function parseNiveau(nom: string): { n?: string; titre: string } {
-  const m = nom.match(/^Niveau\s+(\d+)\s*[—:–-]\s*(.+)$/i);
+  const m = nom.match(/^Niveau\s+(\d+)\s*[:-]\s*(.+)$/i);
   if (m) return { n: m[1], titre: m[2].trim() };
   return { titre: nom };
 }
@@ -48,6 +49,27 @@ export default function OffrePage({ params }: { params: { slug: string } }) {
   const cta = o.cta || site.cta;
   const body = cleanBody(o.body || "");
   const autres = getOffres().filter((x) => x.slug !== o.slug);
+
+  // Le tableau (frontmatter) doit s'afficher avant la section "## Sources" du
+  // corps MDX : on isole cette dernière pour l'insérer après le tableau.
+  const [mainBody, sourcesSection] = (() => {
+    const parts = body.split(/\n(?=## Sources)/);
+    return [parts[0], parts[1] ? `## Sources${parts[1]}` : undefined];
+  })();
+
+  const cas = getCasClients()
+    .filter((c) => c.indexable !== false && (c.montantLabel || "").includes("obtenu"))
+    .filter(
+      (c) =>
+        (o.related?.dispositifs?.length && c.dispositif && o.related.dispositifs.includes(c.dispositif)) ||
+        (o.related?.secteurs?.length && o.related.secteurs.includes(c.secteur))
+    );
+  const casItems: CasCard[] = cas.map((c) => ({
+    slug: c.slug,
+    montant: c.montant,
+    titre: c.titre,
+    contexte: c.contexte,
+  }));
 
   const schemas: object[] = [
     serviceSchema({ name: o.h1, description: o.seo.description, url: `/offres/${o.slug}` }),
@@ -110,7 +132,7 @@ export default function OffrePage({ params }: { params: { slug: string } }) {
         <section className="wrap py-8 lg:py-12">
           <div className="grid lg:grid-cols-12 gap-10 lg:gap-14">
             <div className="lg:col-span-8">
-              <Mdx source={body} />
+              <Mdx source={mainBody} />
 
               {o.tableau && (
                 <div className="mt-10 overflow-x-auto">
@@ -138,6 +160,8 @@ export default function OffrePage({ params }: { params: { slug: string } }) {
                   </table>
                 </div>
               )}
+
+              {sourcesSection && <Mdx source={sourcesSection} className="mt-10" />}
             </div>
 
             <aside className="lg:col-span-4 lg:sticky lg:top-28 self-start space-y-4">
@@ -226,6 +250,16 @@ export default function OffrePage({ params }: { params: { slug: string } }) {
           </div>
         </section>
       ) : null}
+
+      {/* ===== PROJETS FINANCÉS ===== */}
+      {casItems.length > 0 && (
+        <section className="bg-cream border-y border-line">
+          <div className="wrap py-16 lg:py-24">
+            <h2 className="display h-sec font-600 text-ink mb-8">Projets financés</h2>
+            <CasGrid items={casItems} initial={6} step={6} />
+          </div>
+        </section>
+      )}
 
       {/* ===== AUTRES OFFRES ===== */}
       <section className="bg-ink text-white">

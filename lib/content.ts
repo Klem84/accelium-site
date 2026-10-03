@@ -2,6 +2,7 @@ import fs from "node:fs";
 import path from "node:path";
 import matter from "gray-matter";
 import type { Seo } from "./seo";
+import { referencesConfirmees } from "@/config/references";
 
 const CONTENT_DIR = path.join(process.cwd(), "content");
 
@@ -64,8 +65,11 @@ export type Secteur = {
   h1: string;
   accroche: string;
   image?: string;
-  enjeux: string;
-  aides?: { famille: string; finance: string; dispositif?: string }[];
+  enjeux?: string[];
+  aides?: { dispositif: string; pourquoi: string; taux?: string; calendrier?: string }[];
+  faq?: { question: string; reponse: string; lien?: string }[];
+  sources?: { titre: string; url: string }[];
+  regionsActives?: string[];
   accompagnement?: string;
   related?: Related;
   seo: Seo;
@@ -169,11 +173,20 @@ export type Financeur = {
   slug: string;
   nom: string;
   h1: string;
+  definition?: string;
+  echelon?: "Europe" | "État" | "Région";
+  echelonNote?: string;
+  echelonIcon?: "europe" | "etat" | "region";
+  pourQui?: string;
+  interventions?: string[];
   dispositifs?: string[];
   siteOfficiel?: string;
+  faq?: { question: string; reponse: string; lien?: string }[];
+  sources?: { titre: string; url: string }[];
+  auteur?: string;
+  derniereVerification?: string;
   related?: Related;
   seo: Seo;
-  sources?: string[];
 };
 
 export type Article = {
@@ -183,14 +196,14 @@ export type Article = {
   publishedAt: string;
   updatedAt?: string;
   auteur: string;
-  cluster: "actualite" | "dispositifs" | "secteurs" | "methode" | "cas-clients";
+  cluster: "actualite" | "dispositifs" | "secteurs" | "methode" | "cas-clients" | "decryptage" | "agrement-cir-cii";
   excerpt: string;
   heroImage?: string;
   tags?: string[];
   related?: Related;
   seo: Seo;
   draft?: boolean;
-  sources?: string[];
+  sources?: string[] | { titre: string; url: string }[];
 };
 
 export type CasClient = {
@@ -291,10 +304,10 @@ export const getGlossaire = (): Glossaire =>
 export const getFaqTransversale = (): FaqTransversale =>
   readSingle<FaqTransversale>("faq.mdx") || { themes: [] };
 
-// Règle §2.6 du brief commun : un nom de client ne s'affiche que si confirme: true
-// dans config/references.ts. Ce fichier n'existe pas encore (créé par A3) ; en
-// attendant, on masque tout nom par défaut plutôt que d'en afficher un non
-// confirmé. A brancher sur config/references.ts dès sa création.
-export function isNomClientConfirme(_nom: string): boolean {
-  return false;
+// Règle §2.6 du brief commun : un nom de client ne s'affiche que si l'entrée
+// correspondante de config/references.ts a confirme === true et n'est pas refusée.
+// referencesConfirmees()/estAffichable() (créés par A3) sont la source unique de
+// cette vérification.
+export function isNomClientConfirme(nom: string): boolean {
+  return referencesConfirmees().some((r) => r.nom === nom);
 }

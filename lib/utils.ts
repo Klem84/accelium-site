@@ -21,4 +21,6 @@ export const clusterLabels: Record<string, string> = {
   secteurs: "Secteurs",
   methode: "Méthode",
   "cas-clients": "Cas clients",
+  decryptage: "Décryptage",
+  "agrement-cir-cii": "Agrément CIR/CII",
 };

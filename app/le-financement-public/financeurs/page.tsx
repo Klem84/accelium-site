@@ -4,7 +4,6 @@ import { PageHero } from "@/components/blocks/PageHero";
 import { CtaBlock } from "@/components/blocks/CtaBlock";
 import { getFinanceurs } from "@/lib/content";
 import { buildMetadata } from "@/lib/seo";
-import { financeursData } from "@/lib/financeursData";
 import { IconEurope, IconEtat, IconRegion } from "@/components/blocks/Icons";
 
 export const metadata: Metadata = buildMetadata(
@@ -52,7 +51,7 @@ export default function FinanceursHub() {
       <section className="wrap py-16 lg:py-24">
         <div className="space-y-14 lg:space-y-20">
           {groupes.map((g) => {
-            const items = financeurs.filter((f) => financeursData[f.slug]?.echelon === g.echelon);
+            const items = financeurs.filter((f) => f.echelon === g.echelon);
             if (items.length === 0) return null;
             return (
               <div key={g.echelon}>
@@ -69,43 +68,40 @@ export default function FinanceursHub() {
                 </div>
 
                 <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-4">
-                  {items.map((f) => {
-                    const d = financeursData[f.slug];
-                    return (
-                      <Link
-                        key={f.slug}
-                        href={`/le-financement-public/financeurs/${f.slug}`}
-                        className="group flex flex-col rounded-2xl border border-line bg-surface p-6 hover:border-ink hover:shadow-soft transition-all focusable"
-                      >
-                        <div className="flex items-start justify-between gap-3">
-                          <h3 className="display text-[1.25rem] font-600 text-ink group-hover:text-orange700 transition-colors">
-                            {f.nom}
-                          </h3>
-                          <span className="text-orange text-xl transition-transform group-hover:translate-x-1">
-                            →
-                          </span>
-                        </div>
-                        {d?.echelonNote && (
-                          <p className="text-[0.78rem] font-500 text-slate mt-1">{d.echelonNote}</p>
-                        )}
-                        {d?.pourQui && (
-                          <p className="mt-3 text-[0.9rem] text-body leading-relaxed flex-1">{d.pourQui}</p>
-                        )}
-                        {d?.interventions && (
-                          <ul className="mt-4 flex flex-wrap gap-2">
-                            {d.interventions.slice(0, 3).map((i) => (
-                              <li
-                                key={i}
-                                className="inline-flex rounded-full bg-cream border border-line px-3 py-1 text-[0.76rem] font-500 text-slateD"
-                              >
-                                {i}
-                              </li>
-                            ))}
-                          </ul>
-                        )}
-                      </Link>
-                    );
-                  })}
+                  {items.map((f) => (
+                    <Link
+                      key={f.slug}
+                      href={`/le-financement-public/financeurs/${f.slug}`}
+                      className="group flex flex-col rounded-2xl border border-line bg-surface p-6 hover:border-ink hover:shadow-soft transition-all focusable"
+                    >
+                      <div className="flex items-start justify-between gap-3">
+                        <h3 className="display text-[1.25rem] font-600 text-ink group-hover:text-orange700 transition-colors">
+                          {f.nom}
+                        </h3>
+                        <span className="text-orange text-xl transition-transform group-hover:translate-x-1">
+                          →
+                        </span>
+                      </div>
+                      {f.echelonNote && (
+                        <p className="text-[0.78rem] font-500 text-slate mt-1">{f.echelonNote}</p>
+                      )}
+                      {f.pourQui && (
+                        <p className="mt-3 text-[0.9rem] text-body leading-relaxed flex-1">{f.pourQui}</p>
+                      )}
+                      {f.interventions && (
+                        <ul className="mt-4 flex flex-wrap gap-2">
+                          {f.interventions.slice(0, 3).map((i) => (
+                            <li
+                              key={i}
+                              className="inline-flex rounded-full bg-cream border border-line px-3 py-1 text-[0.76rem] font-500 text-slateD"
+                            >
+                              {i}
+                            </li>
+                          ))}
+                        </ul>
+                      )}
+                    </Link>
+                  ))}
                 </div>
               </div>
             );

@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import { notFound } from "next/navigation";
 import Link from "next/link";
+import Image from "next/image";
 import { PageHero } from "@/components/blocks/PageHero";
 import { CtaBlock } from "@/components/blocks/CtaBlock";
 import { BlogCard } from "@/components/blocks/BlogCard";
@@ -21,13 +22,31 @@ export function generateMetadata({ params }: { params: { slug: string } }): Meta
   return buildMetadata(a.seo, `/blog/${a.slug}`);
 }
 
+// Repli si content/auteurs/<slug>.mdx n'existe pas encore (rédaction en parallèle) :
+// on affiche au moins un nom lisible plutôt que de masquer l'auteur.
+function nomAuteurRepli(slug: string): string {
+  return slug
+    .split("-")
+    .map((s) => s.charAt(0).toUpperCase() + s.slice(1))
+    .join(" ");
+}
+
+// Les sources peuvent être un tableau de chaînes ou de {titre, url} : on normalise
+// pour un rendu unique.
+function sourcesNormalisees(sources?: string[] | { titre: string; url: string }[]): string[] {
+  if (!sources?.length) return [];
+  return sources.map((s) => (typeof s === "string" ? s : s.url ? `${s.titre} (${s.url})` : s.titre));
+}
+
 export default function ArticlePage({ params }: { params: { slug: string } }) {
   const a = getArticle(params.slug);
   if (!a) notFound();
-  const auteur = a.auteur ? getAuteur(a.auteur) : undefined;
+  const auteurFiche = a.auteur ? getAuteur(a.auteur) : undefined;
+  const nomAuteur = auteurFiche?.nom || (a.auteur ? nomAuteurRepli(a.auteur) : undefined);
   const related = getArticles()
     .filter((x) => x.slug !== a.slug && x.cluster === a.cluster)
     .slice(0, 3);
+  const sources = sourcesNormalisees(a.sources);
 
   return (
     <>
@@ -38,7 +57,7 @@ export default function ArticlePage({ params }: { params: { slug: string } }) {
           url: `/blog/${a.slug}`,
           datePublished: a.publishedAt,
           dateModified: a.updatedAt,
-          authorName: auteur?.nom || "Accelium Conseil",
+          authorName: nomAuteur || "Accelium Conseil",
           image: a.heroImage,
         })}
       />
@@ -53,23 +72,34 @@ export default function ArticlePage({ params }: { params: { slug: string } }) {
 
       <article className="wrap py-16 lg:py-24 grid lg:grid-cols-12 gap-12">
         <div className="lg:col-span-8">
+          {a.heroImage && (
+            <div className="relative aspect-[16/9] rounded-2xl overflow-hidden border border-line photo mb-8">
+              <Image src={a.heroImage} alt="" fill sizes="(min-width: 1024px) 60vw, 100vw" className="object-cover" />
+            </div>
+          )}
           <p className="text-[0.85rem] text-slate border-b border-line pb-6 mb-8">
             {formatDate(a.publishedAt)}
-            {auteur && <> · Par {auteur.nom}</>} · {readingTime(a.body)} min de lecture
+            {nomAuteur && <> · Par {nomAuteur}</>} · {readingTime(a.body)} min de lecture
           </p>
           <Mdx source={a.body} />
 
-          {auteur && (
+          {auteurFiche && (
             <div className="mt-12 rounded-2xl border border-line bg-cream p-7 flex gap-5 items-start">
-              {auteur.photo && (
-                <img src={auteur.photo} alt={auteur.nom} loading="lazy" decoding="async" className="w-16 h-16 rounded-full object-cover" />
+              {auteurFiche.photo && (
+                <Image
+                  src={auteurFiche.photo}
+                  alt={auteurFiche.nom}
+                  width={64}
+                  height={64}
+                  className="w-16 h-16 rounded-full object-cover"
+                />
               )}
               <div>
-                <p className="display text-[1.15rem] font-600 text-ink">{auteur.nom}</p>
-                <p className="text-[0.85rem] text-slate">{auteur.fonction}</p>
-                <p className="mt-2 text-[0.92rem] text-body">{auteur.bio}</p>
-                {auteur.linkedin && (
-                  <a href={auteur.linkedin} target="_blank" rel="noopener noreferrer" className="mt-2 inline-block text-[0.85rem] font-600 text-orange700 focusable">
+                <p className="display text-[1.15rem] font-600 text-ink">{auteurFiche.nom}</p>
+                <p className="text-[0.85rem] text-slate">{auteurFiche.fonction}</p>
+                <p className="mt-2 text-[0.92rem] text-body">{auteurFiche.bio}</p>
+                {auteurFiche.linkedin && (
+                  <a href={auteurFiche.linkedin} target="_blank" rel="noopener noreferrer" className="mt-2 inline-block text-[0.85rem] font-600 text-orange700 focusable">
                     LinkedIn →
                   </a>
                 )}
@@ -77,8 +107,8 @@ export default function ArticlePage({ params }: { params: { slug: string } }) {
             </div>
           )}
 
-          {a.sources?.length ? (
-            <p className="mt-8 text-[0.8rem] text-slate">Sources : {a.sources.join(" ; ")}.</p>
+          {sources.length > 0 ? (
+            <p className="mt-8 text-[0.8rem] text-slate">Sources : {sources.join(" ; ")}.</p>
           ) : null}
         </div>
 

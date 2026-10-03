@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import { PageHero } from "@/components/blocks/PageHero";
 import { CtaBlock } from "@/components/blocks/CtaBlock";
 import { SourcesBlock } from "@/components/collections/SourcesBlock";
+import { VerifiedBadge } from "@/components/collections/VerifiedBadge";
 import { getGlossaire } from "@/lib/content";
 import { buildMetadata } from "@/lib/seo";
 import { JsonLd } from "@/lib/schema-org";
@@ -10,11 +11,7 @@ import { site } from "@/config/site";
 export function generateMetadata(): Metadata {
   const g = getGlossaire();
   return buildMetadata(
-    g.seo || {
-      title: g.titre || "Glossaire du financement public",
-      description:
-        "Les acronymes et notions du financement public expliqués en clair : AAP, AMI, CIR, CII, FEDER, Fonds Chaleur, France 2030 et plus de 40 autres termes.",
-    },
+    g.seo || { title: g.titre || g.h1 || "Glossaire du financement public", description: g.intro || "" },
     "/le-financement-public/glossaire"
   );
 }
@@ -57,6 +54,12 @@ export default function GlossairePage() {
           </div>
         ) : (
           <div className="max-w-3xl">
+            {g.derniereVerification && (
+              <div className="mb-8">
+                <VerifiedBadge derniereVerification={g.derniereVerification} />
+              </div>
+            )}
+
             {/* Index alphabétique rapide */}
             <nav aria-label="Index du glossaire" className="flex flex-wrap gap-2 mb-10 pb-8 border-b border-line">
               {termes.map((t) => (
@@ -88,12 +91,6 @@ export default function GlossairePage() {
                 </div>
               ))}
             </dl>
-
-            {g.derniereVerification && (
-              <p className="mt-10 text-[0.8rem] text-slate">
-                Définitions vérifiées au {g.derniereVerification}.
-              </p>
-            )}
 
             {g.sources && g.sources.length > 0 && (
               <div className="mt-10">

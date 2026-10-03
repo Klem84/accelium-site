@@ -28,7 +28,7 @@ export function GET() {
   const xml = `<?xml version="1.0" encoding="UTF-8"?>
 <rss version="2.0">
   <channel>
-    <title>Accelium Conseil — Blog</title>
+    <title>Accelium Conseil : Blog</title>
     <link>${site.url}/blog</link>
     <description>Décryptages, actualités et conseils sur les financements publics.</description>
     <language>fr-FR</language>
