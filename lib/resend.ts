@@ -94,7 +94,7 @@ export async function sendLivreBlancEmails(
   livre: LivreBlanc,
   baseUrl?: string
 ): Promise<{ ok: boolean; skipped?: boolean }> {
-  const lien = `${(baseUrl || site.url).replace(/\/$/, "")}${livre.fichier}`;
+  const lien = livre.fichier; // URL absolue Vercel Blob
 
   if (!resend) {
     console.warn("[resend] RESEND_API_KEY manquant : envoi simulé (mock).");

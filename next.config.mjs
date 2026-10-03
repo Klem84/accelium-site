@@ -1,4 +1,18 @@
 import { redirects } from "./config/redirects.mjs";
+import { LIVRES_BLANCS_BASE_URL, livresBlancsBaseConfiguree } from "./config/livres-blancs-base.mjs";
+
+// Anciennes URL des livres blancs (autrefois dans public/) vers Vercel Blob.
+const redirectionsLivresBlancs = livresBlancsBaseConfiguree
+  ? [
+      "livre-blanc-cir-cii.pdf",
+      "livre-blanc-foret-bois.pdf",
+      "programme-agences-de-leau-2025-2030.pdf",
+    ].map((f) => ({
+      source: `/livres-blancs/${f}`,
+      destination: `${LIVRES_BLANCS_BASE_URL}/${f}`,
+      permanent: true,
+    }))
+  : [];
 
 // Fiche J.1.13 de l'audit : CSP sans images.unsplash.com (toutes les images sont désormais
 // hébergées localement, cf. L2.4). Compatible Vercel Analytics, Speed Insights et les
@@ -47,7 +61,7 @@ const nextConfig = {
     imageSizes: [96, 256, 384],
   },
   async redirects() {
-    return redirects;
+    return [...redirects, ...redirectionsLivresBlancs];
   },
   async headers() {
     return [

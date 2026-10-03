@@ -290,3 +290,41 @@ Si un problème critique apparaît après la bascule DNS ou après `vercel --pro
    effectif en quelques minutes.
 3. Dans tous les cas, consigner l'incident et la décision de retour arrière dans
    `RUNLOG-V2.md` (A1) avant de retenter la bascule.
+
+## 9. Livres blancs
+
+Les trois PDF ne sont plus dans `public/` (seuil d'audit : `public/` sous 10 Mo). Ils sont
+hébergés sur **Vercel Blob** (store public de l'équipe), dans le dossier `livres-blancs/`.
+Copies de référence prêtes à envoyer : `RACINE\_run-v2\livres-blancs-blob\` (la version
+forêt-bois contient du texte sélectionnable, 5,9 Mo au lieu de 39 Mo).
+
+### Mise en place initiale (une seule fois, à faire dans le tableau de bord)
+Le token d'API du run n'a pas le droit de créer un store Blob. À faire par Clément :
+1. Vercel, équipe Accelium, onglet **Storage**, bouton **Create Database**, choisir **Blob**.
+2. Nom du store : `accelium-livres-blancs`, accès **Public**, région Paris (cdg1), **Create**.
+3. Dans l'étape de connexion, cocher le projet **accelium-site** et les environnements
+   **Production** et **Preview** (cela injecte `BLOB_READ_WRITE_TOKEN`), puis **Connect**.
+4. Dans le store, onglet **Settings**, copier le **Base URL** (de la forme
+   `https://xxxx.public.blob.vercel-storage.com`), puis envoyer les trois PDF (voir ci-dessous).
+
+### URL de base à changer
+Une seule constante : `config/livres-blancs-base.mjs`, remplacer `STORE_ID` par l'identifiant
+du store (partie `xxxx` de l'URL de base). Elle alimente `config/livres-blancs.ts` (liens des
+emails Resend) et les redirections permanentes de `next.config.mjs` (anciennes URL
+`/livres-blancs/<fichier>.pdf` vers Blob, actives seulement une fois `STORE_ID` remplacé).
+
+### Remplacer ou ajouter un PDF
+Option 1, tableau de bord : Storage, store `accelium-livres-blancs`, **Upload** (même nom de
+fichier pour remplacer). Option 2, PowerShell (token du store dans `$env:BLOB_READ_WRITE_TOKEN`,
+à récupérer dans le tableau de bord, jamais dans un fichier versionné) :
+
+```powershell
+$f = "livre-blanc-cir-cii.pdf"
+Invoke-RestMethod -Method Put -Uri "https://blob.vercel-storage.com/livres-blancs/$f" `
+  -InFile ".\$f" -ContentType "application/pdf" `
+  -Headers @{ authorization = "Bearer $env:BLOB_READ_WRITE_TOKEN"; "x-api-version" = "7"; "x-content-type" = "application/pdf"; "x-add-random-suffix" = "0"; "x-allow-overwrite" = "1" }
+```
+
+L'URL finale est `https://<STORE_ID>.public.blob.vercel-storage.com/livres-blancs/<fichier>` ; elle ne change pas tant que le nom
+du fichier reste le même. Les PDF ne sont pas intégrés dans une page (liens de téléchargement
+envoyés par email), donc la CSP n'a pas besoin d'être modifiée.
