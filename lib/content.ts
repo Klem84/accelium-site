@@ -166,6 +166,26 @@ export type FaqQuestion = { question: string; reponse: string; lien?: string };
 export type FaqTheme = { theme: string; questions: FaqQuestion[] };
 export type FaqTransversale = {
   themes: FaqTheme[];
+  derniereVerification?: string;
+  seo?: Seo;
+};
+
+// Contrat content/quiz.mdx (fiche unique) : quiz de connaissances et d'orientation.
+export type QuizData = {
+  titre?: string;
+  intro?: string;
+  derniereVerification?: string;
+  sources?: { titre: string; url: string }[];
+  questions: {
+    id: string;
+    legende: string;
+    reponses: { id: string; label: string; pistes: string[] }[];
+    bonneReponse?: string;
+    explication?: string;
+    lien?: string;
+    sources?: { titre: string; url: string }[];
+  }[];
+  dispositifs: Record<string, { nom: string; financeur: string; phrase: string; href: string }>;
   seo?: Seo;
 };
 
@@ -303,6 +323,11 @@ export const getGlossaire = (): Glossaire =>
 
 export const getFaqTransversale = (): FaqTransversale =>
   readSingle<FaqTransversale>("faq.mdx") || { themes: [] };
+
+export const getQuiz = (): QuizData => {
+  const q = readSingle<QuizData>("quiz.mdx");
+  return { ...(q || {}), questions: q?.questions || [], dispositifs: q?.dispositifs || {} };
+};
 
 // Règle §2.6 du brief commun : un nom de client ne s'affiche que si l'entrée
 // correspondante de config/references.ts a confirme === true et n'est pas refusée.

@@ -1,7 +1,8 @@
 import type { Metadata } from "next";
 import Link from "next/link";
 import { PageHero } from "@/components/blocks/PageHero";
-import { getPage, getFinanceurs } from "@/lib/content";
+import { Quiz } from "@/components/collections/Quiz";
+import { getPage, getFinanceurs, getQuiz } from "@/lib/content";
 import { buildMetadata } from "@/lib/seo";
 
 const SLUG = "le-financement-public";
@@ -81,6 +82,7 @@ const facteurs = [
 export default function PilierPage() {
   const p = getPage(SLUG);
   const financeurs = getFinanceurs();
+  const quiz = getQuiz();
 
   return (
     <>
@@ -178,6 +180,21 @@ export default function PilierPage() {
         </div>
       </section>
 
+      {/* ===== TESTEZ VOS CONNAISSANCES ===== */}
+      {quiz.questions.length > 0 && (
+        <section className="bg-cream border-y border-line">
+          <div className="wrap py-20 lg:py-28">
+            <div className="max-w-[58ch]">
+              <h2 className="display h-sec font-600 text-ink">Testez vos connaissances</h2>
+              {quiz.intro && <p className="mt-5 text-body lede">{quiz.intro}</p>}
+            </div>
+            <div className="mt-10 max-w-3xl">
+              <Quiz mode="connaissances" questions={quiz.questions} dispositifs={quiz.dispositifs} />
+            </div>
+          </div>
+        </section>
+      )}
+
       {/* ===== CONCLUSION + NAVIGATION ===== */}
       <section className="bg-ink text-white">
         <div className="wrap py-20 lg:py-28">
@@ -220,7 +237,7 @@ export default function PilierPage() {
                   Explorer <span className="transition-transform group-hover:translate-x-1">→</span>
                 </span>
               </Link>
-              <p className="sm:col-span-2 text-[0.8rem] text-white/45">
+              <p className="sm:col-span-2 text-[0.8rem] text-white/70">
                 {financeurs.length} financeurs référencés, du régional à l'européen.
               </p>
             </div>

@@ -1,22 +1,25 @@
 import type { Metadata } from "next";
 import { PageHero } from "@/components/blocks/PageHero";
 import { CtaBlock } from "@/components/blocks/CtaBlock";
+import { VerifiedBadge } from "@/components/collections/VerifiedBadge";
 import { FaqBlock } from "@/components/collections/FaqBlock";
 import { getFaqTransversale } from "@/lib/content";
 import { buildMetadata } from "@/lib/seo";
 import { JsonLd, faqSchema } from "@/lib/schema-org";
 
-export const metadata: Metadata = buildMetadata(
-  {
-    title: "Questions fréquentes sur le financement public",
-    description:
-      "Éligibilité, calendrier, cumul des aides, contrôle et méthode Accelium : les réponses aux questions que nous recevons le plus souvent.",
-  },
-  "/le-financement-public/questions-frequentes"
-);
+export function generateMetadata(): Metadata {
+  return buildMetadata(
+    getFaqTransversale().seo || {
+      title: "Questions fréquentes sur le financement public",
+      description:
+        "Éligibilité, calendrier, cumul des aides, contrôle et méthode Accelium : les réponses aux questions que nous recevons le plus souvent.",
+    },
+    "/le-financement-public/questions-frequentes"
+  );
+}
 
 export default function FaqTransversalePage() {
-  const { themes } = getFaqTransversale();
+  const { themes, derniereVerification } = getFaqTransversale();
   const total = themes.reduce((n, t) => n + t.questions.length, 0);
   const toutes = themes.flatMap((t) => t.questions);
 
@@ -35,6 +38,11 @@ export default function FaqTransversalePage() {
       />
 
       <section className="wrap py-16 lg:py-24 max-w-3xl">
+        {derniereVerification && (
+          <div className="mb-10">
+            <VerifiedBadge derniereVerification={derniereVerification} />
+          </div>
+        )}
         {total === 0 ? (
           <div className="rounded-2xl border border-line bg-cream p-10 text-center">
             <p className="text-body">Cette FAQ transversale est en cours de rédaction. Elle comptera au moins 20 questions.</p>
