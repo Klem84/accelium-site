@@ -1,4 +1,5 @@
 import { site } from "@/config/site";
+import { getAuteur } from "@/lib/content";
 
 const abs = (p: string) => new URL(p, site.url).toString();
 export const ORG_ID = `${site.url}/#organization`;
@@ -124,14 +125,36 @@ export function personSchema(opts: {
   };
 }
 
+/** Auteurs qui représentent l'équipe et non une personne : rendus comme l'Organization. */
+const AUTEURS_COLLECTIFS = new Set(["equipe-accelium"]);
+
+/**
+ * Résout l'auteur d'un contenu depuis content/auteurs/<slug>.mdx (nom, jobTitle, LinkedIn).
+ * Sans auteur personne (slug absent, collectif ou fiche introuvable), renvoie une référence
+ * à l'Organization : jamais une Person nommée comme l'entreprise.
+ */
+export function authorSchema(slug?: string) {
+  const fiche = slug && !AUTEURS_COLLECTIFS.has(slug) ? getAuteur(slug) : undefined;
+  if (!slug || !fiche?.nom) return { "@id": ORG_ID };
+  return {
+    "@type": "Person",
+    "@id": abs(`/cabinet/equipe#${fiche.slug}`),
+    name: fiche.nom,
+    ...((fiche.jobTitle || fiche.fonction) ? { jobTitle: fiche.jobTitle || fiche.fonction } : {}),
+    url: abs("/cabinet/equipe"),
+    ...(fiche.linkedin ? { sameAs: [fiche.linkedin] } : {}),
+    worksFor: { "@id": ORG_ID },
+  };
+}
+
 export function articleSchema(opts: {
   title: string;
   description: string;
   url: string;
   datePublished: string;
   dateModified?: string;
-  authorName: string;
-  authorUrl?: string;
+  /** Slug de content/auteurs ; absent = l'Organization. */
+  auteur?: string;
   image?: string;
 }) {
   return {
@@ -142,7 +165,7 @@ export function articleSchema(opts: {
     url: abs(opts.url),
     datePublished: opts.datePublished,
     dateModified: opts.dateModified || opts.datePublished,
-    author: personSchema({ name: opts.authorName, url: opts.authorUrl }),
+    author: authorSchema(opts.auteur),
     publisher: { "@id": ORG_ID },
     ...(opts.image ? { image: abs(opts.image) } : {}),
   };

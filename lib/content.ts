@@ -122,6 +122,7 @@ export type Region = {
   secteursActifs?: string[];
   sources?: { titre: string; url: string }[];
   derniereVerification?: string;
+  auteur?: string; // slug de content/auteurs, optionnel (affiche « par … » dans le badge)
   seo: Seo;
   faq?: { question: string; reponse: string }[];
   ordre?: number;
@@ -256,6 +257,7 @@ export type Auteur = {
   slug: string;
   nom: string;
   fonction: string;
+  jobTitle?: string;
   bio: string;
   photo?: string;
   linkedin?: string;

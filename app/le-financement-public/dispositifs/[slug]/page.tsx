@@ -64,7 +64,7 @@ export default function DispositifPage({ params }: { params: { slug: string } })
           url: `/le-financement-public/dispositifs/${d.slug}`,
           datePublished: d.derniereVerification || d.updatedAt || new Date().toISOString(),
           dateModified: d.updatedAt || d.derniereVerification,
-          authorName: d.auteur || "Accelium Conseil",
+          auteur: d.auteur,
         })}
       />
 

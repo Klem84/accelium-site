@@ -38,7 +38,7 @@ export default function NewsletterPage({ params }: { params: { slug: string } })
           description: n.resume,
           url: `/ressources/newsletters/${n.slug}`,
           datePublished: n.date,
-          authorName: "Accelium Conseil",
+          // pas d'auteur personne : Organization
         })}
       />
 

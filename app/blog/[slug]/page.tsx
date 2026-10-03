@@ -57,7 +57,7 @@ export default function ArticlePage({ params }: { params: { slug: string } }) {
           url: `/blog/${a.slug}`,
           datePublished: a.publishedAt,
           dateModified: a.updatedAt,
-          authorName: nomAuteur || "Accelium Conseil",
+          auteur: a.auteur,
           image: a.heroImage,
         })}
       />
