@@ -32,14 +32,17 @@ export default function OffresHub() {
               href={`/offres/${o.slug}`}
               className="group focusable grid md:grid-cols-12 gap-4 items-center py-8 border-b border-line"
             >
-              <span className="md:col-span-1 display text-[1.3rem] font-600 text-orange">
+              <span className="md:col-span-1 display text-[1.3rem] font-600 text-orange700">
                 {String(i + 1).padStart(2, "0")}
               </span>
               <h2 className="md:col-span-5 display text-[clamp(1.4rem,1.1rem_+_1.2vw,2rem)] font-500 text-ink group-hover:text-orange700 transition-colors">
                 {o.nomCourt}
               </h2>
               <p className="md:col-span-5 text-[0.97rem] text-body">{o.accroche}</p>
-              <span className="md:col-span-1 md:text-right text-orange text-2xl transition-transform group-hover:translate-x-1">
+              <span
+                aria-hidden="true"
+                className="md:col-span-1 md:text-right text-orange text-2xl transition-transform group-hover:translate-x-1"
+              >
                 →
               </span>
             </Link>

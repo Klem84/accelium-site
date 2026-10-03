@@ -22,8 +22,8 @@ function nomAuteur(slug?: string): string | undefined {
 function formatDate(iso?: string): string | undefined {
   if (!iso) return undefined;
   const d = new Date(iso);
-  if (Number.isNaN(d.getTime())) return iso;
-  return d.toLocaleDateString("fr-FR", { day: "numeric", month: "long", year: "numeric" });
+  if (Number.isNaN(d.getTime())) return undefined;
+  return d.toLocaleDateString("fr-FR", { day: "numeric", month: "long", year: "numeric", timeZone: "UTC" });
 }
 
 /**
@@ -32,7 +32,7 @@ function formatDate(iso?: string): string | undefined {
  */
 export function VerifiedBadge({ derniereVerification, auteur }: { derniereVerification?: string; auteur?: string }) {
   const date = formatDate(derniereVerification);
-  if (!date) return null;
+  if (!date || !derniereVerification) return null;
   const nom = nomAuteur(auteur);
 
   return (
@@ -43,7 +43,7 @@ export function VerifiedBadge({ derniereVerification, auteur }: { derniereVerifi
       >
         ✓
       </span>
-      Vérifié le {date}
+      Vérifié le <time dateTime={derniereVerification}>{date}</time>
       {nom ? ` par ${nom}` : ""}
     </p>
   );

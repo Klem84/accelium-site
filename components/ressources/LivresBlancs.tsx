@@ -143,8 +143,10 @@ function LivreBlancModal({ livre, onClose }: { livre: LivreBlanc; onClose: () =>
     }
   }
 
-  const fieldClass =
-    "w-full rounded-xl border border-line bg-surface px-4 py-3 text-ink focus:outline-none focus:border-orange focus:ring-2 focus:ring-orange/20";
+  const fieldBase =
+    "w-full rounded-xl border bg-surface px-4 py-3 text-ink focus:outline-none focus:border-orange700 focus:ring-2 focus:ring-orange/20";
+  const fieldClassFor = (hasError: boolean) =>
+    `${fieldBase} ${hasError ? "border-2 border-orange700" : "border-slate"}`;
 
   return (
     <div
@@ -201,20 +203,20 @@ function LivreBlancModal({ livre, onClose }: { livre: LivreBlanc; onClose: () =>
 
               <form ref={formRef} onSubmit={onSubmit} className="mt-6 space-y-4" noValidate>
                 {error && (
-                  <p className="rounded-xl bg-orange/10 text-orange700 px-4 py-3 text-[0.92rem]" role="alert">
+                  <p className="rounded-xl bg-orange/5 text-orange700 px-4 py-3 text-[0.92rem]" role="alert">
                     {error}
                   </p>
                 )}
 
                 <div>
                   <label htmlFor="lb-nom" className="block text-[0.85rem] font-600 text-ink mb-1.5">
-                    Nom <span className="text-orange">*</span>
+                    Nom <span className="text-orange700">*</span>
                   </label>
                   <input
                     id="lb-nom"
                     name="nom"
                     required
-                    className={fieldClass}
+                    className={fieldClassFor(!!fieldErrors.nom)}
                     autoComplete="name"
                     aria-invalid={!!fieldErrors.nom}
                     aria-describedby={fieldErrors.nom ? "err-lb-nom" : undefined}
@@ -228,19 +230,19 @@ function LivreBlancModal({ livre, onClose }: { livre: LivreBlanc; onClose: () =>
                   <label htmlFor="lb-societe" className="block text-[0.85rem] font-600 text-ink mb-1.5">
                     Entreprise
                   </label>
-                  <input id="lb-societe" name="societe" className={fieldClass} autoComplete="organization" />
+                  <input id="lb-societe" name="societe" className={fieldClassFor(false)} autoComplete="organization" />
                 </div>
 
                 <div>
                   <label htmlFor="lb-email" className="block text-[0.85rem] font-600 text-ink mb-1.5">
-                    Email <span className="text-orange">*</span>
+                    Email <span className="text-orange700">*</span>
                   </label>
                   <input
                     id="lb-email"
                     name="email"
                     type="email"
                     required
-                    className={fieldClass}
+                    className={fieldClassFor(!!fieldErrors.email)}
                     autoComplete="email"
                     aria-invalid={!!fieldErrors.email}
                     aria-describedby={fieldErrors.email ? "err-lb-email" : undefined}
@@ -272,7 +274,7 @@ function LivreBlancModal({ livre, onClose }: { livre: LivreBlanc; onClose: () =>
                     <Link href="/politique-de-confidentialite" className="text-orange700 underline focusable">
                       politique de confidentialité
                     </Link>
-                    . <span className="text-orange">*</span>
+                    . <span className="text-orange700">*</span>
                   </label>
                 </div>
                 {fieldErrors.consentement && (

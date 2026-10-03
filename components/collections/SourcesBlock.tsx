@@ -15,31 +15,35 @@ function domain(url: string): string {
  */
 export function SourcesBlock({ sources, title = "Sources" }: { sources?: Source[]; title?: string }) {
   if (!sources?.length) {
-    return (
-      <div>
-        <p className="kicker text-orange700 mb-3">{title}</p>
-        <p className="text-[0.85rem] text-slate italic">Sources en cours de vérification.</p>
-      </div>
-    );
+    if (process.env.NODE_ENV !== "production") {
+      return (
+        <p className="border border-dashed border-slate text-slate text-[0.85rem] p-4 rounded-xl">
+          SourcesBlock : aucune source fournie (développement uniquement).
+        </p>
+      );
+    }
+    return null;
   }
 
   return (
-    <div>
+    <div className="rounded-2xl bg-cream p-6 lg:p-7">
       <p className="kicker text-orange700 mb-3">{title}</p>
-      <ul className="space-y-2">
+      <ol className="space-y-2 text-[0.88rem]">
         {sources.map((s) => (
-          <li key={s.url} className="text-[0.88rem]">
+          <li key={s.url} className="break-words">
             <a
               href={s.url}
               target="_blank"
               rel="noopener noreferrer"
-              className="text-body hover:text-orange700 focusable"
+              className="text-body underline decoration-line underline-offset-2 hover:text-orange700 hover:decoration-orange700 focusable"
             >
-              {s.titre} <span className="text-slate">({domain(s.url)})</span>
-            </a>
+              {s.titre}
+              <span className="sr-only"> (nouvel onglet)</span>
+            </a>{" "}
+            <span className="text-slate">({domain(s.url)})</span>
           </li>
         ))}
-      </ul>
+      </ol>
     </div>
   );
 }

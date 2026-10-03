@@ -25,10 +25,16 @@ export function RegionMap({ items }: { items: RegionMapItem[] }) {
 
   return (
     <div>
+      {/*
+        Le SVG est destiné à la souris uniquement : aria-hidden et liens non
+        focalisables (tabIndex -1). Le parcours clavier et lecteur d'écran passe
+        par la liste ci-dessous (13 liens), qui porte aussi les compteurs : un
+        nombre en 10 px sur une case teintée n'atteint pas 4,5:1, donc les
+        compteurs ne sont jamais rendus dans le SVG (§4.5 de la spec A8).
+      */}
       <svg
         viewBox={`0 0 ${width} ${height}`}
-        role="img"
-        aria-label="Carte de France par région, cliquable"
+        aria-hidden="true"
         className="w-full max-w-[560px] mx-auto"
       >
         {REGIONS.map((r) => {
@@ -46,52 +52,42 @@ export function RegionMap({ items }: { items: RegionMapItem[] }) {
                 rx={12}
                 className={
                   actif
-                    ? "fill-surface stroke-line transition-colors group-hover:fill-orange/15 group-focus-visible:fill-orange/15"
+                    ? "fill-surface stroke-line transition-colors group-hover:fill-orange/30 group-hover:stroke-orange700 group-focus-visible:fill-orange/30 group-focus-visible:stroke-orange700"
                     : "fill-cream stroke-line"
                 }
                 strokeWidth={1.5}
               />
               <text
                 x={x + SIZE / 2}
-                y={y + SIZE / 2 - 4}
+                y={y + SIZE / 2}
                 textAnchor="middle"
+                dominantBaseline="middle"
                 className={actif ? "fill-ink" : "fill-slate"}
                 style={{ font: "600 13px 'Clash Display', system-ui, sans-serif" }}
               >
                 {r.code}
               </text>
-              {actif && typeof info?.nbDispositifs === "number" && (
-                <text
-                  x={x + SIZE / 2}
-                  y={y + SIZE / 2 + 14}
-                  textAnchor="middle"
-                  className="fill-orange700"
-                  style={{ font: "600 10px system-ui, sans-serif" }}
-                >
-                  {info.nbDispositifs}
-                </text>
-              )}
             </g>
           );
 
           if (!actif) {
             return (
-              <g key={r.slug} aria-hidden="true">
+              <g key={r.slug}>
                 {cell}
               </g>
             );
           }
 
           return (
-            <a key={r.slug} href={`/regions/${r.slug}`} aria-label={r.nom} className="group focusable">
+            <a key={r.slug} href={`/regions/${r.slug}`} tabIndex={-1} className="group" data-region={r.slug}>
               {cell}
             </a>
           );
         })}
       </svg>
 
-      {/* Liste de secours, toujours accessible (lecteurs d'écran, SVG non chargé). */}
-      <ul className="mt-8 grid grid-cols-2 sm:grid-cols-3 gap-2 text-[0.88rem]">
+      {/* Parcours clavier et lecteur d'écran : liste des 13 régions. */}
+      <ul className="mt-8 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-2 text-[0.9rem]">
         {REGIONS.map((r) => {
           const info = byslug.get(r.slug);
           const actif = Boolean(info?.actif);
@@ -100,16 +96,26 @@ export function RegionMap({ items }: { items: RegionMapItem[] }) {
               {actif ? (
                 <Link
                   href={`/regions/${r.slug}`}
-                  className="flex items-center justify-between gap-2 rounded-lg border border-line px-3 py-2 hover:border-ink transition-colors focusable"
+                  data-region={r.slug}
+                  className="flex items-center justify-between gap-2 rounded-lg border border-line px-3 py-2.5 hover:border-ink transition-colors focusable"
                 >
-                  <span className="text-ink font-500">{r.nom}</span>
-                  <span className="text-orange">→</span>
+                  <span className="text-ink font-600">{r.nom}</span>
+                  {typeof info?.nbDispositifs === "number" ? (
+                    <span className="text-slateD">{info.nbDispositifs} projets</span>
+                  ) : (
+                    <span aria-hidden="true" className="text-orange700">
+                      →
+                    </span>
+                  )}
                 </Link>
               ) : (
-                <span className="flex items-center justify-between gap-2 rounded-lg border border-line px-3 py-2 text-slate">
-                  <span>{r.nom}</span>
-                  <span className="text-[0.72rem]">Bientôt</span>
-                </span>
+                <Link
+                  href={`/contact?region=${encodeURIComponent(r.slug)}`}
+                  className="flex items-center justify-between gap-2 rounded-lg border border-line px-3 py-2.5 hover:border-ink transition-colors focusable"
+                >
+                  <span className="text-ink font-600">{r.nom}</span>
+                  <span className="text-slateD">Nous consulter</span>
+                </Link>
               )}
             </li>
           );

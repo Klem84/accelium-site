@@ -19,6 +19,17 @@ declare global {
 
 // Validation « à la volée » côté client (fiche H5) : mêmes règles que lib/validation.ts,
 // dupliquées ici en version courte pour ne pas dépendre de zod dans le bundle client.
+// Libellés lisibles pour les valeurs connues du paramètre ?objet=, utilisés dans le
+// texte pré-rempli du champ "projet" (demande d'A1, run V2, 28/09/2026).
+const OBJET_LABELS: Record<string, string> = {
+  partenariat: "Objet : proposition de partenariat",
+  candidature: "Objet : candidature spontanée",
+};
+
+function objetLabel(objet: string): string {
+  return OBJET_LABELS[objet] || objet;
+}
+
 function validateField(name: string, value: string): string | null {
   switch (name) {
     case "nom":
@@ -169,8 +180,10 @@ function DiagnosticFormInner({ secteurs }: { secteurs: { slug: string; nom: stri
     }
   }
 
-  const fieldClass =
-    "w-full rounded-xl border border-line bg-surface px-4 py-3 text-ink focus:outline-none focus:border-orange focus:ring-2 focus:ring-orange/20";
+  const fieldBase =
+    "w-full rounded-xl border bg-surface px-4 py-3 text-ink focus:outline-none focus:border-orange700 focus:ring-2 focus:ring-orange/20";
+  const fieldBorder = (hasError: boolean) => (hasError ? "border-2 border-orange700" : "border-slate");
+  const fieldClass = (hasError: boolean) => `${fieldBase} ${fieldBorder(hasError)}`;
   const errClass = "mt-1 text-[0.8rem] text-orange700";
 
   return (
@@ -184,7 +197,7 @@ function DiagnosticFormInner({ secteurs }: { secteurs: { slug: string; nom: stri
       )}
       <form ref={formRef} onSubmit={onSubmit} className="space-y-5" noValidate>
         {error && (
-          <p className="rounded-xl bg-orange/10 text-orange700 px-4 py-3 text-[0.92rem]" role="alert">
+          <p className="rounded-xl bg-orange/5 text-orange700 px-4 py-3 text-[0.92rem]" role="alert">
             {error}
           </p>
         )}
@@ -192,13 +205,13 @@ function DiagnosticFormInner({ secteurs }: { secteurs: { slug: string; nom: stri
         <div className="grid sm:grid-cols-2 gap-5">
           <div>
             <label htmlFor="nom" className="block text-[0.85rem] font-600 text-ink mb-1.5">
-              Nom <span className="text-orange">*</span>
+              Nom <span className="text-orange700">*</span>
             </label>
             <input
               id="nom"
               name="nom"
               required
-              className={fieldClass}
+              className={fieldClass(!!fieldErrors.nom)}
               autoComplete="name"
               onBlur={onFieldBlur}
               aria-invalid={!!fieldErrors.nom}
@@ -212,13 +225,13 @@ function DiagnosticFormInner({ secteurs }: { secteurs: { slug: string; nom: stri
           </div>
           <div>
             <label htmlFor="societe" className="block text-[0.85rem] font-600 text-ink mb-1.5">
-              Entreprise <span className="text-orange">*</span>
+              Entreprise <span className="text-orange700">*</span>
             </label>
             <input
               id="societe"
               name="societe"
               required
-              className={fieldClass}
+              className={fieldClass(!!fieldErrors.societe)}
               autoComplete="organization"
               onBlur={onFieldBlur}
               aria-invalid={!!fieldErrors.societe}
@@ -235,14 +248,14 @@ function DiagnosticFormInner({ secteurs }: { secteurs: { slug: string; nom: stri
         <div className="grid sm:grid-cols-2 gap-5">
           <div>
             <label htmlFor="email" className="block text-[0.85rem] font-600 text-ink mb-1.5">
-              Email <span className="text-orange">*</span>
+              Email <span className="text-orange700">*</span>
             </label>
             <input
               id="email"
               name="email"
               type="email"
               required
-              className={fieldClass}
+              className={fieldClass(!!fieldErrors.email)}
               autoComplete="email"
               onBlur={onFieldBlur}
               aria-invalid={!!fieldErrors.email}
@@ -258,7 +271,7 @@ function DiagnosticFormInner({ secteurs }: { secteurs: { slug: string; nom: stri
             <label htmlFor="telephone" className="block text-[0.85rem] font-600 text-ink mb-1.5">
               Téléphone
             </label>
-            <input id="telephone" name="telephone" type="tel" className={fieldClass} autoComplete="tel" />
+            <input id="telephone" name="telephone" type="tel" className={fieldClass(false)} autoComplete="tel" />
           </div>
         </div>
 
@@ -266,8 +279,8 @@ function DiagnosticFormInner({ secteurs }: { secteurs: { slug: string; nom: stri
           <label htmlFor="secteur" className="block text-[0.85rem] font-600 text-ink mb-1.5">
             Votre secteur
           </label>
-          <select id="secteur" name="secteur" className={fieldClass} defaultValue={secteurInitial}>
-            <option value="">— Sélectionnez —</option>
+          <select id="secteur" name="secteur" className={fieldClass(false)} defaultValue={secteurInitial}>
+            <option value="">Sélectionnez</option>
             {secteurs.map((s) => (
               <option key={s.slug} value={s.nom}>
                 {s.nom}
@@ -285,8 +298,12 @@ function DiagnosticFormInner({ secteurs }: { secteurs: { slug: string; nom: stri
             id="projet"
             name="projet"
             rows={4}
-            className={fieldClass}
-            defaultValue={dispositif || objet ? `${[dispositif, objet].filter(Boolean).join(" — ")}\n` : undefined}
+            className={fieldClass(false)}
+            defaultValue={
+              dispositif || objet
+                ? `${[dispositif, objet ? objetLabel(objet) : ""].filter(Boolean).join(", ")}\n`
+                : undefined
+            }
             placeholder="Décrivez votre projet d'investissement, d'innovation ou de transition…"
           />
         </div>
@@ -313,7 +330,7 @@ function DiagnosticFormInner({ secteurs }: { secteurs: { slug: string; nom: stri
             <Link href="/politique-de-confidentialite" className="text-orange700 underline focusable">
               politique de confidentialité
             </Link>
-            . <span className="text-orange">*</span>
+            . <span className="text-orange700">*</span>
           </label>
         </div>
         {fieldErrors.consentement && (

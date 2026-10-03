@@ -24,11 +24,14 @@ export function FaqBlock({
   const [open, setOpen] = useState<number | null>(0);
 
   if (!items?.length) {
-    return (
-      <p className="text-[0.9rem] text-slate italic">
-        Les questions fréquentes de cette page sont en cours de rédaction.
-      </p>
-    );
+    if (process.env.NODE_ENV !== "production") {
+      return (
+        <p className="border border-dashed border-slate text-slate text-[0.85rem] p-4 rounded-xl">
+          FaqBlock : aucune question fournie (développement uniquement).
+        </p>
+      );
+    }
+    return null;
   }
 
   return (
@@ -53,7 +56,7 @@ export function FaqBlock({
                 >
                   <span className="display text-[1.1rem] font-500 text-ink">{it.question}</span>
                   <span
-                    className={"shrink-0 text-orange text-2xl transition-transform " + (isOpen ? "rotate-45" : "")}
+                    className={"shrink-0 text-orange700 text-2xl transition-transform " + (isOpen ? "rotate-45" : "")}
                     aria-hidden="true"
                   >
                     +

@@ -44,7 +44,7 @@ export function CasGrid({
               )}
               <div className="p-7">
                 {c.secteurNom && (
-                  <span className="inline-flex text-[0.72rem] font-600 tracking-wide uppercase text-orange700 bg-orange/10 rounded-full px-3 py-1">
+                  <span className="inline-flex text-[0.72rem] font-600 tracking-wide uppercase text-orange700 bg-orange/5 rounded-full px-3 py-1">
                     {c.secteurNom}
                   </span>
                 )}

@@ -6,7 +6,7 @@ import { SpeedInsights } from "@vercel/speed-insights/next";
 import Header from "@/components/layout/Header";
 import Footer from "@/components/layout/Footer";
 import MotionProvider from "@/components/motion/MotionProvider";
-import { JsonLd, organizationSchema } from "@/lib/schema-org";
+import { JsonLd, organizationSchema, websiteSchema } from "@/lib/schema-org";
 import { site } from "@/config/site";
 
 // Polices auto-hébergées via next/font/local : 4 graisses au total (2 par famille), pour
@@ -48,11 +48,6 @@ export const metadata: Metadata = {
     locale: "fr_FR",
     siteName: site.name,
   },
-  icons: {
-    icon: "/assets/logo-symbole.png",
-    shortcut: "/assets/logo-symbole.png",
-    apple: "/assets/logo-symbole.png",
-  },
 };
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
@@ -60,6 +55,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
     <html lang="fr" className={`${clashDisplay.variable} ${generalSans.variable}`}>
       <body className="font-sans">
         <JsonLd data={organizationSchema()} />
+        <JsonLd data={websiteSchema()} />
         <a
           href="#contenu"
           className="sr-only focus:not-sr-only focus:absolute focus:z-[80] focus:top-3 focus:left-3 focus:bg-ink focus:text-white focus:px-4 focus:py-2 focus:rounded"
