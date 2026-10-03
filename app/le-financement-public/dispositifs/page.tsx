@@ -9,7 +9,7 @@ export const metadata: Metadata = buildMetadata(
   {
     title: "Les dispositifs de financement public",
     description:
-      "Subventions, prêts, garanties, exonérations et crédits d'impôt mobilisables par les entreprises : taux, calendrier et procédure, vérifiés dispositif par dispositif.",
+      "Subventions, prêts et crédits d'impôt mobilisables par les entreprises : taux, calendrier et procédure, vérifiés dispositif par dispositif.",
   },
   "/le-financement-public/dispositifs"
 );

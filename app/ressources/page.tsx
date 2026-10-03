@@ -16,7 +16,7 @@ export const metadata: Metadata = buildMetadata(
   {
     title: "Ressources : guides, outils et décryptages",
     description:
-      "Livres blancs, fiches de décryptage, newsletters, application d'éligibilité à l'agrément CIR/CII, glossaire, questions fréquentes, dispositifs et régions : toutes nos ressources sur le financement public.",
+      "Livres blancs, fiches de décryptage, newsletters, test d'éligibilité à l'agrément CIR/CII et glossaire : toutes nos ressources sur le financement public.",
   },
   "/ressources"
 );
