@@ -32,10 +32,11 @@ export default function MotionProvider() {
         .then(({ default: Lenis }) => {
           if (cancelled) return;
           lenis = new Lenis({
-            duration: 0.55,
+            // Vitesse de défilement naturelle (vitesse 1) : lissage léger par lerp,
+            // sans durée imposée qui ralentirait la molette.
+            lerp: 0.2,
             wheelMultiplier: 1,
             smoothWheel: true,
-            touchMultiplier: 1.5,
           });
           const raf = (t: number) => {
             lenis?.raf(t);

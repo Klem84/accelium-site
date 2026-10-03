@@ -33,3 +33,6 @@ yarn-error.log*
 
 .vercel
 /public/llms-full.txt
+
+# rapports Lighthouse locaux
+*.report.html

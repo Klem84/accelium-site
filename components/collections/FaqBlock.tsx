@@ -1,13 +1,10 @@
-"use client";
-
-import { useId, useState } from "react";
 import Link from "next/link";
 import { JsonLd, faqSchema } from "@/lib/schema-org";
 
 export type FaqBlockItem = { question: string; reponse: string; lien?: string };
 
 /**
- * Accordéon FAQ accessible (aria-expanded / aria-controls) qui injecte lui-même le
+ * Accordéon FAQ accessible (details/summary natifs, composant serveur, zéro JS client) qui injecte lui-même le
  * JSON-LD FAQPage correspondant. Composant §6.8, réutilisable sur toutes les
  * nouvelles collections (dispositif, région, secteur, glossaire, FAQ transversale).
  */
@@ -20,9 +17,6 @@ export function FaqBlock({
   title?: string;
   withSchema?: boolean;
 }) {
-  const baseId = useId();
-  const [open, setOpen] = useState<number | null>(0);
-
   if (!items?.length) {
     if (process.env.NODE_ENV !== "production") {
       return (
@@ -39,47 +33,27 @@ export function FaqBlock({
       {withSchema && <JsonLd data={faqSchema(items)} />}
       {title && <h2 className="display h-sec font-600 text-ink mb-6">{title}</h2>}
       <div className="divide-y divide-line border-y border-line">
-        {items.map((it, i) => {
-          const isOpen = open === i;
-          const panelId = `${baseId}-panel-${i}`;
-          const buttonId = `${baseId}-button-${i}`;
-          return (
-            <div key={panelId}>
-              <h3>
-                <button
-                  id={buttonId}
-                  type="button"
-                  className="w-full flex items-center justify-between gap-4 py-5 text-left focusable"
-                  aria-expanded={isOpen}
-                  aria-controls={panelId}
-                  onClick={() => setOpen(isOpen ? null : i)}
-                >
-                  <span className="display text-[1.1rem] font-500 text-ink">{it.question}</span>
-                  <span
-                    className={"shrink-0 text-orange700 text-2xl transition-transform " + (isOpen ? "rotate-45" : "")}
-                    aria-hidden="true"
-                  >
-                    +
-                  </span>
-                </button>
-              </h3>
-              <div
-                id={panelId}
-                role="region"
-                aria-labelledby={buttonId}
-                hidden={!isOpen}
-                className="pb-6"
+        {items.map((it, i) => (
+          <details key={i} className="group" open={i === 0}>
+            <summary className="flex w-full cursor-pointer list-none items-center justify-between gap-4 py-5 text-left focusable [&::-webkit-details-marker]:hidden">
+              <h3 className="display text-[1.1rem] font-500 text-ink">{it.question}</h3>
+              <span
+                className="shrink-0 text-orange700 text-2xl transition-transform group-open:rotate-45"
+                aria-hidden="true"
               >
-                <p className="text-body leading-relaxed measure">{it.reponse}</p>
-                {it.lien && (
-                  <Link href={it.lien} className="inline-flex mt-2 text-[0.88rem] font-600 text-orange700 focusable">
-                    En savoir plus →
-                  </Link>
-                )}
-              </div>
+                +
+              </span>
+            </summary>
+            <div className="pb-6">
+              <p className="text-body leading-relaxed measure">{it.reponse}</p>
+              {it.lien && (
+                <Link href={it.lien} className="inline-flex mt-2 text-[0.88rem] font-600 text-orange700 focusable">
+                  En savoir plus →
+                </Link>
+              )}
             </div>
-          );
-        })}
+          </details>
+        ))}
       </div>
     </div>
   );

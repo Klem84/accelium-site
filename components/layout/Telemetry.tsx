@@ -1,11 +1,16 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import { Analytics } from "@vercel/analytics/react";
-import { SpeedInsights } from "@vercel/speed-insights/next";
+import dynamic from "next/dynamic";
 
-/* Mesure d'audience et Web Vitals : montés seulement une fois la page chargée et le
-   navigateur au repos, pour ne pas concurrencer le rendu initial (LCP, TBT). */
+/* Mesure d'audience et Web Vitals : le code n'est même pas téléchargé avant que la page
+   soit chargée et le navigateur au repos (import dynamique), pour ne pas alourdir le
+   JS initial ni concurrencer le rendu (LCP, TBT). */
+const Analytics = dynamic(() => import("@vercel/analytics/react").then((m) => m.Analytics), { ssr: false });
+const SpeedInsights = dynamic(() => import("@vercel/speed-insights/next").then((m) => m.SpeedInsights), {
+  ssr: false,
+});
+
 export default function Telemetry() {
   const [ready, setReady] = useState(false);
 

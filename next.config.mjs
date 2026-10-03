@@ -42,6 +42,9 @@ const nextConfig = {
   images: {
     formats: ["image/avif", "image/webp"],
     minimumCacheTTL: 604800,
+    // Moins de largeurs candidates : srcset 2 fois plus court dans le HTML et le payload RSC.
+    deviceSizes: [640, 828, 1200, 1920],
+    imageSizes: [96, 256, 384],
   },
   async redirects() {
     return redirects;
