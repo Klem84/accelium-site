@@ -49,8 +49,9 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
         <MotionProvider />
         <Header />
         <main id="contenu">{children}</main>
+        {/* Télémétrie Vercel uniquement sur Vercel : ailleurs, ses scripts /_vercel/* renvoient 404 (erreurs console). */}
         <Footer />
-        <Telemetry />
+        {process.env.VERCEL ? <Telemetry /> : null}
       </body>
     </html>
   );

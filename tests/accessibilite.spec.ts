@@ -15,7 +15,9 @@ const PAGES = [
 test.describe("Accessibilité (axe-core)", () => {
   for (const url of PAGES) {
     test(`${url} ne présente aucune violation axe-core (wcag2a, wcag2aa)`, async ({ page }) => {
-      await page.goto(url);
+      // Attendre le chargement complet (CSS appliqué), sinon axe voit les couleurs de lien par défaut.
+      await page.goto(url, { waitUntil: "load" });
+      await page.waitForLoadState("networkidle");
       const results = await new AxeBuilder({ page }).withTags(["wcag2a", "wcag2aa"]).analyze();
 
       if (results.violations.length > 0) {
