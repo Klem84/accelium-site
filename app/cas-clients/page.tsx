@@ -99,7 +99,7 @@ export default function CasClientsHub() {
               D'autres dossiers, encore en cours ou dont la fiche détaillée n'est pas publiée, complètent ce
               panorama.
             </p>
-            <div className="overflow-x-auto">
+            <div className="overflow-x-auto" role="region" aria-label="Autres projets accompagnés, tableau défilant" tabIndex={0}>
               <table className="w-full min-w-[640px] border-collapse rounded-2xl overflow-hidden border border-line text-[0.9rem]">
                 <thead>
                   <tr className="bg-surface text-left">
