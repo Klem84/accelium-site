@@ -2,7 +2,7 @@ import Link from "next/link";
 import { PartnerCard } from "@/components/collections/PartnerCard";
 import { CtaContext } from "@/components/collections/CtaContext";
 import { IconCheck, IconLever } from "@/components/blocks/Icons";
-import { referencesConfirmees, type Reference } from "@/config/references";
+import { estAffichable, referencesConfirmees, type Reference } from "@/config/references";
 import { cerclePrincipes, partenariatModalites, salonsPartenariat, partenairesCibles } from "@/lib/cabinetData";
 import { JsonLd } from "@/lib/schema-org";
 import { site } from "@/config/site";
@@ -18,7 +18,7 @@ function toPartner(r: Reference, type: string) {
     site: r.site || undefined,
     phrase: r.phrase,
     logo: r.logo || undefined,
-    confirme: r.confirme,
+    confirme: estAffichable(r),
   };
 }
 

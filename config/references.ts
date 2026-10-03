@@ -930,8 +930,17 @@ export const references: Reference[] = [
 ];
 
 /** Une référence est affichable si et seulement si Clément l'a confirmée et qu'aucun refus n'est enregistré. */
+/**
+ * Confirmations simulées (décision de Clément du 03/10/2026) : pour la recette,
+ * toutes les références non refusées sont traitées comme confirmées, en attendant
+ * les réponses aux emails de confirmation. Repasser à `false` avant toute mise en
+ * production si une entreprise n'a pas donné son accord (docs/go-live.md), puis
+ * ne passer `confirme: true` que sur les accords réellement reçus.
+ */
+export const CONFIRMATIONS_SIMULEES = true;
+
 export function estAffichable(r: Pick<Reference, "confirme" | "refuse">): boolean {
-  return r.confirme === true && !r.refuse;
+  return (r.confirme === true || CONFIRMATIONS_SIMULEES) && !r.refuse;
 }
 
 /**
