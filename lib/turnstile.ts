@@ -14,7 +14,7 @@ if ((SECRET && !SITE_KEY) || (!SECRET && SITE_KEY)) {
 export async function verifyTurnstile(token: string | undefined, ip?: string): Promise<boolean> {
   // Si aucune clé configurée → on n'impose pas Turnstile (mode dégradé contrôlé).
   if (!SECRET) {
-    console.warn("[turnstile] TURNSTILE_SECRET_KEY manquant — vérification désactivée (mock).");
+    console.warn("[turnstile] TURNSTILE_SECRET_KEY manquant : vérification désactivée (mock).");
     return true;
   }
   if (!token) return false;

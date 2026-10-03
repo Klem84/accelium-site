@@ -15,7 +15,7 @@ function esc(s = "") {
 
 export async function sendLeadEmails(data: DiagnosticInput): Promise<{ ok: boolean; skipped?: boolean }> {
   if (!resend) {
-    console.warn("[resend] RESEND_API_KEY manquant — envoi simulé (mock).");
+    console.warn("[resend] RESEND_API_KEY manquant : envoi simulé (mock).");
     return { ok: true, skipped: true };
   }
 
@@ -26,11 +26,11 @@ export async function sendLeadEmails(data: DiagnosticInput): Promise<{ ok: boole
       <tr><td style="padding:4px 12px 4px 0;color:#5C6B8A">Nom</td><td><strong>${esc(data.nom)}</strong></td></tr>
       <tr><td style="padding:4px 12px 4px 0;color:#5C6B8A">Société</td><td>${esc(data.societe)}</td></tr>
       <tr><td style="padding:4px 12px 4px 0;color:#5C6B8A">Email</td><td>${esc(data.email)}</td></tr>
-      <tr><td style="padding:4px 12px 4px 0;color:#5C6B8A">Téléphone</td><td>${esc(data.telephone || "—")}</td></tr>
-      <tr><td style="padding:4px 12px 4px 0;color:#5C6B8A">Secteur</td><td>${esc(data.secteur || "—")}</td></tr>
+      <tr><td style="padding:4px 12px 4px 0;color:#5C6B8A">Téléphone</td><td>${esc(data.telephone || "non renseigné")}</td></tr>
+      <tr><td style="padding:4px 12px 4px 0;color:#5C6B8A">Secteur</td><td>${esc(data.secteur || "non renseigné")}</td></tr>
     </table>
     <p style="margin-top:12px;color:#5C6B8A">Projet :</p>
-    <p style="white-space:pre-wrap">${esc(data.projet || "—")}</p>
+    <p style="white-space:pre-wrap">${esc(data.projet || "non renseigné")}</p>
   </div>`;
 
   const prospectHtml = `
@@ -46,14 +46,14 @@ export async function sendLeadEmails(data: DiagnosticInput): Promise<{ ok: boole
     from,
     to,
     replyTo: data.email,
-    subject: `Diagnostic — ${data.societe} (${data.nom})`,
+    subject: `Diagnostic : ${data.societe} (${data.nom})`,
     html: interneHtml,
   });
 
   await resend.emails.send({
     from,
     to: data.email,
-    subject: "Votre demande de diagnostic — Accelium Conseil",
+    subject: "Votre demande de diagnostic | Accelium Conseil",
     html: prospectHtml,
   });
 
@@ -65,14 +65,14 @@ export async function sendLeadEmails(data: DiagnosticInput): Promise<{ ok: boole
 // prospect a, lui, déjà été envoyé ou va l'être : le lead n'est jamais perdu côté contact).
 export async function sendMondayFailureAlert(contexte: string, data: Record<string, unknown>): Promise<void> {
   if (!resend) {
-    console.warn("[resend] RESEND_API_KEY manquant — alerte Monday non envoyée (mock).", contexte, data);
+    console.warn("[resend] RESEND_API_KEY manquant : alerte Monday non envoyée (mock).", contexte, data);
     return;
   }
   try {
     await resend.emails.send({
       from,
       to,
-      subject: `⚠ Échec Monday — ${contexte}`,
+      subject: `⚠ Échec Monday : ${contexte}`,
       html: `
       <div style="font-family:system-ui,sans-serif;color:#1B2336">
         <h2 style="color:#F26122">La création du lead dans Monday a échoué</h2>
@@ -97,7 +97,7 @@ export async function sendLivreBlancEmails(
   const lien = `${(baseUrl || site.url).replace(/\/$/, "")}${livre.fichier}`;
 
   if (!resend) {
-    console.warn("[resend] RESEND_API_KEY manquant — envoi simulé (mock).");
+    console.warn("[resend] RESEND_API_KEY manquant : envoi simulé (mock).");
     return { ok: true, skipped: true };
   }
 
@@ -107,7 +107,7 @@ export async function sendLivreBlancEmails(
     <table style="border-collapse:collapse">
       <tr><td style="padding:4px 12px 4px 0;color:#5C6B8A">Document</td><td><strong>${esc(livre.titre)}</strong></td></tr>
       <tr><td style="padding:4px 12px 4px 0;color:#5C6B8A">Nom</td><td><strong>${esc(data.nom)}</strong></td></tr>
-      <tr><td style="padding:4px 12px 4px 0;color:#5C6B8A">Société</td><td>${esc(data.societe || "—")}</td></tr>
+      <tr><td style="padding:4px 12px 4px 0;color:#5C6B8A">Société</td><td>${esc(data.societe || "non renseigné")}</td></tr>
       <tr><td style="padding:4px 12px 4px 0;color:#5C6B8A">Email</td><td>${esc(data.email)}</td></tr>
     </table>
   </div>`;
@@ -130,14 +130,14 @@ export async function sendLivreBlancEmails(
     from,
     to,
     replyTo: data.email,
-    subject: `Livre blanc — ${livre.titre} (${data.nom})`,
+    subject: `Livre blanc : ${livre.titre} (${data.nom})`,
     html: interneHtml,
   });
 
   await resend.emails.send({
     from,
     to: data.email,
-    subject: `Votre livre blanc — ${livre.titre} | Accelium Conseil`,
+    subject: `Votre livre blanc : ${livre.titre} | Accelium Conseil`,
     html: prospectHtml,
   });
 

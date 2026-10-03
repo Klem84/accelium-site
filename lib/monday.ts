@@ -22,7 +22,7 @@ export async function createLead(
   origine?: string
 ): Promise<{ ok: boolean; skipped?: boolean; deduplicated?: boolean; id?: string }> {
   if (!TOKEN) {
-    console.warn("[monday] MONDAY_API_TOKEN manquant — création simulée (mock).");
+    console.warn("[monday] MONDAY_API_TOKEN manquant : création simulée (mock).");
     return { ok: true, skipped: true };
   }
 
@@ -31,7 +31,7 @@ export async function createLead(
     return { ok: true, deduplicated: true, id: existing };
   }
 
-  const source = origine ? `Site — Diagnostic gratuit (${origine})` : "Site — Diagnostic gratuit";
+  const source = origine ? `Site : Diagnostic gratuit (${origine})` : "Site : Diagnostic gratuit";
   const columnValues: Record<string, unknown> = {
     [COL.societe]: data.societe,
     [COL.email]: { email: data.email, text: data.email },
@@ -44,7 +44,7 @@ export async function createLead(
   if (data.secteur) columnValues[COL.secteur] = data.secteur;
   if (data.projet) columnValues[COL.projet] = { text: data.projet };
 
-  return createItem(`${data.nom} — ${data.societe}`, columnValues);
+  return createItem(`${data.nom} | ${data.societe}`, columnValues);
 }
 
 export async function createLeadLivreBlanc(
@@ -53,7 +53,7 @@ export async function createLeadLivreBlanc(
   isoDate: string
 ): Promise<{ ok: boolean; skipped?: boolean; deduplicated?: boolean; id?: string }> {
   if (!TOKEN) {
-    console.warn("[monday] MONDAY_API_TOKEN manquant — création simulée (mock).");
+    console.warn("[monday] MONDAY_API_TOKEN manquant : création simulée (mock).");
     return { ok: true, skipped: true };
   }
 
@@ -65,13 +65,13 @@ export async function createLeadLivreBlanc(
   const columnValues: Record<string, unknown> = {
     [COL.email]: { email: data.email, text: data.email },
     [COL.statut]: { label: "Nouveau" },
-    [COL.source]: `Site — Livre blanc : ${titreLivre}`,
+    [COL.source]: `Site, Livre blanc : ${titreLivre}`,
     [COL.consentement]: { checked: "true" },
     [COL.date]: { date: isoDate.slice(0, 10) },
   };
   if (data.societe) columnValues[COL.societe] = data.societe;
 
-  return createItem(`${data.nom}${data.societe ? ` — ${data.societe}` : ""}`, columnValues);
+  return createItem(`${data.nom}${data.societe ? ` | ${data.societe}` : ""}`, columnValues);
 }
 
 // Déduplication (fiche H8 / L2.7) : recherche la présence d'un lead existant par email avant
